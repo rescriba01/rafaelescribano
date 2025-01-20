@@ -46,5 +46,15 @@ function re_register_block_styles() {
             }',
         )
     );
+
+    // Display heading style
+    register_block_style(
+        'core/heading',
+        array(
+            'name'         => 'display',
+            'label'        => __('Display', 're'),
+            'inline_style' => '.is-style-display { font-size: var(--wp--preset--font-size--display) !important; }'
+        )
+    );
 }
 add_action('init', 're_register_block_styles'); 
