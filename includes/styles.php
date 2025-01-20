@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
  * Enqueue theme styles
  */
 function re_enqueue_styles() {
+    // Main theme style
     wp_enqueue_style(
         're-style',
         RE_THEME_URL . 'style.css',
