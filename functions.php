@@ -49,3 +49,4 @@ require_once RE_THEME_PATH . 'includes/styles.php';
 require_once RE_THEME_PATH . 'includes/scripts.php';
 require_once RE_THEME_PATH . 'includes/block-styles.php';
 require_once RE_THEME_PATH . 'includes/pattern-categories.php';
+require_once RE_THEME_PATH . 'includes/post-type-work.php';
