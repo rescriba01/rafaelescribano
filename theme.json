@@ -354,7 +354,6 @@
 				}
 			},
 			"core/site-title": {
-				"css": "@media (max-width:600px){&{display:none;}}",
 				"typography": {
 					"fontSize": "var(--wp--preset--font-size--medium)",
 					"fontFamily": "var(--wp--preset--font-family--inter)",
