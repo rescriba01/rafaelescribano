@@ -22,4 +22,17 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 }
-add_action('wp_enqueue_scripts', 're_enqueue_styles'); 
+add_action('wp_enqueue_scripts', 're_enqueue_styles');
+
+/**
+ * Enqueue header styles
+ */
+function re_enqueue_header_styles() {
+    wp_enqueue_style(
+        're-header',
+        RE_THEME_URL . 'assets/css/header.css',
+        array(),
+        RE_THEME_VERSION
+    );
+}
+add_action( 'wp_enqueue_scripts', 're_enqueue_header_styles' ); 
