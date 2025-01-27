@@ -6,6 +6,7 @@
 # Editor Files
 *.code-workspace
 .cursorrules
+*.md
 
 # Node related
 node_modules/
