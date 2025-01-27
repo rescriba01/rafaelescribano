@@ -479,9 +479,9 @@
 			}
 		},
 		"typography": {
-			"fontSize": "var(--wp--preset--font-size--small)",
+			"fontSize": "var(--wp--preset--font-size--medium)",
 			"fontFamily": "var(--wp--preset--font-family--inter)",
-			"lineHeight": "1.7"
+			"lineHeight": "1.5"
 		}
 	},
 	"templateParts": [
