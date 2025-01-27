@@ -37,7 +37,7 @@ function re_register_post_types() {
         'publicly_queryable' => true,
         'show_ui'           => true,
         'show_in_menu'      => true,
-        'show_in_rest'      => true, // Enable Gutenberg editor
+        'show_in_rest'      => true, // Enable Gutenberg editor and allow block binding
         'query_var'         => true,
         'rewrite'           => array('slug' => 'work'),
         'capability_type'   => 'post',
