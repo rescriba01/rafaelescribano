@@ -1,0 +1,32 @@
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link-list-title {
+    text-transform: uppercase;
+}
+
+.link-list li {
+    border-bottom: 1px solid var(--wp--preset--color--contrast);
+}
+
+.link-list li:last-child {
+    border-bottom: none;
+}
+
+.link-list a {
+    color: var(--wp--preset--color--contrast);
+    text-decoration: none;
+    display: block;
+    padding-block: 1rem;
+}
+
+.link-list a:first-child {
+    padding-top: 0;
+}
+
+.link-list a:last-child {
+    padding-bottom: 0;
+} 

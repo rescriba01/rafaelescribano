@@ -1,0 +1,10 @@
+.wp-block-re-link-list .link-list-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.wp-block-re-link-list .components-text-control__input {
+    width: 100%;
+} 
