@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
  * Register block styles
  */
 function re_register_block_styles() {
+    // Core Details Block Styles
     register_block_style(
         'core/details',
         array(
@@ -32,6 +33,17 @@ function re_register_block_styles() {
         )
     );
 
+    // Core Heading Block Styles
+    register_block_style(
+        'core/heading',
+        array(
+            'name'         => 'display',
+            'label'        => __('Display', 're'),
+            'inline_style' => '.is-style-display { font-size: var(--wp--preset--font-size--display) !important; }'
+        )
+    );
+
+    // Core List Block Styles
     register_block_style(
         'core/list',
         array(
@@ -44,16 +56,6 @@ function re_register_block_styles() {
             ul.is-style-checkmark-list li {
                 padding-inline-start: 1ch;
             }',
-        )
-    );
-
-    // Display heading style
-    register_block_style(
-        'core/heading',
-        array(
-            'name'         => 'display',
-            'label'        => __('Display', 're'),
-            'inline_style' => '.is-style-display { font-size: var(--wp--preset--font-size--display) !important; }'
         )
     );
 }
