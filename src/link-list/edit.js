@@ -1,9 +1,11 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText, URLInput } from '@wordpress/block-editor';
-import { TextControl, Button, Flex, FlexBlock } from '@wordpress/components';
+import { useBlockProps, RichText, URLInput, InspectorControls } from '@wordpress/block-editor';
+import { TextControl, Button, Flex, FlexBlock, PanelBody, ToggleControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
 const Edit = ({ attributes, setAttributes }) => {
     const { title, links } = attributes;
+    const [isPreview, setIsPreview] = useState(false);
     const blockProps = useBlockProps();
 
     const addLink = () => {
@@ -24,7 +26,22 @@ const Edit = ({ attributes, setAttributes }) => {
         });
     };
 
-    return (
+    const PreviewMode = () => (
+        <div {...blockProps}>
+            <h3 className="link-list-title">
+                {title}
+            </h3>
+            <ul className="link-list">
+                {links.map((link, index) => (
+                    <li key={index}>
+                        <a href={link.url}>{link.text}</a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+
+    const EditMode = () => (
         <div {...blockProps}>
             <RichText
                 tagName="h3"
@@ -70,6 +87,21 @@ const Edit = ({ attributes, setAttributes }) => {
                 {__('Add Link', 're')}
             </Button>
         </div>
+    );
+
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody title={__('Block Settings', 're')}>
+                    <ToggleControl
+                        label={__('Preview Mode', 're')}
+                        checked={isPreview}
+                        onChange={() => setIsPreview(!isPreview)}
+                    />
+                </PanelBody>
+            </InspectorControls>
+            {isPreview ? <PreviewMode /> : <EditMode />}
+        </>
     );
 };
 

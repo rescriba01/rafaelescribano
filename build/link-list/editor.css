@@ -1,3 +1,4 @@
+/* Edit mode styles */
 .wp-block-re-link-list .link-list-item {
     display: flex;
     gap: 1rem;
@@ -7,4 +8,26 @@
 
 .wp-block-re-link-list .components-text-control__input {
     width: 100%;
+}
+
+/* Preview mode styles - matching frontend */
+.wp-block-re-link-list .link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wp-block-re-link-list .link-list li {
+    margin-bottom: 0.5rem;
+}
+
+.wp-block-re-link-list .link-list a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.25rem;
+    transition: color 0.2s ease;
+}
+
+.wp-block-re-link-list .link-list a:hover {
+    color: var(--wp--preset--color--primary, #0073aa);
 } 
