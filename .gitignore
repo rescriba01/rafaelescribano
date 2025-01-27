@@ -1,5 +1,19 @@
-# Mac OS System Files
+# Dependencies
+node_modules/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Mac OS System Files
 .LSOverride
 ._*
 
@@ -33,4 +47,3 @@ sitemap.xml.gz
 
 # Build/Distribution directories
 dist/
-build/
