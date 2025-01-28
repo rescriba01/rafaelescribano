@@ -13,6 +13,12 @@ header.wp-block-template-part .site-header__branding .wp-block-site-title {
     display: none !important;
 }
 
+/* Navigation Styles */
+header.wp-block-template-part nav.wp-block-navigation a {
+    text-decoration: none;
+    color: var(--wp--preset--color--contrast);
+}
+
 /* Tablet and up */
 @media (min-width: 481px) {
     header.wp-block-template-part .site-header__branding .wp-block-site-title {
@@ -21,6 +27,22 @@ header.wp-block-template-part .site-header__branding .wp-block-site-title {
     
     header.wp-block-template-part .wp-block-group.site-header {
         outline: none !important;
+    }
+}
+
+/* Navigation hover styles - 768px and up */
+@media (min-width: 768px) {
+    header.wp-block-template-part nav.wp-block-navigation a {
+        padding: 0.5em 1em;
+        border-radius: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    header.wp-block-template-part nav.wp-block-navigation a:hover,
+    header.wp-block-template-part nav.wp-block-navigation a:focus,
+    .wp-block-navigation .wp-block-navigation-item__content:hover {
+        background-color: var(--wp--preset--color--contrast);
+        color: #ffffff !important;
     }
 }
 
