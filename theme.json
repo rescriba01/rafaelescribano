@@ -179,7 +179,7 @@
 					"name": "Display",
 					"fluid": {
 						"min": "3rem",
-						"max": "7.5rem"
+						"max": "10rem"
 					},
 					"lineHeight": "1.25"
 				},
