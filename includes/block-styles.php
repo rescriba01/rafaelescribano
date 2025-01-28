@@ -39,7 +39,7 @@ function re_register_block_styles() {
         array(
             'name'         => 'display',
             'label'        => __('Display', 're'),
-            'inline_style' => '.is-style-display { font-size: var(--wp--preset--font-size--display) !important; }'
+            'inline_style' => '.is-style-display { font-size: var(--wp--preset--font-size--display) !important; font-weight: 500 !important;}'
         )
     );
 
