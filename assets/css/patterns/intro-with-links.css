@@ -1,0 +1,18 @@
+/* Intro with Links Pattern Styles */
+.intro-with-links .introduction {
+    padding-inline-start: 1.5em;
+}
+
+.intro-with-links .introduction p {
+    padding-inline-end: 1em;
+}
+
+.intro-with-links .project-links {
+    align-self: flex-end;
+}
+
+@media (max-width: 783px) {
+    .intro-with-links .project-links {
+        padding-inline: 1.5em;
+    }
+} 
