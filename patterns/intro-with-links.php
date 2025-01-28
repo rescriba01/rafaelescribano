@@ -11,7 +11,7 @@
 
 <!-- wp:columns {"metadata":{"categories":["featured"],"patternName":"re/intro-with-links","name":"Intro with Links"},"align":"full","className":"intro-with-links"} -->
 <div class="wp-block-columns alignfull intro-with-links"><!-- wp:column {"width":"66.66%","metadata":{"name":"Introduction"},"className":"introduction"} -->
-<div class="wp-block-column introduction" style="flex-basis:66.66%"><!-- wp:heading {"className":"is-style-display"} -->
+<div class="wp-block-column introduction" style="flex-basis:66.66%"><!-- wp:heading {"level":1,"className":"wp-block-heading is-style-display"} -->
 <h1 class="wp-block-heading is-style-display">I'm Rafael Escribano</h1>
 <!-- /wp:heading -->
 
