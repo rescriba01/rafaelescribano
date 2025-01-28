@@ -12,11 +12,11 @@
 <!-- wp:columns {"metadata":{"categories":["featured"],"patternName":"re/intro-with-links","name":"Intro with Links"},"align":"full","className":"intro-with-links"} -->
 <div class="wp-block-columns alignfull intro-with-links"><!-- wp:column {"width":"66.66%","metadata":{"name":"Introduction"},"className":"introduction"} -->
 <div class="wp-block-column introduction" style="flex-basis:66.66%"><!-- wp:heading {"className":"is-style-display"} -->
-<h2 class="wp-block-heading is-style-display">I'm Rafael Escribano</h2>
+<h1 class="wp-block-heading is-style-display">I'm Rafael Escribano</h1>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"style":{"spacing":{"padding":{"right":"1em"}}}} -->
-<p style="padding-right:1em">I craft scalable, user-focused web solutions that elevate digital platforms. With over a decade of experience, I specialize in custom WordPress development, API integrations, and optimizing workflows to deliver seamless, high-performing websites tailored to client needs.</p>
+<!-- wp:paragraph -->
+<p>I craft scalable, user-focused web solutions that elevate digital platforms. With over a decade of experience, I specialize in custom WordPress development, API integrations, and optimizing workflows to deliver seamless, high-performing websites tailored to client needs.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
