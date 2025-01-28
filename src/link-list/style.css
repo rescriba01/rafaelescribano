@@ -14,8 +14,9 @@
     text-transform: uppercase;
     color: #666;
     letter-spacing: 0.1em;
-    font-size: var(--wp--preset--font-size--small);
-    margin-bottom: 2rem;
+    font-size: var(--wp--preset--font-size--medium);
+    font-weight: 400;
+    margin-bottom: 0;
 }
 
 /* List container styles */
@@ -31,10 +32,6 @@
     padding: 1em 0;
     border-bottom: 1px solid var(--wp--preset--color--contrast-soft, rgba(51, 51, 51, 0.2));
     transition: border-color 0.3s ease;
-}
-
-.wp-block-re-link-list .link-list li:last-child {
-    border-bottom: none;
 }
 
 /* Link styles */
