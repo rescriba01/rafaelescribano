@@ -15,8 +15,8 @@
 <h2 class="wp-block-heading is-style-display">I'm Rafael Escribano</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph -->
-<p>I craft scalable, user-focused web solutions that elevate digital platforms. With over a decade of experience, I specialize in custom WordPress development, API integrations, and optimizing workflows to deliver seamless, high-performing websites tailored to client needs.</p>
+<!-- wp:paragraph {"style":{"spacing":{"padding":{"right":"1em"}}}} -->
+<p style="padding-right:1em">I craft scalable, user-focused web solutions that elevate digital platforms. With over a decade of experience, I specialize in custom WordPress development, API integrations, and optimizing workflows to deliver seamless, high-performing websites tailored to client needs.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
