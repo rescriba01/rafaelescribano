@@ -173,7 +173,7 @@
 					"size": "5.625rem",
 					"name": "Display",
 					"fluid": {
-						"min": "6.375rem",
+						"min": "3rem",
 						"max": "7.5rem"
 					}
 				},
