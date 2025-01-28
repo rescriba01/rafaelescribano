@@ -21,6 +21,14 @@ function re_enqueue_styles() {
         array(),
         RE_THEME_VERSION
     );
+
+    // Enqueue pattern styles
+    wp_enqueue_style(
+        're-pattern-intro-with-links',
+        get_template_directory_uri() . '/assets/css/patterns/intro-with-links.css',
+        array(),
+        RE_THEME_VERSION
+    );
 }
 add_action('wp_enqueue_scripts', 're_enqueue_styles');
 
