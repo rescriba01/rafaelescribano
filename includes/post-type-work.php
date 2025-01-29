@@ -126,9 +126,15 @@ function re_work_meta_box_html($post) {
     $start_date = get_post_meta($post->ID, '_work_start_date', true);
     $end_date = get_post_meta($post->ID, '_work_end_date', true);
     $location = get_post_meta($post->ID, '_work_location', true);
+    $project = get_post_meta($post->ID, '_work_project', true);
 
     wp_nonce_field('re_work_meta_box', 're_work_meta_box_nonce');
     ?>
+    <p>
+        <label for="work_project"><?php esc_html_e('Project Name', 're'); ?></label><br>
+        <input type="text" id="work_project" name="work_project" value="<?php echo esc_attr($project); ?>" class="widefat">
+        <span class="description"><?php esc_html_e('The name of the specific project or product worked on', 're'); ?></span>
+    </p>
     <p>
         <label for="work_employer"><?php esc_html_e('Employer/Client', 're'); ?></label><br>
         <input type="text" id="work_employer" name="work_employer" value="<?php echo esc_attr($employer); ?>" class="widefat">
@@ -177,6 +183,7 @@ function re_save_work_meta_box($post_id) {
     }
 
     $fields = array(
+        'work_project',
         'work_employer',
         'work_role',
         'work_start_date',
