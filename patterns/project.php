@@ -28,9 +28,13 @@ if ($work_query->have_posts()) :
         $role = get_post_meta(get_the_ID(), '_work_role', true);
         $start_date = get_post_meta(get_the_ID(), '_work_start_date', true);
         $location = get_post_meta(get_the_ID(), '_work_location', true);
+        $project = get_post_meta(get_the_ID(), '_work_project', true);
         
-        // Get work categories and tags
-        $categories = get_the_terms(get_the_ID(), 'work_category');
+        // Get gallery images and layout
+        $gallery_images = get_post_meta(get_the_ID(), '_work_gallery_images', true);
+        $gallery_layout = get_post_meta(get_the_ID(), '_work_gallery_layout', true) ?: 'full';
+        
+        // Get work tags
         $tags = get_the_terms(get_the_ID(), 'work_tag');
         
         // Format the post count
@@ -42,7 +46,7 @@ if ($work_query->have_posts()) :
     <!-- wp:group {"className":"project-header","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
     <div class="wp-block-group project-header">
         <!-- wp:heading {"level":1,"className":"project-title"} -->
-        <h1 class="project-title"><?php echo esc_html(get_the_title()); ?> - <?php echo esc_html($employer); ?></h1>
+        <h1 class="project-title"><?php echo esc_html(get_the_title()); ?> - <?php echo esc_html($project); ?></h1>
         <!-- /wp:heading -->
 
         <!-- wp:paragraph {"className":"project-count"} -->
@@ -62,6 +66,41 @@ if ($work_query->have_posts()) :
             </figure>
             <!-- /wp:image -->
             <?php endif; ?>
+
+            <?php if ($gallery_images) : 
+                $image_ids = explode(',', $gallery_images);
+                if ($gallery_layout === 'split') : ?>
+                    <!-- wp:columns {"className":"project-gallery split"} -->
+                    <div class="wp-block-columns project-gallery split">
+                    <?php foreach (array_chunk($image_ids, ceil(count($image_ids) / 2)) as $column_images) : ?>
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <?php foreach ($column_images as $image_id) : ?>
+                            <!-- wp:image {"id":<?php echo esc_attr($image_id); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                            <figure class="wp-block-image size-large project-gallery-image">
+                                <?php echo wp_get_attachment_image($image_id, 'large'); ?>
+                            </figure>
+                            <!-- /wp:image -->
+                            <?php endforeach; ?>
+                        </div>
+                        <!-- /wp:column -->
+                    <?php endforeach; ?>
+                    </div>
+                    <!-- /wp:columns -->
+                <?php else : ?>
+                    <!-- wp:group {"className":"project-gallery full"} -->
+                    <div class="wp-block-group project-gallery full">
+                    <?php foreach ($image_ids as $image_id) : ?>
+                        <!-- wp:image {"id":<?php echo esc_attr($image_id); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                        <figure class="wp-block-image size-large project-gallery-image">
+                            <?php echo wp_get_attachment_image($image_id, 'large'); ?>
+                        </figure>
+                        <!-- /wp:image -->
+                    <?php endforeach; ?>
+                    </div>
+                    <!-- /wp:group -->
+                <?php endif;
+            endif; ?>
         </div>
         <!-- /wp:column -->
 
@@ -79,18 +118,6 @@ if ($work_query->have_posts()) :
                 <!-- wp:paragraph {"className":"project-date"} -->
                 <p class="project-date"><?php echo esc_html($start_date); ?></p>
                 <!-- /wp:paragraph -->
-                <?php endif; ?>
-
-                <?php if ($categories && !is_wp_error($categories)) : ?>
-                <!-- wp:group {"className":"project-categories","layout":{"type":"flex","flexWrap":"wrap"}} -->
-                <div class="wp-block-group project-categories">
-                    <?php foreach ($categories as $category) : ?>
-                    <!-- wp:paragraph {"className":"project-category"} -->
-                    <p class="project-category"><?php echo esc_html($category->name); ?></p>
-                    <!-- /wp:paragraph -->
-                    <?php endforeach; ?>
-                </div>
-                <!-- /wp:group -->
                 <?php endif; ?>
 
                 <?php if ($tags && !is_wp_error($tags)) : ?>

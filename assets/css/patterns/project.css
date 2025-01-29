@@ -29,16 +29,43 @@
 }
 
 /* Image Styles */
-.project-image {
+.project-image,
+.project-gallery-image {
     margin: 0;
     border-radius: 0.5rem;
     overflow: hidden;
 }
 
-.project-image img {
+.project-image img,
+.project-gallery-image img {
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* Gallery Styles */
+.project-gallery {
+    margin-top: 2rem;
+}
+
+.project-gallery.full .project-gallery-image {
+    margin-bottom: 2rem;
+}
+
+.project-gallery.full .project-gallery-image:last-child {
+    margin-bottom: 0;
+}
+
+.project-gallery.split {
+    gap: 2rem;
+}
+
+.project-gallery.split .project-gallery-image {
+    margin-bottom: 2rem;
+}
+
+.project-gallery.split .project-gallery-image:last-child {
+    margin-bottom: 0;
 }
 
 /* Meta Information */
@@ -60,13 +87,11 @@
     margin: 0;
 }
 
-/* Categories and Tags */
-.project-categories,
+/* Tags */
 .project-tags {
     gap: 0.5rem;
 }
 
-.project-category,
 .project-tag {
     font-family: var(--wp--preset--font-family--inter);
     font-size: var(--wp--preset--font-size--small);
@@ -96,5 +121,9 @@
     .project-header {
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .project-gallery.split {
+        flex-direction: column;
     }
 } 
