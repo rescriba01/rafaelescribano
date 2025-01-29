@@ -25,7 +25,15 @@ function re_enqueue_styles() {
     // Enqueue pattern styles
     wp_enqueue_style(
         're-pattern-intro-with-links',
-        get_template_directory_uri() . '/assets/css/patterns/intro-with-links.css',
+        RE_THEME_URL . 'assets/css/patterns/intro-with-links.css',
+        array(),
+        RE_THEME_VERSION
+    );
+
+    // Enqueue project pattern styles
+    wp_enqueue_style(
+        're-pattern-project',
+        RE_THEME_URL . 'assets/css/patterns/project.css',
         array(),
         RE_THEME_VERSION
     );
