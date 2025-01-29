@@ -1,12 +1,30 @@
 /* Intro with Links Pattern Styles */
-.intro-with-links .introduction {
+.wp-block-group.intro-group {
+    position: relative;
+}
+
+/* Introduction Column */
+.intro-group .intro-with-links-coulmns .introduction {
     padding-inline-start: 1.5em;
 }
 
-.intro-with-links .introduction p {
+.intro-group .intro-with-links-coulmns .introduction p {
     padding-inline-end: 1em;
 }
 
-.intro-with-links .project-links {
+/* Project Links Column */
+.intro-group .intro-with-links-coulmns .project-links {
     align-self: flex-end;
+}
+
+/* Responsive Styles */
+@media (max-width: 781px) {
+    .intro-group .intro-with-links-coulmns {
+        gap: 2rem;
+    }
+    
+    .intro-group .intro-with-links-coulmns .introduction,
+    .intro-group .intro-with-links-coulmns .project-links {
+        flex-basis: 100% !important;
+    }
 }
