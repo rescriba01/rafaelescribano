@@ -44,11 +44,16 @@ const Edit = ({ attributes, setAttributes }) => {
     const EditMode = () => (
         <div {...blockProps}>
             <RichText
+                identifier="title"
                 tagName="h3"
                 value={title}
-                onChange={(title) => setAttributes({ title })}
+                onChange={(newTitle) => setAttributes({ title: newTitle })}
                 placeholder={__('Enter list title...', 're')}
                 className="link-list-title"
+                allowedFormats={['core/bold', 'core/italic']}
+                multiline={false}
+                keepPlaceholderOnFocus={true}
+                preserveWhiteSpace={true}
             />
             
             <ul className="link-list">
