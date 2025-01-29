@@ -10,9 +10,3 @@
 .intro-with-links .project-links {
     align-self: flex-end;
 }
-
-@media (max-width: 783px) {
-    .intro-with-links .project-links {
-        padding-inline: 1.5em;
-    }
-} 
