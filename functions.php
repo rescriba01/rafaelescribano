@@ -54,3 +54,4 @@ require_once RE_THEME_PATH . 'includes/post-type-work.php';
 
 // Admin includes
 require_once RE_THEME_PATH . 'includes/admin/enqueue.php';
+require_once RE_THEME_PATH . 'includes/admin/ajax.php';
