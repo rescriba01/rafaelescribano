@@ -31,8 +31,7 @@ if ($work_query->have_posts()) :
         $project = get_post_meta(get_the_ID(), '_work_project', true);
         
         // Get gallery images and layout
-        $gallery_images = get_post_meta(get_the_ID(), '_work_gallery_images', true);
-        $gallery_layout = get_post_meta(get_the_ID(), '_work_gallery_layout', true) ?: 'full';
+        $gallery_data = json_decode(get_post_meta(get_the_ID(), '_work_gallery_data', true) ?: '[]', true);
         
         // Get work tags
         $tags = get_the_terms(get_the_ID(), 'work_tag');
@@ -59,47 +58,51 @@ if ($work_query->have_posts()) :
     <div class="wp-block-columns project-content">
         <!-- wp:column {"width":"60%"} -->
         <div class="wp-block-column" style="flex-basis:60%">
-            <?php if (has_post_thumbnail()) : ?>
-            <!-- wp:image {"sizeSlug":"large","className":"project-image"} -->
-            <figure class="wp-block-image size-large project-image">
-                <?php the_post_thumbnail('large'); ?>
-            </figure>
+            <?php if (has_post_thumbnail()) : 
+                $thumb_id = get_post_thumbnail_id();
+                $thumb_url = wp_get_attachment_image_url($thumb_id, 'large');
+            ?>
+            <!-- wp:image {"id":<?php echo $thumb_id; ?>,"sizeSlug":"large","className":"project-image"} -->
+            <figure class="wp-block-image size-large project-image"><img src="<?php echo esc_url($thumb_url); ?>" alt="" class="wp-image-<?php echo esc_attr($thumb_id); ?>"/></figure>
             <!-- /wp:image -->
             <?php endif; ?>
 
-            <?php if ($gallery_images) : 
-                $image_ids = explode(',', $gallery_images);
-                if ($gallery_layout === 'split') : ?>
-                    <!-- wp:columns {"className":"project-gallery split"} -->
-                    <div class="wp-block-columns project-gallery split">
-                    <?php foreach (array_chunk($image_ids, ceil(count($image_ids) / 2)) as $column_images) : ?>
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <?php foreach ($column_images as $image_id) : ?>
-                            <!-- wp:image {"id":<?php echo esc_attr($image_id); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
-                            <figure class="wp-block-image size-large project-gallery-image">
-                                <?php echo wp_get_attachment_image($image_id, 'large'); ?>
-                            </figure>
-                            <!-- /wp:image -->
-                            <?php endforeach; ?>
+            <?php 
+            if (!empty($gallery_data)) : 
+                foreach ($gallery_data as $section) :
+                    $layout = $section['layout'];
+                    $images = $section['images'];
+
+                    if ($layout === 'split' && count($images) === 2) : ?>
+                        <!-- wp:columns {"className":"project-gallery split"} -->
+                        <div class="wp-block-columns project-gallery split">
+                            <!-- wp:column -->
+                            <div class="wp-block-column">
+                                <?php $img_url = wp_get_attachment_image_url($images[0], 'large'); ?>
+                                <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                                <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
+                                <!-- /wp:image -->
+                            </div>
+                            <!-- /wp:column -->
+
+                            <!-- wp:column -->
+                            <div class="wp-block-column">
+                                <?php $img_url = wp_get_attachment_image_url($images[1], 'large'); ?>
+                                <!-- wp:image {"id":<?php echo esc_attr($images[1]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                                <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[1]); ?>"/></figure>
+                                <!-- /wp:image -->
+                            </div>
+                            <!-- /wp:column -->
                         </div>
-                        <!-- /wp:column -->
-                    <?php endforeach; ?>
-                    </div>
-                    <!-- /wp:columns -->
-                <?php else : ?>
-                    <!-- wp:group {"className":"project-gallery full"} -->
-                    <div class="wp-block-group project-gallery full">
-                    <?php foreach ($image_ids as $image_id) : ?>
-                        <!-- wp:image {"id":<?php echo esc_attr($image_id); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
-                        <figure class="wp-block-image size-large project-gallery-image">
-                            <?php echo wp_get_attachment_image($image_id, 'large'); ?>
-                        </figure>
+                        <!-- /wp:columns -->
+                    <?php elseif ($layout === 'full' && count($images) === 1) : 
+                        $img_url = wp_get_attachment_image_url($images[0], 'large');
+                    ?>
+                        <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image full"} -->
+                        <figure class="wp-block-image size-large project-gallery-image full"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
                         <!-- /wp:image -->
-                    <?php endforeach; ?>
-                    </div>
-                    <!-- /wp:group -->
-                <?php endif;
+                    <?php endif;
+                endforeach;
             endif; ?>
         </div>
         <!-- /wp:column -->
