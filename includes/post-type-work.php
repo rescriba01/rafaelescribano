@@ -10,6 +10,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (!defined('RE_VERSION')) {
+    define('RE_VERSION', '1.0.0');
+}
+
 /**
  * Register custom post types
  */
@@ -179,13 +183,42 @@ function re_work_meta_tabs_html($post) {
             <!-- Gallery Tab -->
             <div class="work-meta-tabs__panel" data-tab="gallery">
                 <div class="work-gallery-container">
-                    <input type="hidden" name="work_gallery_images" id="work_gallery_images" value="<?php echo esc_attr($gallery_images); ?>">
+                    <input type="hidden" name="work_gallery_data" id="work_gallery_data" value="<?php 
+                        echo esc_attr(get_post_meta($post->ID, '_work_gallery_data', true)); 
+                    ?>">
                     
-                    <div class="work-gallery-preview" id="work_gallery_preview">
+                    <div class="work-gallery-controls">
+                        <select id="work_gallery_layout_select" class="widefat">
+                            <option value=""><?php esc_html_e('Select Image Layout', 're'); ?></option>
+                            <option value="full"><?php esc_html_e('Full Width Image', 're'); ?></option>
+                            <option value="split"><?php esc_html_e('50/50 Split Images', 're'); ?></option>
+                        </select>
+                        
+                        <button type="button" class="button" id="work_gallery_upload" disabled>
+                            <?php esc_html_e('Add Images', 're'); ?>
+                        </button>
+                    </div>
+
+                    <p class="gallery-help-text">
+                        <?php esc_html_e('Select a layout first. Full Width allows one image, 50/50 Split requires exactly two images.', 're'); ?>
+                    </p>
+                    
+                    <div class="work-gallery-sections">
                         <?php
-                        if ($gallery_images) {
-                            $image_ids = explode(',', $gallery_images);
-                            foreach ($image_ids as $image_id) {
+                        $gallery_data = json_decode(get_post_meta($post->ID, '_work_gallery_data', true) ?: '[]', true);
+                        
+                        foreach ($gallery_data as $section) {
+                            $layout = $section['layout'];
+                            $images = $section['images'];
+                            
+                            echo '<div class="gallery-section" data-layout="' . esc_attr($layout) . '">';
+                            echo '<div class="gallery-section-header">';
+                            echo '<h4>' . ($layout === 'full' ? esc_html__('Full Width Section', 're') : esc_html__('50/50 Split Section', 're')) . '</h4>';
+                            echo '<button type="button" class="button-link remove-section">' . esc_html__('Remove Section', 're') . '</button>';
+                            echo '</div>';
+                            
+                            echo '<div class="gallery-section-images ' . esc_attr($layout) . '">';
+                            foreach ($images as $image_id) {
                                 $image = wp_get_attachment_image($image_id, 'thumbnail');
                                 if ($image) {
                                     echo '<div class="gallery-image-preview">';
@@ -194,21 +227,11 @@ function re_work_meta_tabs_html($post) {
                                     echo '</div>';
                                 }
                             }
+                            echo '</div>';
+                            echo '</div>';
                         }
                         ?>
                     </div>
-
-                    <p>
-                        <button type="button" class="button" id="work_gallery_upload"><?php esc_html_e('Add Images', 're'); ?></button>
-                    </p>
-
-                    <p>
-                        <label for="work_gallery_layout"><?php esc_html_e('Image Layout', 're'); ?></label><br>
-                        <select name="work_gallery_layout" id="work_gallery_layout" class="widefat">
-                            <option value="full" <?php selected($gallery_layout, 'full'); ?>><?php esc_html_e('Full Width', 're'); ?></option>
-                            <option value="split" <?php selected($gallery_layout, 'split'); ?>><?php esc_html_e('Split 50/50', 're'); ?></option>
-                        </select>
-                    </p>
                 </div>
             </div>
         </div>
@@ -236,8 +259,7 @@ function re_save_work_meta_box($post_id) {
         'work_start_date',
         'work_end_date',
         'work_location',
-        'work_gallery_images',
-        'work_gallery_layout'
+        'work_gallery_data'
     );
 
     foreach ($fields as $field) {
