@@ -5,54 +5,62 @@
 .project-section {
     background-color: #000;
     color: #fff;
-    margin-inline: calc(50% - 50vw) !important;
-    padding-inline: calc(50vw - 50%) !important;
+    padding: 1.5rem 0;
     position: relative;
-    width: 100vw !important;
 }
 
 /* Header Styles */
 .project-header {
-    margin: 0 auto;
-    margin-bottom: 2rem;
-    max-width: var(--wp--style--global--content-size, 1200px);
-    padding: 2rem 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
     width: 100%;
+    padding-inline: 1rem;
 }
 
 .project-count {
     color: #666;
     font-size: 1rem;
     font-weight: 500;
-    margin: 0 0 1rem;
+    margin: 0;
 }
 
 .project-title {
     color: #fff;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 500;
     line-height: 1.1;
     margin: 0;
 }
 
+/* Visibility Classes */
+.desktop-only {
+    display: none;
+}
+
 /* Info Styles */
 .project-info {
-    margin: 0 auto;
-    margin-bottom: 3rem;
-    max-width: var(--wp--style--global--content-size, 1200px);
-    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding-inline: 1.5rem;
     width: 100%;
 }
 
 .project-meta {
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1em;
+    margin-block-start: 0;
 }
 
 .meta-field {
+    flex-direction: column;
     gap: 0.5rem;
 }
 
 .meta-label {
     color: #666;
+    font-size: 0.875rem;
     margin: 0;
     text-transform: uppercase;
 }
@@ -66,29 +74,36 @@
     margin: 0;
 }
 
-/* Hide tags on mobile */
-.project-section .desktop-only {
-    display: none !important; /* Use !important to ensure it overrides any other display values */
+/* Tags Styles */
+.project-tags {
+    align-items: flex-end;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.project-tag {
+    background-color: #666;
+    border-radius: 2rem;
+    color: #fff;
+    font-size: 0.875rem;
+    margin: 0;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
 }
 
 /* Gallery Styles */
 .project-gallery-wrapper {
-    margin: 0 auto;
-    margin-top: -2rem; /* Create overlap effect */
-    max-width: var(--wp--style--global--content-size, 1200px);
-    padding-inline: 1rem;
-    position: relative;
-    width: 100%;
-    z-index: 1;
-}
-
-.project-image,
-.project-gallery-image {
-    margin: 0 0 2rem;
+    margin-block-start: 2rem;
+    margin-inline: auto;
+    margin-block-end: -5rem !important;
+    max-width: 1200px;
 }
 
 .project-image img,
-.project-gallery-image img {
+.project-gallery-image img,
+.wp-block-image img {
     display: block;
     height: auto;
     width: 100%;
@@ -96,7 +111,14 @@
 
 /* Split Gallery Layout */
 .project-gallery.split {
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+}
+
+.project-gallery.split .project-gallery-image {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 300px;
 }
 
 /* Desktop Styles */
@@ -104,37 +126,41 @@
     .project-section {
         display: grid;
         gap: 2rem;
-        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "header header"
+            "info tags"
+            "gallery gallery";
+        grid-template-columns: 2fr 1fr;
+        padding: 2rem 1.5rem;
     }
 
     .project-header {
-        padding: 4rem 2rem;
+        grid-area: header;
+        padding-inline: 0;
     }
 
     .project-info {
-        padding-inline: 2rem;
+        grid-area: info;
+        padding-inline: 0;
+    }
+
+    .project-tags-wrapper {
+        grid-area: tags;
+        align-self: start;
     }
 
     .project-gallery-wrapper {
-        grid-column: 2;
-        margin-top: 0;
-        padding-inline: 2rem;
+        grid-area: gallery;
+        margin-block-start: 0;
+        padding-inline: 0;
     }
 
-    .project-section .desktop-only {
-        display: flex !important;
+    .desktop-only {
+        display: block;
     }
 
     .project-tags {
-        gap: 0.5rem;
-    }
-
-    .project-tag {
-        background-color: #666;
-        border-radius: 2rem;
-        color: #fff;
-        font-size: 0.875rem;
-        margin: 0;
-        padding: 0.25rem 0.75rem;
+        display: flex;
+        padding-top: 0.5rem;
     }
 }
