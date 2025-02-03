@@ -40,10 +40,10 @@ if ($work_query->have_posts()) :
         $post_count = sprintf('%02d/%02d', $current_post, $total_posts);
 ?>
 
-<!-- wp:group {"tagName":"section","className":"project-section","layout":{"type":"constrained"}} -->
-<section class="wp-block-group project-section">
-    <!-- wp:group {"className":"project-header","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-header">
+<!-- wp:group {"tagName":"section","className":"project-section","align":"full","layout":{"type":"constrained"}} -->
+<section class="wp-block-group project-section alignfull">
+    <!-- wp:group {"className":"project-header","align":"full","layout":{"type":"default"}} -->
+    <div class="wp-block-group project-header alignfull">
         <!-- wp:paragraph {"className":"project-count"} -->
         <p class="project-count"><?php echo esc_html($post_count); ?></p>
         <!-- /wp:paragraph -->
@@ -54,11 +54,11 @@ if ($work_query->have_posts()) :
     </div>
     <!-- /wp:group -->
 
-    <!-- wp:group {"className":"project-info","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-info">
+    <!-- wp:group {"className":"project-info","align":"full","layout":{"type":"default"}} -->
+    <div class="wp-block-group project-info alignfull">
         <?php if ($project) : ?>
-        <!-- wp:group {"className":"meta-field","layout":{"type":"flex","orientation":"vertical"}} -->
-        <div class="wp-block-group meta-field">
+        <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+        <div class="wp-block-group meta-field alignfull">
             <!-- wp:paragraph {"className":"meta-label"} -->
             <p class="meta-label">Project</p>
             <!-- /wp:paragraph -->
@@ -70,11 +70,11 @@ if ($work_query->have_posts()) :
         <?php endif; ?>
 
         <?php if ($role || $start_date) : ?>
-        <!-- wp:group {"className":"project-meta","layout":{"type":"flex","orientation":"vertical"}} -->
-        <div class="wp-block-group project-meta">
+        <!-- wp:group {"className":"project-meta","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+        <div class="wp-block-group project-meta alignfull">
             <?php if ($role) : ?>
-            <!-- wp:group {"className":"meta-field","layout":{"type":"flex","orientation":"vertical"}} -->
-            <div class="wp-block-group meta-field">
+            <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+            <div class="wp-block-group meta-field alignfull">
                 <!-- wp:paragraph {"className":"meta-label"} -->
                 <p class="meta-label">Role</p>
                 <!-- /wp:paragraph -->
@@ -86,8 +86,8 @@ if ($work_query->have_posts()) :
             <?php endif; ?>
 
             <?php if ($start_date) : ?>
-            <!-- wp:group {"className":"meta-field","layout":{"type":"flex","orientation":"vertical"}} -->
-            <div class="wp-block-group meta-field">
+            <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+            <div class="wp-block-group meta-field alignfull">
                 <!-- wp:paragraph {"className":"meta-label"} -->
                 <p class="meta-label">Date</p>
                 <!-- /wp:paragraph -->
@@ -101,26 +101,27 @@ if ($work_query->have_posts()) :
         <!-- /wp:group -->
         <?php endif; ?>
 
-        <?php if ($tags && !is_wp_error($tags)) : ?>
-        <!-- wp:group {"className":"desktop-only","layout":{"type":"default"}} -->
-        <div class="wp-block-group desktop-only">
-            <!-- wp:group {"className":"project-tags","layout":{"type":"flex","flexWrap":"wrap"}} -->
-            <div class="wp-block-group project-tags">
-                <?php foreach ($tags as $tag) : ?>
-                <!-- wp:paragraph {"className":"project-tag"} -->
-                <p class="project-tag"><?php echo esc_html($tag->name); ?></p>
-                <!-- /wp:paragraph -->
-                <?php endforeach; ?>
-            </div>
-            <!-- /wp:group -->
-        </div>
-        <!-- /wp:group -->
-        <?php endif; ?>
     </div>
     <!-- /wp:group -->
 
-    <!-- wp:group {"className":"project-gallery-wrapper","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-gallery-wrapper">
+    <?php if ($tags && !is_wp_error($tags)) : ?>
+    <!-- wp:group {"className":"project-tags-wrapper desktop-only","align":"full","layout":{"type":"default"}} -->
+    <div class="wp-block-group project-tags-wrapper desktop-only alignfull">
+        <!-- wp:group {"className":"project-tags","align":"full","layout":{"type":"flex","orientation":"vertical","justifyContent":"flex-start"}} -->
+        <div class="wp-block-group project-tags alignfull">
+            <?php foreach ($tags as $tag) : ?>
+            <!-- wp:paragraph {"className":"project-tag"} -->
+            <p class="project-tag"><?php echo esc_html($tag->name); ?></p>
+            <!-- /wp:paragraph -->
+            <?php endforeach; ?>
+        </div>
+        <!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
+    <?php endif; ?>
+
+    <!-- wp:group {"className":"project-gallery-wrapper","align":"full","layout":{"type":"default"}} -->
+    <div class="wp-block-group project-gallery-wrapper alignfull">
         <?php if (has_post_thumbnail()) : 
             $thumb_id = get_post_thumbnail_id();
             $thumb_url = wp_get_attachment_image_url($thumb_id, 'large');
