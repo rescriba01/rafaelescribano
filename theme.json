@@ -449,6 +449,7 @@
 				"color": {
 					"text": "var(--wp--preset--color--contrast)"
 				},
+				"css": ".site-header__logo.wp-block-image a{display:inherit !important;}",
 				":hover": {
 					"color": {
 						"text": "var(--wp--preset--color--contrast)"
