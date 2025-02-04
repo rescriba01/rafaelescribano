@@ -9,7 +9,19 @@ header.wp-block-template-part .wp-block-group.site-header {
     border-radius: 2rem;
 }
 
-header.wp-block-template-part .site-header__branding .wp-block-site-title {
+/* Header Logo Styles */
+.site-header__logo {
+    margin: 0;
+}
+
+.site-header__logo img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.site-header__branding .wp-block-site-title {
     display: none !important;
 }
 

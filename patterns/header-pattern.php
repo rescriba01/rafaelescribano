@@ -15,10 +15,10 @@
     <div class="wp-block-group alignwide site-header">
         <!-- wp:group {"style":{"spacing":{"blockGap":"14px"}},"className":"site-header__branding","layout":{"type":"flex","alignItems":"center"}} -->
         <div class="wp-block-group site-header__branding">
-            <!-- wp:image {"width":40,"height":40,"scale":"cover","sizeSlug":"full","linkDestination":"custom","className":"site-header__logo is-style-rounded"} -->
-            <figure class="wp-block-image size-full is-resized is-style-rounded site-header__logo">
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-                    <img src="<?php echo esc_url( RE_THEME_URL . 'assets/images/headshot.jpg' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" style="object-fit:cover;width:40px;height:40px"/>
+            <!-- wp:image {"id":0,"sizeSlug":"full","linkDestination":"custom","className":"site-header__logo is-style-rounded","width":40,"height":40} -->
+            <figure class="wp-block-image size-full site-header__logo is-style-rounded">
+                <a href="<?php echo esc_url(home_url('/')); ?>">
+                    <img src="<?php echo esc_url(RE_THEME_URL . 'assets/images/headshot.jpg'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="40" height="40"/>
                 </a>
             </figure>
             <!-- /wp:image -->
