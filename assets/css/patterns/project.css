@@ -102,8 +102,7 @@
 }
 
 .project-image img,
-.project-gallery-image img,
-.wp-block-image img {
+.project-gallery-image img {
     display: block;
     height: auto;
     width: 100%;
