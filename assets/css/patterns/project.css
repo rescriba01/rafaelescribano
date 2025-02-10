@@ -2,7 +2,7 @@
  * Project Pattern Styles
  */
 
-.project-section {
+.project {
     background-color: #000;
     color: #fff;
     padding: 1.5rem 0;
@@ -128,8 +128,8 @@
 
 /* Desktop Styles */
 @media (min-width: 768px) {
-    .project-section {
-        padding: 2rem 0; /* Remove horizontal padding */
+    .project {
+        padding: 2rem 0;
     }
 
     .project-content {
