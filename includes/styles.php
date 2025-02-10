@@ -37,6 +37,16 @@ function re_enqueue_styles() {
         array(),
         RE_THEME_VERSION
     );
+
+    // Pattern: Work Card Stack
+    if (is_post_type_archive('work')) {
+        wp_enqueue_style(
+            're-work-card-stack',
+            RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
+            array(),
+            RE_THEME_VERSION
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 're_enqueue_styles');
 
