@@ -60,43 +60,38 @@
         // Handle layout selection via AJAX
         const handleLayoutSelection = async (layout) => {
             try {
+                const formData = new URLSearchParams({
+                    action: 're_update_gallery_layout',
+                    nonce: reWorkMeta.nonce,
+                    post_id: reWorkMeta.post_id,
+                    layout: layout
+                });
+
                 const response = await fetch(reWorkMeta.ajaxurl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: new URLSearchParams({
-                        action: 're_update_gallery_layout',
-                        nonce: reWorkMeta.nonce,
-                        post_id: reWorkMeta.post_id,
-                        layout: layout
-                    })
+                    body: formData
                 });
 
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('Response not ok:', {
-                        status: response.status,
-                        statusText: response.statusText,
-                        responseText: errorText
-                    });
-                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                
+
                 const data = await response.json();
-                
+                console.log('AJAX Response:', data); // Debug log
+
                 if (data.success) {
                     currentLayout = layout;
                     uploadButton.disabled = !currentLayout;
-                    
-                    // Initialize media uploader if needed
                     initializeMediaUploader();
                 } else {
-                    throw new Error(data.data?.message || 'Error updating layout');
+                    throw new Error(data.error || 'Unknown error occurred');
                 }
             } catch (error) {
                 console.error('Error details:', error);
-                alert(wp.i18n.__('Error updating layout. Please try again.', 're'));
+                alert('Error updating layout. Please try again.');
                 layoutSelect.value = '';
                 uploadButton.disabled = true;
             }
@@ -104,38 +99,33 @@
 
         // Initialize media uploader
         const initializeMediaUploader = () => {
-            if (!mediaUploader) {
-                mediaUploader = wp.media({
-                    title: wp.i18n.__('Select Project Images', 're'),
-                    button: {
-                        text: wp.i18n.__('Add to Gallery', 're')
-                    },
-                    multiple: true
-                });
+            mediaUploader = wp.media({
+                title: wp.i18n.__('Select Project Images', 're'),
+                button: {
+                    text: wp.i18n.__('Add to Gallery', 're')
+                },
+                multiple: currentLayout === 'split',
+                library: {
+                    type: 'image'
+                }
+            });
 
-                mediaUploader.on('select', () => {
-                    const attachments = mediaUploader.state().get('selection').map(
-                        attachment => attachment.toJSON()
-                    );
+            mediaUploader.on('select', () => {
+                const selection = mediaUploader.state().get('selection');
+                const requiredCount = currentLayout === 'split' ? 2 : 1;
 
-                    // Validate selection based on layout
-                    if (currentLayout === 'full' && attachments.length > 1) {
-                        alert(wp.i18n.__('Full width layout only allows one image.', 're'));
-                        return;
-                    }
-                    if (currentLayout === 'split' && attachments.length !== 2) {
-                        alert(wp.i18n.__('Split layout requires exactly two images.', 're'));
-                        return;
-                    }
+                if (selection.length !== requiredCount) {
+                    alert(`Please select exactly ${requiredCount} image(s) for this layout.`);
+                    return;
+                }
 
-                    createGallerySection(currentLayout, attachments);
-                    
-                    // Reset layout selection
-                    layoutSelect.value = '';
-                    uploadButton.disabled = true;
-                    currentLayout = '';
-                });
-            }
+                createGallerySection(currentLayout, selection.models);
+                
+                // Reset selection state
+                layoutSelect.value = '';
+                uploadButton.disabled = true;
+                currentLayout = '';
+            });
         };
 
         // Layout selection handler
@@ -149,16 +139,6 @@
             }
         });
 
-        // Render existing gallery sections
-        const renderExistingSections = (sections) => {
-            sections.forEach(section => {
-                createGallerySection(section.layout, section.images.map(id => ({
-                    id: id,
-                    sizes: { thumbnail: { url: wp.media.attachment(id).get('url') } }
-                })));
-            });
-        };
-
         // Create gallery section
         const createGallerySection = (layout, attachments) => {
             const section = document.createElement('div');
@@ -169,7 +149,7 @@
             header.className = 'gallery-section-header';
             header.innerHTML = `
                 <h4>${layout === 'full' ? 'Full Width Section' : '50/50 Split Section'}</h4>
-                <button type="button" class="button-link remove-section">${wp.i18n.__('Remove Section', 're')}</button>
+                <button type="button" class="button-link remove-section">Remove Section</button>
             `;
 
             const imagesContainer = document.createElement('div');
@@ -179,8 +159,8 @@
                 const imagePreview = document.createElement('div');
                 imagePreview.className = 'gallery-image-preview';
                 imagePreview.innerHTML = `
-                    <img src="${attachment.sizes.thumbnail.url}" alt="" />
-                    <button type="button" class="remove-image" data-id="${attachment.id}">×</button>
+                    <img src="${attachment.get('sizes').thumbnail.url}" alt="" class="wp-image-${attachment.get('id')}" />
+                    <button type="button" class="remove-image" data-id="${attachment.get('id')}">×</button>
                 `;
                 imagesContainer.appendChild(imagePreview);
             });
@@ -194,17 +174,32 @@
 
         // Update gallery data
         const updateGalleryData = () => {
-            const data = Array.from(document.querySelectorAll('.gallery-section')).map(section => ({
+            const data = Array.from(galleryContainer.querySelectorAll('.gallery-section')).map(section => ({
                 layout: section.dataset.layout,
-                images: Array.from(section.querySelectorAll('.remove-image')).map(btn => btn.dataset.id)
+                images: Array.from(section.querySelectorAll('.wp-image-[0-9]+')).map(img => {
+                    const idMatch = img.className.match(/wp-image-(\d+)/);
+                    return idMatch ? parseInt(idMatch[1]) : null;
+                }).filter(id => id !== null)
             }));
 
             galleryInput.value = JSON.stringify(data);
             
-            // Trigger change event for WordPress to recognize the update
+            // Trigger change event
             const event = new Event('change', { bubbles: true });
             galleryInput.dispatchEvent(event);
         };
+
+        // Handle section and image removal
+        galleryContainer.addEventListener('click', (e) => {
+            if (e.target.matches('.remove-section')) {
+                e.target.closest('.gallery-section').remove();
+                updateGalleryData();
+            } else if (e.target.matches('.remove-image')) {
+                const preview = e.target.closest('.gallery-image-preview');
+                preview.remove();
+                updateGalleryData();
+            }
+        });
 
         // Initialize existing gallery data
         const initializeState = () => {
@@ -212,42 +207,22 @@
             if (existingData) {
                 try {
                     const parsedData = JSON.parse(existingData);
-                    renderExistingSections(parsedData);
+                    if (Array.isArray(parsedData)) {
+                        parsedData.forEach(section => {
+                            if (section.images && section.images.length > 0) {
+                                const attachments = section.images.map(id => wp.media.attachment(id));
+                                Promise.all(attachments.map(att => att.fetch())).then(() => {
+                                    createGallerySection(section.layout, attachments);
+                                });
+                            }
+                        });
+                    }
                 } catch (e) {
                     console.error('Error parsing gallery data:', e);
                 }
             }
         };
 
-        // Upload button handler
-        uploadButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (!currentLayout) return;
-            
-            if (mediaUploader) {
-                mediaUploader.open();
-            }
-        });
-
-        // Gallery container event delegation
-        galleryContainer.addEventListener('click', (e) => {
-            if (e.target.matches('.remove-section')) {
-                e.target.closest('.gallery-section').remove();
-                updateGalleryData();
-            } else if (e.target.matches('.remove-image')) {
-                const section = e.target.closest('.gallery-section');
-                e.target.closest('.gallery-image-preview').remove();
-                
-                if (section.dataset.layout === 'split' && 
-                    section.querySelectorAll('.gallery-image-preview').length < 2) {
-                    section.remove();
-                }
-                
-                updateGalleryData();
-            }
-        });
-
-        // Initialize the gallery state
         initializeState();
     };
 
