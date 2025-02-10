@@ -541,6 +541,11 @@
 			"name": "no-title",
 			"title": "No title",
 			"postTypes": [ "post","page" ]
+		},
+		{
+			"name": "single-work",
+			"title": "Single Work",
+			"postTypes": [ "work" ]
 		}
 	]
 }
