@@ -240,6 +240,54 @@ function re_work_meta_tabs_html($post) {
 }
 
 /**
+ * Validate gallery data structure
+ *
+ * @param array $gallery_data The gallery data to validate
+ * @return bool|array False if invalid, sanitized array if valid
+ */
+function re_validate_gallery_data($gallery_data) {
+    if (!is_array($gallery_data)) {
+        return false;
+    }
+
+    $valid_layouts = array('full', 'split');
+    $sanitized_data = array();
+
+    foreach ($gallery_data as $section) {
+        // Check required keys exist
+        if (!isset($section['layout']) || !isset($section['images']) || !is_array($section['images'])) {
+            return false;
+        }
+
+        // Validate layout
+        if (!in_array($section['layout'], $valid_layouts)) {
+            return false;
+        }
+
+        // Validate images based on layout
+        $images = array_map('absint', $section['images']);
+        $images = array_filter($images, function($id) {
+            return wp_attachment_is_image($id);
+        });
+
+        // Check image count based on layout
+        if ($section['layout'] === 'full' && count($images) !== 1) {
+            return false;
+        }
+        if ($section['layout'] === 'split' && count($images) !== 2) {
+            return false;
+        }
+
+        $sanitized_data[] = array(
+            'layout' => sanitize_text_field($section['layout']),
+            'images' => $images
+        );
+    }
+
+    return $sanitized_data;
+}
+
+/**
  * Save work meta box data
  *
  * @param int $post_id Post ID
@@ -252,23 +300,58 @@ function re_save_work_meta_box($post_id) {
         return;
     }
 
-    $fields = array(
+    // Regular text fields
+    $text_fields = array(
         'work_project',
         'work_employer',
         'work_role',
         'work_start_date',
         'work_end_date',
-        'work_location',
-        'work_gallery_data'
+        'work_location'
     );
 
-    foreach ($fields as $field) {
+    foreach ($text_fields as $field) {
         if (isset($_POST[$field])) {
             update_post_meta(
                 $post_id,
                 '_' . $field,
                 sanitize_text_field($_POST[$field])
             );
+        }
+    }
+
+    // Handle gallery data with debugging
+    if (isset($_POST['work_gallery_data'])) {
+        $raw_data = wp_unslash($_POST['work_gallery_data']);
+        
+        // Log raw data for debugging
+        error_log('Raw gallery data: ' . $raw_data);
+        
+        $gallery_data = json_decode($raw_data, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('JSON decode error: ' . json_last_error_msg());
+            return;
+        }
+        
+        // Validate and sanitize gallery data
+        $validated_data = re_validate_gallery_data($gallery_data);
+        
+        if ($validated_data !== false) {
+            update_post_meta(
+                $post_id,
+                '_work_gallery_data',
+                wp_json_encode($validated_data)
+            );
+        } else {
+            error_log('Gallery validation failed for post ' . $post_id);
+            
+            // Add error notice if validation fails
+            add_action('admin_notices', function() {
+                echo '<div class="notice notice-error is-dismissible">';
+                echo '<p>' . esc_html__('Gallery data validation failed. Please check your gallery sections.', 're') . '</p>';
+                echo '</div>';
+            });
         }
     }
 }
