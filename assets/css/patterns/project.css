@@ -9,13 +9,19 @@
     position: relative;
 }
 
+/* Add a container for the constrained content */
+.project-content {
+    width: min(75rem, 100%); /* Matches your theme.json contentSize */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+}
+
 /* Header Styles */
 .project-header {
     display: flex;
     flex-flow: column nowrap;
     gap: 1em;
     width: 100%;
-    padding-inline: 1rem;
 }
 
 .project-count {
@@ -123,6 +129,10 @@
 /* Desktop Styles */
 @media (min-width: 768px) {
     .project-section {
+        padding: 2rem 0; /* Remove horizontal padding */
+    }
+
+    .project-content {
         display: grid;
         gap: 2rem;
         grid-template-areas:
@@ -130,17 +140,15 @@
             "info tags"
             "gallery gallery";
         grid-template-columns: 2fr 1fr;
-        padding: 2rem 1.5rem;
     }
 
+    /* Move grid-area assignments to inner elements */
     .project-header {
         grid-area: header;
-        padding-inline: 0;
     }
 
     .project-info {
         grid-area: info;
-        padding-inline: 0;
     }
 
     .project-tags-wrapper {
@@ -151,7 +159,6 @@
     .project-gallery-wrapper {
         grid-area: gallery;
         margin-block-start: 0;
-        padding-inline: 0;
     }
 
     .desktop-only {

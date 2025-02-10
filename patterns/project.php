@@ -42,132 +42,136 @@ if ($work_query->have_posts()) :
 
 <!-- wp:group {"tagName":"section","className":"project-section","align":"full","layout":{"type":"constrained"}} -->
 <section class="wp-block-group project-section alignfull">
-    <!-- wp:group {"className":"project-header","align":"full","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-header alignfull">
-        <!-- wp:paragraph {"className":"project-count"} -->
-        <p class="project-count"><?php echo esc_html($post_count); ?></p>
-        <!-- /wp:paragraph -->
-
-        <!-- wp:heading {"level":1,"className":"project-title"} -->
-        <h1 class="project-title"><?php echo esc_html(get_the_title()); ?> - <?php echo esc_html($project); ?></h1>
-        <!-- /wp:heading -->
-    </div>
-    <!-- /wp:group -->
-
-    <!-- wp:group {"className":"project-info","align":"full","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-info alignfull">
-        <?php if ($project) : ?>
-        <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
-        <div class="wp-block-group meta-field alignfull">
-            <!-- wp:paragraph {"className":"meta-label"} -->
-            <p class="meta-label">Project</p>
+    <!-- wp:group {"className":"project-content","layout":{"type":"default"}} -->
+    <div class="wp-block-group project-content">
+        <!-- wp:group {"className":"project-header","align":"full","layout":{"type":"default"}} -->
+        <div class="wp-block-group project-header alignfull">
+            <!-- wp:paragraph {"className":"project-count"} -->
+            <p class="project-count"><?php echo esc_html($post_count); ?></p>
             <!-- /wp:paragraph -->
-            <!-- wp:paragraph {"className":"project-value"} -->
-            <p class="project-value"><?php echo esc_html($project); ?></p>
-            <!-- /wp:paragraph -->
+
+            <!-- wp:heading {"level":1,"className":"project-title"} -->
+            <h1 class="project-title"><?php echo esc_html(get_the_title()); ?> - <?php echo esc_html($project); ?></h1>
+            <!-- /wp:heading -->
         </div>
         <!-- /wp:group -->
-        <?php endif; ?>
 
-        <?php if ($role || $start_date) : ?>
-        <!-- wp:group {"className":"project-meta","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
-        <div class="wp-block-group project-meta alignfull">
-            <?php if ($role) : ?>
+        <!-- wp:group {"className":"project-info","align":"full","layout":{"type":"default"}} -->
+        <div class="wp-block-group project-info alignfull">
+            <?php if ($project) : ?>
             <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
             <div class="wp-block-group meta-field alignfull">
                 <!-- wp:paragraph {"className":"meta-label"} -->
-                <p class="meta-label">Role</p>
+                <p class="meta-label">Project</p>
                 <!-- /wp:paragraph -->
-                <!-- wp:paragraph {"className":"project-role"} -->
-                <p class="project-role"><?php echo esc_html($role); ?></p>
+                <!-- wp:paragraph {"className":"project-value"} -->
+                <p class="project-value"><?php echo esc_html($project); ?></p>
                 <!-- /wp:paragraph -->
             </div>
             <!-- /wp:group -->
             <?php endif; ?>
 
-            <?php if ($start_date) : ?>
-            <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
-            <div class="wp-block-group meta-field alignfull">
-                <!-- wp:paragraph {"className":"meta-label"} -->
-                <p class="meta-label">Date</p>
-                <!-- /wp:paragraph -->
-                <!-- wp:paragraph {"className":"project-date"} -->
-                <p class="project-date"><?php echo esc_html($start_date); ?></p>
-                <!-- /wp:paragraph -->
+            <?php if ($role || $start_date) : ?>
+            <!-- wp:group {"className":"project-meta","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+            <div class="wp-block-group project-meta alignfull">
+                <?php if ($role) : ?>
+                <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+                <div class="wp-block-group meta-field alignfull">
+                    <!-- wp:paragraph {"className":"meta-label"} -->
+                    <p class="meta-label">Role</p>
+                    <!-- /wp:paragraph -->
+                    <!-- wp:paragraph {"className":"project-role"} -->
+                    <p class="project-role"><?php echo esc_html($role); ?></p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->
+                <?php endif; ?>
+
+                <?php if ($start_date) : ?>
+                <!-- wp:group {"className":"meta-field","align":"full","layout":{"type":"flex","orientation":"vertical"}} -->
+                <div class="wp-block-group meta-field alignfull">
+                    <!-- wp:paragraph {"className":"meta-label"} -->
+                    <p class="meta-label">Date</p>
+                    <!-- /wp:paragraph -->
+                    <!-- wp:paragraph {"className":"project-date"} -->
+                    <p class="project-date"><?php echo esc_html($start_date); ?></p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->
+                <?php endif; ?>
             </div>
             <!-- /wp:group -->
             <?php endif; ?>
+
+        </div>
+        <!-- /wp:group -->
+
+        <?php if ($tags && !is_wp_error($tags)) : ?>
+        <!-- wp:group {"className":"project-tags-wrapper desktop-only","align":"full","layout":{"type":"default"}} -->
+        <div class="wp-block-group project-tags-wrapper desktop-only alignfull">
+            <!-- wp:group {"className":"project-tags","align":"full","layout":{"type":"flex","orientation":"vertical","justifyContent":"flex-start"}} -->
+            <div class="wp-block-group project-tags alignfull">
+                <?php foreach ($tags as $tag) : ?>
+                <!-- wp:paragraph {"className":"project-tag"} -->
+                <p class="project-tag"><?php echo esc_html($tag->name); ?></p>
+                <!-- /wp:paragraph -->
+                <?php endforeach; ?>
+            </div>
+            <!-- /wp:group -->
         </div>
         <!-- /wp:group -->
         <?php endif; ?>
 
-    </div>
-    <!-- /wp:group -->
+        <!-- wp:group {"className":"project-gallery-wrapper","align":"full","layout":{"type":"default"}} -->
+        <div class="wp-block-group project-gallery-wrapper alignfull">
+            <?php if (has_post_thumbnail()) : 
+                $thumb_id = get_post_thumbnail_id();
+                $thumb_url = wp_get_attachment_image_url($thumb_id, 'large');
+            ?>
+            <!-- wp:image {"id":<?php echo $thumb_id; ?>,"sizeSlug":"large","className":"project-image"} -->
+            <figure class="wp-block-image size-large project-image"><img src="<?php echo esc_url($thumb_url); ?>" alt="" class="wp-image-<?php echo esc_attr($thumb_id); ?>"/></figure>
+            <!-- /wp:image -->
+            <?php endif; ?>
 
-    <?php if ($tags && !is_wp_error($tags)) : ?>
-    <!-- wp:group {"className":"project-tags-wrapper desktop-only","align":"full","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-tags-wrapper desktop-only alignfull">
-        <!-- wp:group {"className":"project-tags","align":"full","layout":{"type":"flex","orientation":"vertical","justifyContent":"flex-start"}} -->
-        <div class="wp-block-group project-tags alignfull">
-            <?php foreach ($tags as $tag) : ?>
-            <!-- wp:paragraph {"className":"project-tag"} -->
-            <p class="project-tag"><?php echo esc_html($tag->name); ?></p>
-            <!-- /wp:paragraph -->
-            <?php endforeach; ?>
+            <?php 
+            if (!empty($gallery_data)) : 
+                foreach ($gallery_data as $section) :
+                    $layout = $section['layout'];
+                    $images = $section['images'];
+
+                    if ($layout === 'split' && count($images) === 2) : ?>
+                        <!-- wp:columns {"className":"project-gallery split"} -->
+                        <div class="wp-block-columns project-gallery split">
+                            <!-- wp:column -->
+                            <div class="wp-block-column">
+                                <?php $img_url = wp_get_attachment_image_url($images[0], 'large'); ?>
+                                <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                                <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
+                                <!-- /wp:image -->
+                            </div>
+                            <!-- /wp:column -->
+
+                            <!-- wp:column -->
+                            <div class="wp-block-column">
+                                <?php $img_url = wp_get_attachment_image_url($images[1], 'large'); ?>
+                                <!-- wp:image {"id":<?php echo esc_attr($images[1]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
+                                <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[1]); ?>"/></figure>
+                                <!-- /wp:image -->
+                            </div>
+                            <!-- /wp:column -->
+                        </div>
+                        <!-- /wp:columns -->
+                    <?php elseif ($layout === 'full' && count($images) === 1) : 
+                        $img_url = wp_get_attachment_image_url($images[0], 'large');
+                    ?>
+                        <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image full"} -->
+                        <figure class="wp-block-image size-large project-gallery-image full"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
+                        <!-- /wp:image -->
+                    <?php endif;
+                endforeach;
+            endif; ?>
         </div>
         <!-- /wp:group -->
-    </div>
-    <!-- /wp:group -->
-    <?php endif; ?>
-
-    <!-- wp:group {"className":"project-gallery-wrapper","align":"full","layout":{"type":"default"}} -->
-    <div class="wp-block-group project-gallery-wrapper alignfull">
-        <?php if (has_post_thumbnail()) : 
-            $thumb_id = get_post_thumbnail_id();
-            $thumb_url = wp_get_attachment_image_url($thumb_id, 'large');
-        ?>
-        <!-- wp:image {"id":<?php echo $thumb_id; ?>,"sizeSlug":"large","className":"project-image"} -->
-        <figure class="wp-block-image size-large project-image"><img src="<?php echo esc_url($thumb_url); ?>" alt="" class="wp-image-<?php echo esc_attr($thumb_id); ?>"/></figure>
-        <!-- /wp:image -->
-        <?php endif; ?>
-
-        <?php 
-        if (!empty($gallery_data)) : 
-            foreach ($gallery_data as $section) :
-                $layout = $section['layout'];
-                $images = $section['images'];
-
-                if ($layout === 'split' && count($images) === 2) : ?>
-                    <!-- wp:columns {"className":"project-gallery split"} -->
-                    <div class="wp-block-columns project-gallery split">
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <?php $img_url = wp_get_attachment_image_url($images[0], 'large'); ?>
-                            <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
-                            <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
-                            <!-- /wp:image -->
-                        </div>
-                        <!-- /wp:column -->
-
-                        <!-- wp:column -->
-                        <div class="wp-block-column">
-                            <?php $img_url = wp_get_attachment_image_url($images[1], 'large'); ?>
-                            <!-- wp:image {"id":<?php echo esc_attr($images[1]); ?>,"sizeSlug":"large","className":"project-gallery-image"} -->
-                            <figure class="wp-block-image size-large project-gallery-image"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[1]); ?>"/></figure>
-                            <!-- /wp:image -->
-                        </div>
-                        <!-- /wp:column -->
-                    </div>
-                    <!-- /wp:columns -->
-                <?php elseif ($layout === 'full' && count($images) === 1) : 
-                    $img_url = wp_get_attachment_image_url($images[0], 'large');
-                ?>
-                    <!-- wp:image {"id":<?php echo esc_attr($images[0]); ?>,"sizeSlug":"large","className":"project-gallery-image full"} -->
-                    <figure class="wp-block-image size-large project-gallery-image full"><img src="<?php echo esc_url($img_url); ?>" alt="" class="wp-image-<?php echo esc_attr($images[0]); ?>"/></figure>
-                    <!-- /wp:image -->
-                <?php endif;
-            endforeach;
-        endif; ?>
     </div>
     <!-- /wp:group -->
 </section>
