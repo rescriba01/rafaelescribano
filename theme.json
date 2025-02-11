@@ -62,8 +62,8 @@
 			]
 		},
 		"layout": {
-			"contentSize": "52.5rem",
-			"wideSize": "68.75rem",
+			"contentSize": "56.25rem",
+			"wideSize": "87.5rem",
 			"padding": {
 				"left": "1.5rem",
 				"right": "1.5rem"
