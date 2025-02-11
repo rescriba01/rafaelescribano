@@ -4,27 +4,27 @@
 }
 
 /* Introduction Column */
-.intro-group .intro-with-links-coulmns .introduction {
+.intro-group .intro-with-links-columns .introduction {
     padding-inline-start: 1.5em;
 }
 
-.intro-group .intro-with-links-coulmns .introduction p {
+.intro-group .intro-with-links-columns .introduction p {
     padding-inline-end: 1em;
 }
 
 /* Project Links Column */
-.intro-group .intro-with-links-coulmns .project-links {
+.intro-group .intro-with-links-columns .project-links {
     align-self: center;
 }
 
 /* Responsive Styles */
 @media (max-width: 781px) {
-    .intro-group .intro-with-links-coulmns {
+    .intro-group .intro-with-links-columns {
         gap: 2rem;
     }
     
-    .intro-group .intro-with-links-coulmns .introduction,
-    .intro-group .intro-with-links-coulmns .project-links {
+    .intro-group .intro-with-links-columns .introduction,
+    .intro-group .intro-with-links-columns .project-links {
         flex-basis: 100% !important;
     }
 }
