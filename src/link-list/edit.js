@@ -1,76 +1,117 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText, URLInput, InspectorControls } from '@wordpress/block-editor';
-import { TextControl, Button, Flex, FlexBlock, PanelBody, ToggleControl } from '@wordpress/components';
+import { useBlockProps, RichText, URLInput } from '@wordpress/block-editor';
+import { Button, Flex, FlexBlock, Popover } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 const Edit = ({ attributes, setAttributes }) => {
     const { title, links } = attributes;
-    const [isPreview, setIsPreview] = useState(false);
     const blockProps = useBlockProps();
+    const [localInputs, setLocalInputs] = useState(links.map(link => link.text));
+    const [isEditingURL, setIsEditingURL] = useState({});
+
+    const handleTitleChange = (newTitle) => {
+        setAttributes({ title: newTitle });
+    };
+
+    const handleTextChange = (index, value) => {
+        const newInputs = [...localInputs];
+        newInputs[index] = value;
+        setLocalInputs(newInputs);
+    };
+
+    const handleTextBlur = (index) => {
+        const updatedLinks = [...links];
+        updatedLinks[index] = {
+            ...updatedLinks[index],
+            text: localInputs[index]
+        };
+        setAttributes({ links: updatedLinks });
+    };
+
+    const handleURLChange = (index, url, post = null) => {
+        const updatedLinks = [...links];
+        // If a post is selected, use its title as the link text if no text was entered
+        if (post && !localInputs[index]) {
+            const newInputs = [...localInputs];
+            newInputs[index] = post.title;
+            setLocalInputs(newInputs);
+            updatedLinks[index] = {
+                ...updatedLinks[index],
+                text: post.title
+            };
+        }
+        updatedLinks[index] = {
+            ...updatedLinks[index],
+            url
+        };
+        setAttributes({ links: updatedLinks });
+    };
 
     const addLink = () => {
         setAttributes({
             links: [...links, { text: '', url: '' }]
         });
-    };
-
-    const updateLink = (index, property, value) => {
-        const newLinks = [...links];
-        newLinks[index] = { ...newLinks[index], [property]: value };
-        setAttributes({ links: newLinks });
+        setLocalInputs([...localInputs, '']);
     };
 
     const removeLink = (index) => {
         setAttributes({
             links: links.filter((_, i) => i !== index)
         });
+        setLocalInputs(localInputs.filter((_, i) => i !== index));
+        // Clean up any editing state
+        const newIsEditingURL = { ...isEditingURL };
+        delete newIsEditingURL[index];
+        setIsEditingURL(newIsEditingURL);
     };
 
-    const PreviewMode = () => (
-        <div {...blockProps}>
-            <h3 className="link-list-title">
-                {title}
-            </h3>
-            <ul className="link-list">
-                {links.map((link, index) => (
-                    <li key={index}>
-                        <a href={link.url}>{link.text}</a>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-
-    const EditMode = () => (
+    return (
         <div {...blockProps}>
             <RichText
-                identifier="title"
                 tagName="h3"
                 value={title}
-                onChange={(newTitle) => setAttributes({ title: newTitle })}
+                onChange={handleTitleChange}
                 placeholder={__('Enter list title...', 're')}
                 className="link-list-title"
-                allowedFormats={['core/bold', 'core/italic']}
-                multiline={false}
-                keepPlaceholderOnFocus={true}
-                preserveWhiteSpace={true}
             />
             
             <ul className="link-list">
                 {links.map((link, index) => (
-                    <li key={index} className="link-list-item">
+                    <li key={`${index}-${link.url}`} className="link-list-item">
                         <Flex>
                             <FlexBlock>
-                                <TextControl
+                                <input
+                                    type="text"
+                                    value={localInputs[index]}
+                                    onChange={(e) => handleTextChange(index, e.target.value)}
+                                    onBlur={() => handleTextBlur(index)}
                                     placeholder={__('Link text...', 're')}
-                                    value={link.text}
-                                    onChange={(value) => updateLink(index, 'text', value)}
+                                    className="link-text-input"
                                 />
-                                <URLInput
-                                    value={link.url}
-                                    onChange={(value) => updateLink(index, 'url', value)}
-                                    placeholder={__('Enter URL or search for content...', 're')}
-                                />
+                                <div className="url-input-wrapper">
+                                    <Button
+                                        icon="admin-links"
+                                        className="url-input-button"
+                                        onClick={() => setIsEditingURL({ ...isEditingURL, [index]: true })}
+                                    >
+                                        {link.url ? link.url : __('Insert Link', 're')}
+                                    </Button>
+                                    {isEditingURL[index] && (
+                                        <Popover
+                                            position="bottom center"
+                                            onClose={() => setIsEditingURL({ ...isEditingURL, [index]: false })}
+                                        >
+                                            <div className="url-input-popover">
+                                                <URLInput
+                                                    value={link.url}
+                                                    onChange={(url, post) => handleURLChange(index, url, post)}
+                                                    suggestions={true}
+                                                    hasBorder={true}
+                                                />
+                                            </div>
+                                        </Popover>
+                                    )}
+                                </div>
                             </FlexBlock>
                             <Button
                                 isDestructive
@@ -92,21 +133,6 @@ const Edit = ({ attributes, setAttributes }) => {
                 {__('Add Link', 're')}
             </Button>
         </div>
-    );
-
-    return (
-        <>
-            <InspectorControls>
-                <PanelBody title={__('Block Settings', 're')}>
-                    <ToggleControl
-                        label={__('Preview Mode', 're')}
-                        checked={isPreview}
-                        onChange={() => setIsPreview(!isPreview)}
-                    />
-                </PanelBody>
-            </InspectorControls>
-            {isPreview ? <PreviewMode /> : <EditMode />}
-        </>
     );
 };
 
