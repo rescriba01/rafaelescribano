@@ -9,7 +9,7 @@
  * @since 1.0.0
  */
 
-// Get unique employers from work posts
+// Get work posts and organize by employer
 $employers = [];
 $work_query = new WP_Query([
     'post_type' => 'work',
@@ -23,63 +23,63 @@ if ($work_query->have_posts()) {
     while ($work_query->have_posts()) {
         $work_query->the_post();
         $employer = get_post_meta(get_the_ID(), '_work_employer', true);
-        if (!empty($employer) && !isset($employers[$employer])) {
-            $employers[$employer] = [];
-        }
         if (!empty($employer)) {
+            if (!isset($employers[$employer])) {
+                $employers[$employer] = [];
+            }
             $employers[$employer][] = [
                 'id' => get_the_ID(),
                 'title' => get_the_title(),
                 'project' => get_post_meta(get_the_ID(), '_work_project', true),
-                'image' => get_the_post_thumbnail_url(get_the_ID(), 'large'),
-                'permalink' => get_the_permalink()
+                'excerpt' => get_the_excerpt()
             ];
         }
     }
     wp_reset_postdata();
 }
 
-// Only proceed if we have employers
 if (!empty($employers)):
 ?>
 
-<!-- wp:group {"className":"work-card-stacks","align":"wide","layout":{"type":"constrained"}} -->
-<div class="wp-block-group work-card-stacks alignwide">
+<!-- wp:group {"className":"re-work-grid","align":"wide","layout":{"type":"constrained"}} -->
+<div class="wp-block-group re-work-grid alignwide">
     <?php foreach ($employers as $employer => $projects): ?>
-    <!-- wp:group {"className":"card-stack","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group card-stack">
-        <!-- wp:heading {"level":2,"className":"employer-title"} -->
-        <h2 class="wp-block-heading employer-title"><?php echo esc_html($employer); ?></h2>
-        <!-- /wp:heading -->
-
-        <!-- wp:group {"className":"cards-wrapper","layout":{"type":"constrained"}} -->
-        <div class="wp-block-group cards-wrapper">
-            <?php foreach ($projects as $project): ?>
-            <!-- wp:group {"className":"card","layout":{"type":"constrained"}} -->
-            <div class="wp-block-group card">
-                <?php if (!empty($project['image'])): ?>
-                <!-- wp:image {"sizeSlug":"large","linkDestination":"custom"} -->
-                <figure class="wp-block-image size-large">
-                    <a href="<?php echo esc_url($project['permalink']); ?>">
-                        <img src="<?php echo esc_url($project['image']); ?>" alt="<?php echo esc_attr($project['title']); ?>"/>
-                    </a>
-                </figure>
-                <!-- /wp:image -->
-                <?php endif; ?>
-
-                <!-- wp:group {"className":"card-content","layout":{"type":"constrained"}} -->
-                <div class="wp-block-group card-content">
-                    <!-- wp:heading {"level":3} -->
-                    <h3 class="wp-block-heading"><?php echo esc_html($project['title']); ?></h3>
-                    <!-- /wp:heading -->
-
-                    <?php if (!empty($project['project'])): ?>
-                    <!-- wp:paragraph {"className":"project-name"} -->
-                    <p class="project-name"><?php echo esc_html($project['project']); ?></p>
-                    <!-- /wp:paragraph -->
-                    <?php endif; ?>
+    <!-- wp:group {"className":"re-work-employer","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group re-work-employer">
+        <!-- wp:group {"className":"re-project-stack","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group re-project-stack">
+            <!-- wp:group {"className":"re-project-card re-project-card--hidden","layout":{"type":"constrained"}} -->
+            <div class="wp-block-group re-project-card re-project-card--hidden">
+                <div class="re-project-card__content">
+                    <div class="re-project-card__header">
+                        <div class="re-project-card__avatar"></div>
+                        <div class="re-project-card__employer"></div>
+                    </div>
+                    <div class="text has-large-font-size"></div>
+                    <div class="text has-medium-font-size"></div>
+                    <div class="text has-small-font-size"></div>
+                    <div class="re-project-card__button"></div>
                 </div>
-                <!-- /wp:group -->
+            </div>
+            <!-- /wp:group -->
+
+            <?php foreach ($projects as $project): 
+                $first_letter = mb_substr($employer, 0, 1);
+            ?>
+            <!-- wp:group {"className":"re-project-card","layout":{"type":"constrained"}} -->
+            <div class="wp-block-group re-project-card">
+                <div class="re-project-card__content">
+                    <div class="re-project-card__header">
+                        <div class="re-project-card__avatar" data-letter="<?php echo esc_attr($first_letter); ?>"></div>
+                        <div class="re-project-card__employer has-medium-font-size"><?php echo esc_html($employer); ?></div>
+                    </div>
+                    <div class="text has-large-font-size"><?php echo esc_html($project['title']); ?></div>
+                    <?php if (!empty($project['project'])): ?>
+                    <div class="text has-medium-font-size"><?php echo esc_html($project['project']); ?></div>
+                    <?php endif; ?>
+                    <div class="text has-small-font-size"><?php echo wp_kses_post($project['excerpt']); ?></div>
+                    <a href="<?php echo esc_url(get_permalink($project['id'])); ?>" class="re-project-card__button has-small-font-size">View Details</a>
+                </div>
             </div>
             <!-- /wp:group -->
             <?php endforeach; ?>
