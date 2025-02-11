@@ -6,8 +6,54 @@
     margin-bottom: 1rem;
 }
 
-.wp-block-re-link-list .components-text-control__input {
+.wp-block-re-link-list .link-text-input {
     width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 6px 8px;
+    border: 1px solid #949494;
+    border-radius: 2px;
+    background: #fff;
+}
+
+.wp-block-re-link-list .link-text-input:focus {
+    border-color: var(--wp-admin-theme-color);
+    box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
+    outline: 2px solid transparent;
+}
+
+/* URL Input styles */
+.wp-block-re-link-list .url-input-wrapper {
+    position: relative;
+}
+
+.wp-block-re-link-list .url-input-button {
+    width: 100%;
+    height: auto;
+    padding: 6px 8px;
+    justify-content: flex-start;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #949494;
+    border-radius: 2px;
+    background: #fff;
+}
+
+.wp-block-re-link-list .url-input-button:hover {
+    background: #f0f0f0;
+}
+
+.wp-block-re-link-list .url-input-popover {
+    width: 300px;
+    padding: 1rem;
+}
+
+.wp-block-re-link-list .url-input-popover .block-editor-url-input input[type="text"] {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #949494;
+    border-radius: 2px;
 }
 
 /* Preview mode styles - matching frontend */
