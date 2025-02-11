@@ -22,7 +22,7 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 
-    // Enqueue pattern styles
+    // Pattern: Intro with Links
     wp_enqueue_style(
         're-pattern-intro-with-links',
         RE_THEME_URL . 'assets/css/patterns/intro-with-links.css',
@@ -30,7 +30,7 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 
-    // Enqueue project pattern styles
+    // Pattern: Project
     wp_enqueue_style(
         're-pattern-project',
         RE_THEME_URL . 'assets/css/patterns/project.css',
@@ -39,19 +39,18 @@ function re_enqueue_styles() {
     );
 
     // Pattern: Work Card Stack
-    if (is_post_type_archive('work')) {
-        wp_enqueue_style(
-            're-work-card-stack',
-            RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
-            array(),
-            RE_THEME_VERSION
-        );
-    }
+    wp_enqueue_style(
+        're-pattern-work-card-stack',
+        RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
+        array(),
+        RE_THEME_VERSION
+    );
 }
-add_action('wp_enqueue_scripts', 're_enqueue_styles');
+add_action( 'wp_enqueue_scripts', 're_enqueue_styles' );
 
 /**
- * Enqueue header styles
+ * Enqueue header 
+ * Part: Header
  */
 function re_enqueue_header_styles() {
     wp_enqueue_style(

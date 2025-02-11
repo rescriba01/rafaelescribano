@@ -22,14 +22,13 @@ function re_enqueue_scripts() {
         true
     );
 
-    if (is_post_type_archive('work')) {
-        wp_enqueue_script(
-            're-work-card-stack',
-            RE_THEME_URL . 'assets/js/patterns/work-card-stack.js',
-            array(),
-            RE_THEME_VERSION,
-            true
-        );
-    }
+    // Pattern: Work Card Stack
+    wp_enqueue_script(
+        're-pattern-work-card-stack',
+        RE_THEME_URL . 'assets/js/patterns/work-card-stack.js',
+        array(),
+        RE_THEME_VERSION,
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 're_enqueue_scripts'); 
