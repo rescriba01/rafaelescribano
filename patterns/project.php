@@ -35,8 +35,8 @@ if ($work_query->have_posts()) :
 ?>
 
 <!-- wp:group {"tagName":"article","metadata":{"name":"Project"},"align":"full","className":"project","layout":{"type":"constrained"}} -->
-<article class="wp-block-group alignfull project"><!-- wp:group {"metadata":{"name":"Project-content"},"className":"project-content","layout":{"type":"default"}} -->
-<div class="wp-block-group project-content"><!-- wp:group {"metadata":{"name":"Project-header"},"className":"project-header","layout":{"type":"default"}} -->
+<article class="wp-block-group alignfull project"><!-- wp:group {"metadata":{"name":"Project-content"},"align":"wide","className":"project-content","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide project-content"><!-- wp:group {"metadata":{"name":"Project-header"},"className":"project-header","layout":{"type":"default"}} -->
 <div class="wp-block-group project-header"><!-- wp:paragraph {"className":"project-count"} -->
 <p class="project-count"><?php echo esc_html($post_count); ?></p>
 <!-- /wp:paragraph -->
