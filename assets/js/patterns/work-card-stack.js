@@ -6,11 +6,11 @@
      * @since 1.0.0
      */
     const initCardStacks = () => {
-        const cardStacks = document.querySelectorAll('.cards-wrapper');
+        const projectStacks = document.querySelectorAll('.re-project-stack');
         
-        cardStacks.forEach(stack => {
-            const cards = stack.querySelectorAll('.card');
-            const indexes = Array.from({ length: cards.length }, (_, i) => i);
+        projectStacks.forEach(stack => {
+            const cards = stack.querySelectorAll('.re-project-card:not(.re-project-card--hidden)');
+            const arrIndexes = Array.from({ length: cards.length }, (_, i) => i);
 
             /**
              * Set data-slide attributes for cards
@@ -24,12 +24,12 @@
             };
 
             // Initialize card indexes
-            setIndexes(indexes);
+            setIndexes(arrIndexes);
 
             // Handle click events
             stack.addEventListener('click', () => {
-                indexes.unshift(indexes.pop());
-                setIndexes(indexes);
+                arrIndexes.unshift(arrIndexes.pop());
+                setIndexes(arrIndexes);
             });
         });
     };
