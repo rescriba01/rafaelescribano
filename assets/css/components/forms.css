@@ -1,0 +1,160 @@
+/* Form Styles
+--------------------------------------------- */
+
+/* Form Container */
+form {
+    margin-block: var(--wp--preset--spacing--40);
+    width: 100%;
+}
+
+/* Labels */
+label {
+    color: var(--wp--preset--color--contrast);
+    display: block;
+    font-family: var(--wp--preset--font-family--system);
+    font-size: var(--wp--preset--font-size--medium);
+    font-weight: 500;
+    margin-block-end: var(--wp--preset--spacing--20);
+}
+
+/* Input Fields & Textareas */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+    background-color: var(--wp--preset--color--base);
+    border: 1px solid var(--wp--preset--color--contrast);
+    border-radius: 4px;
+    color: var(--wp--preset--color--contrast);
+    display: block;
+    font-family: var(--wp--preset--font-family--system);
+    font-size: var(--wp--preset--font-size--medium);
+    line-height: 1.5;
+    max-width: 100%;
+    padding: var(--wp--preset--spacing--20);
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+/* Focus States */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="range"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="time"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="color"]:focus,
+textarea:focus {
+    border-color: var(--wp--preset--color--primary);
+    outline: 2px solid var(--wp--preset--color--primary);
+    outline-offset: 2px;
+}
+
+/* Textarea specific styles */
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Submit Button */
+input[type="submit"],
+.wpcf7-submit {
+    background-color: var(--wp--preset--color--primary);
+    border: 2px solid var(--wp--preset--color--primary);
+    border-radius: 4px;
+    color: var(--wp--preset--color--base);
+    cursor: pointer;
+    display: inline-block;
+    font-family: var(--wp--preset--font-family--system);
+    font-size: var(--wp--preset--font-size--medium);
+    font-weight: 500;
+    line-height: 1;
+    margin-block-start: var(--wp--preset--spacing--30);
+    padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+.wpcf7-submit:hover,
+.wpcf7-submit:focus {
+    background-color: transparent;
+    color: var(--wp--preset--color--primary);
+}
+
+/* Error States */
+.wpcf7 form.invalid .wpcf7-response-output,
+.wpcf7 form.unaccepted .wpcf7-response-output,
+.wpcf7 form.payment-required .wpcf7-response-output {
+    border: 2px solid var(--wp--preset--color--error, #dc3232);
+    color: var(--wp--preset--color--error, #dc3232);
+    margin: var(--wp--preset--spacing--30) 0;
+    padding: var(--wp--preset--spacing--20);
+}
+
+.wpcf7-not-valid-tip {
+    color: var(--wp--preset--color--error, #dc3232);
+    font-size: var(--wp--preset--font-size--small);
+    margin-block-start: var(--wp--preset--spacing--10);
+}
+
+/* Success States */
+.wpcf7 form.sent .wpcf7-response-output {
+    border: 2px solid var(--wp--preset--color--success, #46b450);
+    color: var(--wp--preset--color--success, #46b450);
+    margin: var(--wp--preset--spacing--30) 0;
+    padding: var(--wp--preset--spacing--20);
+}
+
+/* Loading States */
+.wpcf7-spinner {
+    display: inline-block;
+    margin-inline-start: var(--wp--preset--spacing--20);
+    vertical-align: middle;
+}
+
+/* Responsive Adjustments */
+@media screen and (min-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="range"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="color"] {
+        max-width: 400px;
+    }
+
+    textarea {
+        max-width: 600px;
+    }
+} 
