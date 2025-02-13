@@ -373,100 +373,134 @@
      * Initialize gallery functionality
      */
     const initGallery = () => {
-        const layoutSelect = document.getElementById( 'work_gallery_layout_select' );
-        const uploadButton = document.getElementById( 'work_gallery_upload' );
-        const galleryInput = document.getElementById( 'work_gallery_data' );
-        const galleryContainer = document.querySelector( '.work-gallery-sections' );
+        // Add debug logging for initialization
+        console.log('Initializing gallery functionality...');
         
-        if ( !layoutSelect || !uploadButton || !galleryInput || !galleryContainer ) {
-            console.error( 'Required gallery elements not found' );
+        const layoutSelect = document.getElementById('work_gallery_layout_select');
+        const uploadButton = document.getElementById('work_gallery_upload');
+        const galleryInput = document.getElementById('work_gallery_data');
+        const galleryContainer = document.querySelector('.work-gallery-sections');
+        
+        // Log element existence
+        console.log('Required elements found:', {
+            layoutSelect: !!layoutSelect,
+            uploadButton: !!uploadButton,
+            galleryInput: !!galleryInput,
+            galleryContainer: !!galleryContainer
+        });
+        
+        if (!layoutSelect || !uploadButton || !galleryInput || !galleryContainer) {
+            console.error('Required gallery elements not found');
+            utils.createNotice(wp.i18n.__('Error: Required gallery elements not found', 're'), 'error');
             return;
         }
 
         let currentLayout = '';
-        const state = new GalleryState( galleryContainer, galleryInput );
-        const mediaManager = new MediaFrameManager( currentLayout );
+        const state = new GalleryState(galleryContainer, galleryInput);
+        const mediaManager = new MediaFrameManager(currentLayout);
 
-        /**
-         * Handle layout selection via REST API
-         * 
-         * @param {string} layout Selected layout
-         */
-        const handleLayoutSelection = async ( layout ) => {
+        // Verify wp.media availability
+        if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+            console.error('WordPress media library not available');
+            utils.createNotice(wp.i18n.__('Error: Media library not available', 're'), 'error');
+            return;
+        }
+
+        const handleLayoutSelection = async (layout) => {
+            console.log('Handling layout selection:', layout);
             try {
-                const response = await fetch( reWorkMeta.ajaxurl, {
+                // Log AJAX parameters
+                console.log('AJAX parameters:', {
+                    url: reWorkMeta.ajaxurl,
+                    nonce: reWorkMeta.nonce,
+                    postId: reWorkMeta.post_id
+                });
+
+                const response = await fetch(reWorkMeta.ajaxurl, {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'X-WP-Nonce': reWorkMeta.nonce
                     },
-                    body: new URLSearchParams( {
+                    body: new URLSearchParams({
                         action: 're_update_gallery_layout',
                         nonce: reWorkMeta.nonce,
                         post_id: reWorkMeta.post_id,
                         layout
-                    } )
-                } );
+                    })
+                });
 
-                if ( !response.ok ) {
-                    throw new Error( `HTTP error! status: ${ response.status }` );
+                // Log response status
+                console.log('Layout selection response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
+                console.log('Layout selection response:', data);
 
-                if ( data.success ) {
+                if (data.success) {
                     currentLayout = layout;
                     mediaManager.currentLayout = layout;
                     uploadButton.disabled = !currentLayout;
                     mediaManager.initialize();
                 } else {
-                    throw new Error( data.error || wp.i18n.__( 'Unknown error occurred', 're' ) );
+                    throw new Error(data.error || wp.i18n.__('Unknown error occurred', 're'));
                 }
-            } catch ( error ) {
-                console.error( 'Error details:', error );
-                utils.createNotice( error.message, 'error' );
+            } catch (error) {
+                console.error('Layout selection error:', error);
+                utils.createNotice(error.message, 'error');
                 layoutSelect.value = '';
                 uploadButton.disabled = true;
             }
         };
 
-        // Event Handlers
-        layoutSelect.addEventListener( 'change', ( event ) => {
+        // Event Handlers with logging
+        layoutSelect.addEventListener('change', (event) => {
+            console.log('Layout changed:', event.target.value);
             const selectedLayout = event.target.value;
-            if ( selectedLayout ) {
-                handleLayoutSelection( selectedLayout );
+            if (selectedLayout) {
+                handleLayoutSelection(selectedLayout);
             } else {
                 uploadButton.disabled = true;
                 currentLayout = '';
             }
-        } );
+        });
 
-        uploadButton.addEventListener( 'click', ( event ) => {
+        uploadButton.addEventListener('click', (event) => {
+            console.log('Upload button clicked');
             event.preventDefault();
-            mediaManager.open();
-        } );
-
-        galleryContainer.addEventListener( 'click', ( e ) => {
-            if ( e.target.matches( '.remove-section' ) ) {
-                e.target.closest( '.gallery-section' ).remove();
-                state.update();
-            } else if ( e.target.matches( '.remove-image' ) ) {
-                const preview = e.target.closest( '.gallery-image-preview' );
-                preview.remove();
-                state.update();
+            
+            // Verify wp.media state before opening
+            if (!wp.media || !mediaManager.frame) {
+                console.error('Media frame not properly initialized');
+                utils.createNotice(wp.i18n.__('Error: Media library not properly initialized', 're'), 'error');
+                return;
             }
-        } );
+            
+            mediaManager.open();
+        });
 
-        // Initialize
-        mediaManager.onSelect( ( attachments ) => {
-            state.createSection( currentLayout, attachments );
-            layoutSelect.value = '';
-            uploadButton.disabled = true;
-            currentLayout = '';
-        } );
+        // Initialize with logging
+        try {
+            mediaManager.onSelect((attachments) => {
+                console.log('Media selection made:', attachments.length);
+                state.createSection(currentLayout, attachments);
+                layoutSelect.value = '';
+                uploadButton.disabled = true;
+                currentLayout = '';
+            });
 
-        state.initialize();
+            state.initialize().catch(error => {
+                console.error('State initialization error:', error);
+                utils.createNotice(wp.i18n.__('Error initializing gallery state', 're'), 'error');
+            });
+        } catch (error) {
+            console.error('Gallery initialization error:', error);
+            utils.createNotice(wp.i18n.__('Error initializing gallery', 're'), 'error');
+        }
     };
 
     /**
