@@ -60,4 +60,18 @@ function re_enqueue_header_styles() {
         RE_THEME_VERSION
     );
 }
-add_action( 'wp_enqueue_scripts', 're_enqueue_header_styles' ); 
+add_action( 'wp_enqueue_scripts', 're_enqueue_header_styles' );
+
+/**
+ * Enqueue form styles
+ * Component: Forms
+ */
+function re_enqueue_form_styles() {
+    wp_enqueue_style(
+        're-forms',
+        RE_THEME_URL . 'assets/css/components/forms.css',
+        array(),
+        RE_THEME_VERSION
+    );
+}
+add_action( 'wp_enqueue_scripts', 're_enqueue_form_styles' ); 
