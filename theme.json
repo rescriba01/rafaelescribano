@@ -397,7 +397,10 @@
 				"css": "&.is-style-rounded img{border-radius:50%;} &.site-header__logo img{border-radius:50%;} @media (max-width:600px){&.site-header__logo img{margin-inline-start:6px;margin-block-start:5px;margin-block-end:5px;}}"
 			},
 			"core/group": {
-				"css": ".site-header{outline:1px solid var(--wp--preset--color--contrast);border-radius:2rem;gap:10px !important;}"
+				"spacing": {
+					"blockGap": "0"
+				},
+				"css": ".site-header{outline:1px solid var(--wp--preset--color--contrast);border-radius:2rem;gap:10px !important;} .re-work-employer { margin-block: 0; }"
 			}
 		},
 		"color": {
