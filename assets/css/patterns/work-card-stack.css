@@ -1,20 +1,65 @@
 /* Grid Layout */
 .re-work-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
-    padding: 2rem 0;
+    padding: 2rem;
+    padding-inline: clamp(1.75rem, 5vw, 2rem);
 }
 
-@media (min-width: 768px) {
+/* Mobile Layout */
+@media (max-width: 781px) {
     .re-work-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+    }
+
+    .re-project-stack {
+        transform: none;
+        min-height: auto;
+    }
+    
+    .re-project-card {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .re-project-card__content {
+        padding: 1.5rem;
+    }
+
+    /* Show employer as section header */
+    .re-work-employer {
+        margin-bottom: 2rem;
+    }
+
+    .re-work-employer::before {
+        content: attr(data-employer);
+        display: block;
+        font-size: var(--wp--preset--font-size--large);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--wp--preset--color--contrast);
+    }
+
+    /* Hide placeholder card on mobile */
+    .re-project-card.re-project-card--hidden {
+        display: none;
     }
 }
 
-@media (min-width: 1024px) {
+/* Desktop Layout */
+@media (min-width: 782px) {
     .re-work-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .re-project-card:not(.re-project-card--hidden) {
+        position: absolute;
+        transition: all 0.8s cubic-bezier(0.18, 0.98, 0.45, 1);
     }
 }
 
@@ -99,7 +144,16 @@
 
 /* Card Content */
 .re-project-card__content {
-    padding: 14px 18px 20px;
+    position: relative;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--wp--preset--color--base);
+    border: 1px solid var(--wp--preset--color--contrast-soft);
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .re-project-card__header {
@@ -150,6 +204,14 @@
 
 .re-project-card .text.has-large-font-size {
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show max 2 lines */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    max-width: 100%;
+    margin: 0;
 }
 
 .re-project-card .text.has-medium-font-size {
