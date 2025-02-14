@@ -45,7 +45,7 @@ if (!empty($employers)):
 <div class="wp-block-group re-work-grid alignwide">
     <?php foreach ($employers as $employer => $projects): ?>
     <!-- wp:group {"className":"re-work-employer","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group re-work-employer">
+    <div class="wp-block-group re-work-employer" data-employer="<?php echo esc_attr($employer); ?>">
         <!-- wp:group {"className":"re-project-stack","layout":{"type":"constrained"}} -->
         <div class="wp-block-group re-project-stack">
             <!-- wp:group {"className":"re-project-card re-project-card--hidden","layout":{"type":"constrained"}} -->
