@@ -1,0 +1,19 @@
+---
+description: Enforces secure coding practices for PHP, JavaScript, and database interactions in WordPress projects.
+globs: **/*.php, **/*.js
+---
+
+# Rules
+
+- Never modify core WordPress files. Use hooks and filters instead.
+- Escape all output using `esc_html()`, `esc_attr()`, `esc_url()`, etc.
+- Validate and sanitize all user inputs (`sanitize_text_field()`, `wp_kses()`).
+- Use prepared statements (`$wpdb->prepare()`) for database queries.
+- Secure AJAX and REST API endpoints with nonces (`check_ajax_referer()`).
+- Restrict direct file access using `defined('ABSPATH') || exit;`.
+
+### References
+[wordpress-api.mdc](mdc:.cursor/rules/wordpress-api.mdc)
+[.cursorrules](mdc:.cursorrules)
+[WordPress-dev-guidelines.md](mdc:WordPress-dev-guidelines.md)
+[php-wordpress.mdc](mdc:.cursor/rules/php-wordpress.mdc)

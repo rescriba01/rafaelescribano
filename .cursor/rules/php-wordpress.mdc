@@ -1,0 +1,188 @@
+---
+description: Guidelines for PHP and WordPress development and best practices.
+globs: **/*.php
+---
+# PHP & WordPress Coding Standards
+
+## Core Principles
+- Follow WordPress PHP coding standards (phpcs --standard=WordPress).
+- Use `declare(strict_types=1);` in all PHP files.
+- Organize theme-specific functions into separate files instead of placing everything in `functions.php`.
+- Use WordPress hooks (actions and filters) for extending functionality.
+- Never modify core WordPress files—extend using hooks and filters.
+
+## Best Practices
+- Utilize PHP 7.4+ features (typed properties, arrow functions).
+- Use enqueue helper functions for asset management (example code below).
+- Follow proper error handling with `WP_DEBUG_LOG` and try-catch blocks.
+- Use `$wpdb->prepare()` for database interactions.
+- Implement pagination with `paginate_links()`.
+- Use WordPress's options API for storing configuration data.
+- Manage background tasks with `wp_cron()`.
+- Format conditionals using `<?php if ( condition ): ?>` syntax.
+- Define constants for paths, URLs, and versioning at the beginning of a theme/plugin.
+- Use define() to set constants instead of variables for values that don't change.
+- Constants should be prefixed appropriately (RE_THEME_ for themes, PLUGIN_NAME_ for plugins).
+- Example structure for themes:
+```php
+/**
+ * Set Theme Constants
+ *
+ * Defines constants for use throughout the theme.
+ *
+ * @since 1.0.0
+ */
+if ( ! defined( 'RE_THEME_VERSION' ) ) {
+    $theme_data = wp_get_theme();
+    define( 'RE_THEME_VERSION', $theme_data->get( 'Version' ) );
+    define( 'RE_THEME_PATH', get_template_directory() . '/' );
+    define( 'RE_THEME_URL', get_template_directory_uri() . '/' );
+}
+```
+- Example structure for plugins:
+```php
+/**
+ * Set Plugin Constants
+ *
+ * Defines constants for use throughout the plugin.
+ *
+ * @since 1.0.0
+ */
+if ( ! defined( 'PLUGIN_NAME_VERSION' ) ) {
+    define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+    define( 'PLUGIN_NAME_PATH', plugin_dir_path( __FILE__ ) );
+    define( 'PLUGIN_NAME_URL', plugin_dir_url( __FILE__ ) );
+}
+```
+
+## Naming Conventions
+- Use `snake_case` for PHP functions, variables, and constants.
+- Namespace theme-specific functions using `retheme_`.
+
+## Security
+- Validate and sanitize user input with WordPress functions.
+- Use nonces (`wp_create_nonce()`, `check_admin_referer()`) for form security.
+- Escape output with `esc_html()`, `esc_attr()`, and `wp_kses()`.
+
+scripts.php example:
+```php
+<?php
+/**
+ * Script Loading
+ *
+ * @package re
+ * @since 1.0.0
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Enqueue theme scripts
+ */
+function re_enqueue_scripts() {
+    wp_enqueue_script(
+        're-navigation',
+        RE_THEME_URL . 'assets/js/navigation.js',
+        array(),
+        RE_THEME_VERSION,
+        true
+    );
+
+    // Pattern: Work Card Stack
+    wp_enqueue_script(
+        're-pattern-work-card-stack',
+        RE_THEME_URL . 'assets/js/patterns/work-card-stack.js',
+        array(),
+        RE_THEME_VERSION,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 're_enqueue_scripts');
+```
+
+style.php example:
+```php
+<?php
+/**
+ * Style Loading
+ *
+ * @package re
+ * @since 1.0.0
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Enqueue theme styles
+ */
+function re_enqueue_styles() {
+    // Main theme style
+    wp_enqueue_style(
+        're-style',
+        RE_THEME_URL . 'style.css',
+        array(),
+        RE_THEME_VERSION
+    );
+
+    // Pattern: Intro with Links
+    wp_enqueue_style(
+        're-pattern-intro-with-links',
+        RE_THEME_URL . 'assets/css/patterns/intro-with-links.css',
+        array(),
+        RE_THEME_VERSION
+    );
+
+    // Pattern: Project
+    wp_enqueue_style(
+        're-pattern-project',
+        RE_THEME_URL . 'assets/css/patterns/project.css',
+        array(),
+        RE_THEME_VERSION
+    );
+
+    // Pattern: Work Card Stack
+    wp_enqueue_style(
+        're-pattern-work-card-stack',
+        RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
+        array(),
+        RE_THEME_VERSION
+    );
+}
+add_action( 'wp_enqueue_scripts', 're_enqueue_styles' );
+
+/**
+ * Enqueue header 
+ * Part: Header
+ */
+function re_enqueue_header_styles() {
+    wp_enqueue_style(
+        're-header',
+        RE_THEME_URL . 'assets/css/layout/header.css',
+        array(),
+        RE_THEME_VERSION
+    );
+}
+add_action( 'wp_enqueue_scripts', 're_enqueue_header_styles' );
+
+/**
+ * Enqueue form styles
+ * Component: Forms
+ */
+function re_enqueue_form_styles() {
+    wp_enqueue_style(
+        're-forms',
+        RE_THEME_URL . 'assets/css/components/forms.css',
+        array(),
+        RE_THEME_VERSION
+    );
+}
+add_action( 'wp_enqueue_scripts', 're_enqueue_form_styles' );
+```
+### References
+@plugin-development.mdc
+[WordPress-dev-guidelines.md](mdc:WordPress-dev-guidelines.md)
+[.cursorrules](mdc:.cursorrules)

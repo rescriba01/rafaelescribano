@@ -1,0 +1,20 @@
+---
+description: Defines best practices for writing maintainable and performant CSS in WordPress.
+globs: **/*.css, **/*.scss
+---
+# CSS Standards
+
+## Core Principles
+- Use CSS custom properties (`--color-primary`, `--spacing-unit`).
+- Apply BEM (`block__element--modifier`) for naming.
+- Implement a mobile-first design approach.
+
+## Best Practices
+- Use `grid`, `flexbox`, and `clamp()` for layout.
+- Avoid inline styles unless absolutely necessary.
+- Alphabetize CSS declarations.
+- Optimize styles by avoiding overly specific selectors.
+
+### References
+[.cursorrules](mdc:.cursorrules)
+[WordPress-dev-guidelines.md](mdc:WordPress-dev-guidelines.md)

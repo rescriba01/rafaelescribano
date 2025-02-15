@@ -1,0 +1,29 @@
+---
+description: JS & TypeScript Best Practices.
+globs: **/*.js, **/*.ts
+---
+# JavaScript Coding Standards
+
+## Core Principles
+- Stick to Vanilla JavaScript with ES6+ features (`let`, `const`, arrow functions).
+- Modularize JavaScript with ES6 modules (import/export).
+- Use Promises and async/await instead of callbacks for asynchronous tasks.
+- Avoid jQuery unless required for compatibility with third-party plugins.
+- Use wp_localize_script() for passing PHP data to JS instead of global variables.
+- Defer or asynchronously load scripts for performance `(wp_enqueue_script( ..., ..., [ 'async' => true ]))`.
+
+## Best Practices
+- Use `async/await` and Promises for API requests.
+- Organize API requests in reusable functions.
+- Use `wp_localize_script()` for passing dynamic data to JavaScript.
+- Avoid polluting the global namespace (use IIFEs or ES modules).
+
+## Naming Conventions
+- Use `camelCase` for variables and functions.
+- Use `PascalCase` for classes and constructors.
+
+
+### References
+[.cursorrules](mdc:.cursorrules)
+[WordPress-dev-guidelines.md](mdc:WordPress-dev-guidelines.md)
+

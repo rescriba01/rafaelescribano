@@ -1,0 +1,38 @@
+---
+description: 
+globs: **/*.html, **/*.css, **/*.js, **/*.ts, **/*.php, **/*.json
+---
+# General Coding Standards
+
+## Core Principles
+- Write clean, maintainable, and readable code.
+- Use `declare(strict_types=1);` in all PHP files.
+- Follow DRY (Don't Repeat Yourself) and KISS (Keep It Simple, Stupid) principles.
+- Modularize code into separate files instead of dumping everything into one file.
+- Always use version control and commit meaningful changes.
+- Never hardcode sensitive information—use environment variables instead.
+
+## Best Practices
+- Use PHP 8+ features where possible (typed properties, union types, match expressions).
+- Follow proper error handling with `try-catch` blocks and logging (`error_log()` or `Monolog`).
+- Use prepared statements for database queries to prevent SQL injection.
+- Implement pagination instead of loading large datasets at once.
+- Avoid deeply nested conditionals—use early returns when possible.
+- Format conditionals using `<?php if ( condition ): ?>` syntax.
+- Use dependency injection instead of global variables where applicable.
+
+## Naming Conventions
+- Use `snake_case` for PHP functions, variables, and constants.
+- Use `PascalCase` for class names.
+- Use `camelCase` for object properties and method names.
+- Prefix functions and classes with project-specific namespaces.
+
+## Security
+- Validate and sanitize all user input before processing.
+- Escape output using `htmlspecialchars()`, `strip_tags()`, or framework-specific functions.
+- Use CSRF protection (`nonce`, `tokens`, or `headers`).
+- Avoid executing dynamic queries with user input—use parameterized queries.
+
+### References
+[php-wordpress.mdc](mdc:.cursor/rules/php-wordpress.mdc)
+[.cursorrules](mdc:.cursorrules)

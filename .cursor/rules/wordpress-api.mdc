@@ -1,0 +1,20 @@
+---
+description: 
+globs: **/wp-json/**/*.php, **/api/**/*.php, **/rest/**/*.js
+---
+
+# Rules
+- Prefer REST API (`wp-json`) over `admin-ajax.php` for handling requests.
+- Use `register_rest_route()` with a dedicated controller class.
+- Ensure all endpoints implement proper authentication `(current_user_can(), wp_verify_nonce())`.
+- Always return JSON responses using `wp_send_json_success()` or `wp_send_json_error()`.
+- Utilize `?_embed` to fetch related resources efficiently.
+- Implement caching for performance (`wp_cache_set()` or the Transients API).
+- Use `pre_get_posts` to modify REST queries instead of custom SQL.
+
+### References
+[php-wordpress.mdc](mdc:.cursor/rules/php-wordpress.mdc)
+[WordPress-dev-guidelines.md](mdc:WordPress-dev-guidelines.md)
+[.cursorrules](mdc:.cursorrules)
+[js_typescript.mdc](mdc:.cursor/rules/js_typescript.mdc)
+[general.mdc](mdc:.cursor/rules/general.mdc)

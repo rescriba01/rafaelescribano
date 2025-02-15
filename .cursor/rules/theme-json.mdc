@@ -1,0 +1,13 @@
+---
+description: When theme building these should be considered
+globs: 
+---
+## Core Principles
+- Use `theme.json` for global styles instead of hardcoded CSS.
+- Define color palettes, typography, and layout options.
+
+## Best Practices
+- Align custom properties with reusable naming conventions.
+- Use `theme.json` as a single source of truth for styling.
+
+### References
