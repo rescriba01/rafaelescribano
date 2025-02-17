@@ -3,11 +3,6 @@
     position: relative;
 }
 
-/* Introduction Column */
-.intro-group .intro-with-links-columns .introduction {
-    padding-inline-start: 1.5em;
-}
-
 .intro-group .intro-with-links-columns .introduction p {
     padding-inline-end: 1em;
 }

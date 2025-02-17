@@ -1,8 +1,4 @@
 /* Base Styles (Mobile First) */
-header.wp-block-template-part,
-footer.wp-block-template-part {
-    padding-inline: 1.25rem;
-}
 
 header.wp-block-template-part .wp-block-group.site-header {
     outline: 1px solid var(--wp--preset--color--contrast) !important;

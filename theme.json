@@ -63,11 +63,7 @@
 		},
 		"layout": {
 			"contentSize": "56.25rem",
-			"wideSize": "87.5rem",
-			"padding": {
-				"left": "1.5rem",
-				"right": "1.5rem"
-			}
+			"wideSize": "87.5rem"
 		},
 		"spacing": {
 			"padding": true,
@@ -75,6 +71,16 @@
 			"blockGap": true,
 			"units": [ "px", "em", "rem", "vh", "vw", "%" ],
 			"spacingSizes": {
+				"30": {
+					"name": "0.75rem",
+					"size": "0.75rem",
+					"slug": "30"
+				},
+				"40": {
+					"name": "1.25rem",
+					"size": "1.25rem",
+					"slug": "40"
+				},
 				"50": {
 					"name": "1.5rem",
 					"size": "1.5rem",
@@ -398,7 +404,7 @@
 			},
 			"core/group": {
 				"spacing": {
-					"blockGap": "0"
+					"blockGap": "var(--wp--preset--spacing--50)"
 				},
 				"css": ".site-header{outline:1px solid var(--wp--preset--color--contrast);border-radius:2rem;gap:10px !important;} .re-work-employer { margin-block: 0; }"
 			}
@@ -452,7 +458,7 @@
 				"color": {
 					"text": "var(--wp--preset--color--contrast)"
 				},
-				"css": ".site-header__logo.wp-block-image a{display:inherit !important;}",
+				"css": ".site-header__logo.wp-block-image a{display:block !important;}",
 				":hover": {
 					"color": {
 						"text": "var(--wp--preset--color--contrast)"

@@ -2,17 +2,22 @@
  * Project Pattern Styles
  */
 
+/* Layout */
 .project {
+    /* margin-inline: calc(var(--wp--preset--spacing--40) * -1); */
     background-color: #000;
     color: #fff;
-    padding: 1.5rem 0;
+    padding-block: 1.5rem;
     position: relative;
 }
 
-/* Add a container for the constrained content */
+.project > * {
+    padding-inline: var(--wp--preset--spacing--40);
+}
+
+/* Project Content Styles */
 .project-content {
     margin-inline: auto;
-    padding-inline: 1.5rem;
 }
 
 /* Header Styles */
@@ -48,7 +53,6 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    padding-inline: 1.5rem;
     width: 100%;
 }
 
@@ -128,7 +132,12 @@
 /* Desktop Styles */
 @media (min-width: 768px) {
     .project {
-        padding: 2rem 0;
+        padding-block: 2rem;
+        margin-inline: calc(var(--wp--preset--spacing--50) * -1);
+    }
+
+    .project > * {
+        padding-inline: var(--wp--preset--spacing--50);
     }
 
     .project-content {
@@ -167,5 +176,17 @@
     .project-tags {
         display: flex;
         padding-top: 0.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .project {
+        width: 100%;
+        max-width: var(--wp--style--global--content-size, 87.5rem);
+        margin-inline: auto;
+    }
+
+    .project > * {
+        padding-inline: var(--wp--preset--spacing--60);
     }
 }

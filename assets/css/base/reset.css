@@ -1,0 +1,97 @@
+/* Reset & Base Styles for WordPress Block Theme
+ * Following WordPress Block Theme best practices
+ * and modern CSS reset principles
+ */
+
+/* Use border-box by default */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Improve text rendering */
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default margin and inherit font for form elements */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul[class],
+ol[class] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* WordPress specific resets */
+.wp-site-blocks {
+    padding: 0;
+}
+
+.wp-block-template-part.header,
+.wp-block-template-part.footer {
+    padding: 0;
+}
+
+/* Remove margin from the last element in blocks */
+.wp-block-group > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Ensure proper box model for WordPress blocks */
+.wp-block {
+    max-width: none;
+} 

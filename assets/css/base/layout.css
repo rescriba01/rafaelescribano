@@ -1,0 +1,28 @@
+/* Import reset styles */
+@import url("reset.css");
+
+/* Global Layout Styles */
+header.wp-block-template-part,
+.entry-content > *:not(.project),
+footer.wp-block-template-part {
+    padding-inline: var(--wp--preset--spacing--40);
+    width: 100%;
+    margin-inline: auto;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    header.wp-block-template-part,
+    .entry-content > *:not(.project),
+    footer.wp-block-template-part {
+        padding-inline: var(--wp--preset--spacing--50);
+    }
+}
+
+@media (min-width: 1024px) {
+    header.wp-block-template-part,
+    .entry-content > *:not(.project),
+    footer.wp-block-template-part {
+        padding-inline: var(--wp--preset--spacing--60);
+    }
+} 
