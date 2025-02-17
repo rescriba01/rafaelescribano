@@ -4,7 +4,6 @@
 
 /* Layout */
 .project {
-    /* margin-inline: calc(var(--wp--preset--spacing--40) * -1); */
     background-color: #000;
     color: #fff;
     padding-block: 1.5rem;
@@ -136,10 +135,6 @@
         margin-inline: calc(var(--wp--preset--spacing--50) * -1);
     }
 
-    .project > * {
-        padding-inline: var(--wp--preset--spacing--50);
-    }
-
     .project-content {
         display: grid;
         gap: 2rem;
@@ -162,6 +157,7 @@
     .project-tags-wrapper {
         grid-area: tags;
         align-self: start;
+        padding-inline-end: 3rem;
     }
 
     .project-gallery-wrapper {
@@ -182,11 +178,6 @@
 @media (min-width: 1024px) {
     .project {
         width: 100%;
-        max-width: var(--wp--style--global--content-size, 87.5rem);
         margin-inline: auto;
-    }
-
-    .project > * {
-        padding-inline: var(--wp--preset--spacing--60);
     }
 }
