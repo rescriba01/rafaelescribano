@@ -6,6 +6,7 @@ globs: **/*.php
 
 ## Core Principles
 - Follow WordPress PHP coding standards (phpcs --standard=WordPress).
+- Follow all spacing standards set in the WordPress coding standards. This means respecting any spaces within parenthesis and adding spaces when not present.
 - Use `declare(strict_types=1);` in all PHP files.
 - Organize theme-specific functions into separate files instead of placing everything in `functions.php`.
 - Use WordPress hooks (actions and filters) for extending functionality.
