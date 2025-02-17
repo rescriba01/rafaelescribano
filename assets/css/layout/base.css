@@ -1,6 +1,3 @@
-/* Import reset styles */
-@import url("reset.css");
-
 /* Global Layout Styles */
 header.wp-block-template-part,
 .entry-content > *:not(.project),
@@ -19,10 +16,14 @@ footer.wp-block-template-part {
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 991px) {
     header.wp-block-template-part,
-    .entry-content > *:not(.project),
     footer.wp-block-template-part {
+        max-width: var(--wp--style--global--wide-size, 87.5rem);
+        padding-inline: 0;
+    }
+
+    .entry-content > *:not(.project) {
         padding-inline: var(--wp--preset--spacing--60);
     }
 } 

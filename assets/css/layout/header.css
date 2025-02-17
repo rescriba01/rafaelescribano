@@ -1,13 +1,13 @@
-/* Base Styles (Mobile First) */
-
-header.wp-block-template-part .wp-block-group.site-header {
+/* Header Layout & Styles */
+.wp-block-group.site-header {
     outline: 1px solid var(--wp--preset--color--contrast) !important;
     border-radius: 2rem;
 }
 
-/* Header Logo Styles */
+/* Header Logo */
 .site-header__logo {
     margin: 0;
+    display: block;
 }
 
 .site-header__logo img {
@@ -20,34 +20,33 @@ header.wp-block-template-part .wp-block-group.site-header {
     display: none !important;
 }
 
-/* Navigation Styles */
-header.wp-block-template-part nav.wp-block-navigation a {
+/* Navigation */
+.wp-block-navigation a {
     text-decoration: none;
     color: var(--wp--preset--color--contrast);
 }
 
-/* Tablet and up */
+/* Responsive Styles */
 @media (min-width: 481px) {
-    header.wp-block-template-part .site-header__branding .wp-block-site-title {
+    .site-header__branding .wp-block-site-title {
         display: block !important;
     }
     
-    header.wp-block-template-part .wp-block-group.site-header {
+    .wp-block-group.site-header {
         outline: none !important;
     }
 }
 
-/* Navigation hover styles - 768px and up */
 @media (min-width: 768px) {
-    header.wp-block-template-part nav.wp-block-navigation a {
+    .wp-block-navigation a {
         padding: 0.5em 1em;
         border-radius: 2rem;
         transition: all 0.3s ease;
     }
 
-    header.wp-block-template-part nav.wp-block-navigation a:hover,
-    header.wp-block-template-part nav.wp-block-navigation a:focus,
-    .wp-block-navigation .wp-block-navigation-item__content:hover {
+    .wp-block-navigation a:hover,
+    .wp-block-navigation a:focus,
+    .wp-block-navigation-item__content:hover {
         background-color: var(--wp--preset--color--contrast);
         color: #ffffff !important;
     }
@@ -57,6 +56,7 @@ header.wp-block-template-part nav.wp-block-navigation a {
 @media (min-width: 991px) {
     header.wp-block-template-part,
     footer.wp-block-template-part {
-        padding-inline: 3rem;
+        max-width: var(--wp--style--global--wide-size, 87.5rem);
+        padding-inline: 0;
     }
 } 

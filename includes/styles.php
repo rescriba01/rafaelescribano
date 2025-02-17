@@ -14,23 +14,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Enqueue theme styles
  */
 function re_enqueue_styles() {
-    // Enqueue base layout styles (includes reset)
+    // Base styles
     wp_enqueue_style(
-        're-base-layout',
-        RE_THEME_URL . 'assets/css/base/layout.css',
+        're-reset',
+        RE_THEME_URL . 'assets/css/base/reset.css',
         array(),
         RE_THEME_VERSION
     );
 
-    // Enqueue main theme style
+    // Layout styles
     wp_enqueue_style(
-        're-style',
-        RE_THEME_URL . 'style.css',
-        array( 're-base-layout' ),
+        're-layout-base',
+        RE_THEME_URL . 'assets/css/layout/base.css',
+        array( 're-reset' ),
         RE_THEME_VERSION
     );
 
-    // Pattern: Intro with Links
+    wp_enqueue_style(
+        're-layout-header',
+        RE_THEME_URL . 'assets/css/layout/header.css',
+        array( 're-layout-base' ),
+        RE_THEME_VERSION
+    );
+
+    // Main theme style
+    wp_enqueue_style(
+        're-style',
+        RE_THEME_URL . 'style.css',
+        array( 're-layout-header' ),
+        RE_THEME_VERSION
+    );
+
+    // Pattern styles
     wp_enqueue_style(
         're-pattern-intro-with-links',
         RE_THEME_URL . 'assets/css/patterns/intro-with-links.css',
@@ -38,7 +53,6 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 
-    // Pattern: Project
     wp_enqueue_style(
         're-pattern-project',
         RE_THEME_URL . 'assets/css/patterns/project.css',
@@ -46,10 +60,17 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 
-    // Pattern: Work Card Stack
     wp_enqueue_style(
         're-pattern-work-card-stack',
         RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
+        array( 're-style' ),
+        RE_THEME_VERSION
+    );
+
+    // Component styles
+    wp_enqueue_style(
+        're-forms',
+        RE_THEME_URL . 'assets/css/components/forms.css',
         array( 're-style' ),
         RE_THEME_VERSION
     );
