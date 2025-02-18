@@ -1,4 +1,10 @@
 /* Global Layout Styles */
+:root {
+    --site-max-width: var(--wp--style--global--wide-size, 87.5rem);
+    --content-padding: var(--wp--preset--spacing--40);
+}
+
+/* Apply base layout to core elements */
 header.wp-block-template-part,
 .entry-content > *:not(.project),
 footer.wp-block-template-part {
@@ -9,17 +15,19 @@ footer.wp-block-template-part {
 
 /* Responsive adjustments */
 @media (min-width: 768px) {
-    header.wp-block-template-part,
-    .entry-content > *:not(.project),
-    footer.wp-block-template-part {
-        padding-inline: var(--wp--preset--spacing--50);
+    :root {
+        --content-padding: var(--wp--preset--spacing--50);
     }
 }
 
 @media (min-width: 991px) {
+    :root {
+        --content-padding: var(--wp--preset--spacing--60);
+    }
+
     header.wp-block-template-part,
     footer.wp-block-template-part {
-        max-width: var(--wp--style--global--wide-size, 87.5rem);
+        max-width: var(--site-max-width);
         padding-inline: 0;
     }
 

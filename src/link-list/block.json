@@ -14,13 +14,13 @@
         },
         "links": {
             "type": "array",
-            "default": [
-                { "text": "StartGlobal", "url": "#" },
-                { "text": "Payper", "url": "#" },
-                { "text": "Vipline", "url": "#" },
-                { "text": "Metafy", "url": "#" },
-                { "text": "Fleetsu", "url": "#" }
-            ]
+            "default": []
+        },
+        "className": {
+            "type": "string"
+        },
+        "metadata": {
+            "type": "object"
         }
     },
     "supports": {

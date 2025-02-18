@@ -1,12 +1,24 @@
+/* Variables */
+:root {
+    --card-transition: all 0.8s cubic-bezier(0.18, 0.98, 0.45, 1);
+    --card-hover-transition: all 0.32s cubic-bezier(0.18, 0.98, 0.45, 1);
+    --card-border-radius: 14px;
+    --card-base-width: calc(18rem + 19vh);
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --grid-gap: 2rem;
+    --grid-padding: clamp(1.75rem, 5vw, 2rem);
+}
+
 /* Grid Layout */
 .re-work-grid {
     display: grid;
-    gap: 2rem;
-    padding: 2rem;
-    padding-inline: clamp(1.75rem, 5vw, 2rem);
+    gap: var(--grid-gap);
+    padding: var(--grid-gap);
+    padding-inline: var(--grid-padding);
 }
 
-/* Remove top margin from subsequent employer sections on larger screens */
+/* Remove top margin from subsequent employer sections */
 @media (min-width: 768px) {
     .re-work-employer + .re-work-employer {
         margin-block-start: 0;
@@ -40,7 +52,7 @@
 
     /* Show employer as section header */
     .re-work-employer {
-        margin-bottom: 2rem;
+        margin-bottom: var(--grid-gap);
     }
 
     .re-work-employer::before {
@@ -83,12 +95,13 @@
     width: 100%;
 }
 
+/* Base Card Styles */
 .re-project-card {
     width: 100%;
-    max-width: calc(18rem + 19vh);
+    max-width: var(--card-base-width);
     background: var(--wp--preset--color--base);
     border: 1px solid var(--wp--preset--color--contrast-soft);
-    border-radius: 14px;
+    border-radius: var(--card-border-radius);
     cursor: pointer;
 }
 
@@ -100,53 +113,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: all 0.8s cubic-bezier(0.18, 0.98, 0.45, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: var(--card-transition);
+    box-shadow: var(--card-shadow);
     background: #fff;
-}
-
-/* Stacking effect based on data-slide attribute */
-.re-project-card:not(.re-project-card--hidden)[data-slide="0"] {
-    transform: translate(0px, 0px) scale(1);
-    z-index: 6;
-    opacity: 1;
-    transition: all 0.32s cubic-bezier(0.18, 0.98, 0.45, 1);
-}
-
-.re-project-card:not(.re-project-card--hidden)[data-slide="1"] {
-    transform: translate(15px, 15px) scale(0.975);
-    z-index: 5;
-    opacity: 0.95;
-}
-
-.re-project-card:not(.re-project-card--hidden)[data-slide="2"] {
-    transform: translate(30px, 30px) scale(0.95);
-    z-index: 4;
-    opacity: 0.9;
-}
-
-.re-project-card:not(.re-project-card--hidden)[data-slide="3"] {
-    transform: translate(45px, 45px) scale(0.925);
-    z-index: 3;
-    opacity: 0.85;
-}
-
-.re-project-card:not(.re-project-card--hidden)[data-slide="4"] {
-    transform: translate(60px, 60px) scale(0.9);
-    z-index: 2;
-    opacity: 0.8;
-}
-
-.re-project-card:not(.re-project-card--hidden)[data-slide="5"],
-.re-project-card:not(.re-project-card--hidden)[data-slide="6"] {
-    transform: translate(75px, 75px) scale(0.875);
-    z-index: 1;
-    opacity: 0.75;
-}
-
-.re-project-card:not(.re-project-card--hidden):hover {
-    transform: translate(0, -5px) scale(1.02) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Card Content */
@@ -163,6 +132,7 @@
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
+/* Card Header */
 .re-project-card__header {
     display: flex;
     flex-flow: row nowrap;
@@ -251,6 +221,63 @@
     transform: translateY(-2px);
     background-color: var(--wp--preset--color--contrast);
     color: var(--wp--preset--color--base);
+}
+
+/* Stacking effect mixins */
+.card-stack-effect {
+    position: absolute;
+    transition: var(--card-transition);
+}
+
+/* Stacking effect based on data-slide attribute */
+.re-project-card:not(.re-project-card--hidden)[data-slide="0"] {
+    composes: card-stack-effect;
+    transform: translate(0px, 0px) scale(1);
+    z-index: 6;
+    opacity: 1;
+    transition: var(--card-hover-transition);
+}
+
+.re-project-card:not(.re-project-card--hidden)[data-slide="1"] {
+    composes: card-stack-effect;
+    transform: translate(15px, 15px) scale(0.975);
+    z-index: 5;
+    opacity: 0.95;
+}
+
+.re-project-card:not(.re-project-card--hidden)[data-slide="2"] {
+    composes: card-stack-effect;
+    transform: translate(30px, 30px) scale(0.95);
+    z-index: 4;
+    opacity: 0.9;
+}
+
+.re-project-card:not(.re-project-card--hidden)[data-slide="3"] {
+    composes: card-stack-effect;
+    transform: translate(45px, 45px) scale(0.925);
+    z-index: 3;
+    opacity: 0.85;
+}
+
+.re-project-card:not(.re-project-card--hidden)[data-slide="4"] {
+    composes: card-stack-effect;
+    transform: translate(60px, 60px) scale(0.9);
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.re-project-card:not(.re-project-card--hidden)[data-slide="5"],
+.re-project-card:not(.re-project-card--hidden)[data-slide="6"] {
+    composes: card-stack-effect;
+    transform: translate(75px, 75px) scale(0.875);
+    z-index: 1;
+    opacity: 0.75;
+}
+
+/* Hover Effects */
+.re-project-card:not(.re-project-card--hidden):hover {
+    transform: translate(0, -5px) scale(1.02) !important;
+    box-shadow: var(--card-hover-shadow);
 }
 
 /* Responsive */
