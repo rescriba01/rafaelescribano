@@ -18,7 +18,8 @@ const blockEntries = getBlockDirectories().reduce((entries, blockName) => ({
 // Add theme JavaScript entries
 const themeEntries = {
     'js/gsap-config': './assets/js/modules/gsap-config.js',
-    'js/animations': './assets/js/animations.js'
+    'js/animations': './assets/js/animations.js',
+    'js/patterns/intro-with-links': './assets/js/patterns/intro-with-links.js'
 };
 
 // Merge all entries
