@@ -6,6 +6,13 @@
     padding-inline: clamp(1.75rem, 5vw, 2rem);
 }
 
+/* Remove top margin from subsequent employer sections on larger screens */
+@media (min-width: 768px) {
+    .re-work-employer + .re-work-employer {
+        margin-block-start: 0;
+    }
+}
+
 /* Mobile Layout */
 @media (max-width: 781px) {
     .re-work-grid {

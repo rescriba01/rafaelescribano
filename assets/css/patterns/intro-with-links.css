@@ -23,3 +23,9 @@
         flex-basis: 100% !important;
     }
 }
+
+@media (min-width: 768px) {
+    .wp-block-group.intro-group {
+        height: 100vh;
+    }
+}
