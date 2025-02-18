@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "re/link-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "Link List",
   "category": "widgets",
   "icon": "admin-links",
@@ -14,28 +14,13 @@
     },
     "links": {
       "type": "array",
-      "default": [
-        {
-          "text": "StartGlobal",
-          "url": "#"
-        },
-        {
-          "text": "Payper",
-          "url": "#"
-        },
-        {
-          "text": "Vipline",
-          "url": "#"
-        },
-        {
-          "text": "Metafy",
-          "url": "#"
-        },
-        {
-          "text": "Fleetsu",
-          "url": "#"
-        }
-      ]
+      "default": []
+    },
+    "className": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
     }
   },
   "supports": {
