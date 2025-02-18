@@ -52,8 +52,8 @@ if ($work_query->have_posts()) :
 
         <!-- wp:columns {"metadata":{"name":"Project-meta-columns"},"className":"project-meta-columns"} -->
         <div class="wp-block-columns project-meta-columns">
-            <!-- wp:column {"width":"66.66%"} -->
-            <div class="wp-block-column" style="flex-basis:66.66%">
+            <!-- wp:column {"width":"66.66%","className":"project-info-column"} -->
+            <div class="wp-block-column project-info-column" style="flex-basis:66.66%">
                 <!-- wp:group {"metadata":{"name":"Project-info"},"className":"project-info","layout":{"type":"default"}} -->
                 <div class="wp-block-group project-info">
                     <?php if ($project) : ?>
@@ -105,8 +105,8 @@ if ($work_query->have_posts()) :
             </div>
             <!-- /wp:column -->
 
-            <!-- wp:column {"width":"33.33%"} -->
-            <div class="wp-block-column" style="flex-basis:33.33%">
+            <!-- wp:column {"width":"33.33%","className":"project-tags-column"} -->
+            <div class="wp-block-column project-tags-column" style="flex-basis:33.33%">
                 <?php if ($tags && !is_wp_error($tags)) : ?>
                 <!-- wp:group {"metadata":{"name":"Project-tags"},"className":"project-tags-wrapper","layout":{"type":"default"}} -->
                 <div class="wp-block-group project-tags-wrapper">
