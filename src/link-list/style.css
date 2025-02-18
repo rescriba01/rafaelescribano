@@ -3,12 +3,6 @@
     margin-block: 2rem;
 }
 
-@media (max-width: 783px) {
-    .wp-block-re-link-list {
-        padding-inline: 1.5em;
-    }
-}
-
 /* Title styles */
 .wp-block-re-link-list .link-list-title {
     text-transform: uppercase;
