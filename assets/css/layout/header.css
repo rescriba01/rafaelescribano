@@ -30,6 +30,12 @@
     border-radius: 50%;
 }
 
+.header-logo a,
+.header-branding .wp-block-image a {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
 .header-branding .wp-block-site-title {
     display: none !important;
 }
