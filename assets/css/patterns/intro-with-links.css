@@ -27,6 +27,7 @@
 @media (max-width: 781px) {
     .intro-group .intro-with-links-columns {
         gap: 2rem;
+        margin-block-start: 0;
     }
     
     .intro-group .intro-with-links-columns .introduction,
