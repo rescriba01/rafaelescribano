@@ -10,15 +10,11 @@
 }
 
 /* Initial Animation States */
-.introduction {
-    opacity: 0;
-    transform: translateX(-100px);
+.intro-group .introduction {
     will-change: transform, opacity;
 }
 
-.project-links .link-list li {
-    opacity: 0;
-    transform: translateX(100px);
+.intro-group .project-links .link-list li {
     will-change: transform, opacity;
 }
 
@@ -62,19 +58,12 @@
     z-index: 1;
 }
 
-/* Ensure content is visible initially for no-js fallback */
-.no-js .introduction,
-.no-js .project-links .link-list li {
-    opacity: 1;
-    transform: none;
-    visibility: visible;
-}
-
+/* Ensure content is visible for no-js and reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-    .introduction,
-    .project-links .link-list li {
-        opacity: 1;
-        transform: none;
-        visibility: visible;
+    .intro-group .introduction,
+    .intro-group .project-links .link-list li {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
     }
 }

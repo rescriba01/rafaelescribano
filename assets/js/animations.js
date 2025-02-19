@@ -6,17 +6,18 @@ import { gsap, ScrollTrigger, fadeIn, staggerFadeIn } from './modules/gsap-confi
         // Header animations
         const header = document.querySelector('.site-header');
         if (header) {
-            fadeIn(header);
+            fadeIn(header, 0, false);
         }
 
         // Navigation items stagger animation
         const navItems = document.querySelectorAll('.wp-block-navigation-item');
         if (navItems.length) {
-            staggerFadeIn(navItems);
+            staggerFadeIn(navItems, 0.2, false);
         }
 
         // Initialize ScrollTrigger for content sections
-        const contentSections = document.querySelectorAll('.entry-content > *:not(.project)');
+        // Explicitly exclude intro-group and its children
+        const contentSections = document.querySelectorAll('.entry-content > *:not(.project):not(.intro-group):not(.introduction):not(.project-links)');
         contentSections.forEach((section) => {
             gsap.from(section, {
                 scrollTrigger: {
@@ -26,7 +27,8 @@ import { gsap, ScrollTrigger, fadeIn, staggerFadeIn } from './modules/gsap-confi
                 },
                 opacity: 0,
                 y: 30,
-                duration: 0.8
+                duration: 0.8,
+                clearProps: 'transform,opacity'
             });
         });
 

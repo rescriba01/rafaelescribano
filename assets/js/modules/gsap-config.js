@@ -11,23 +11,23 @@ gsap.defaults({
 });
 
 // Common animation utilities
-const fadeIn = (element, delay = 0) => {
+const fadeIn = (element, delay = 0, useTransform = true) => {
     return gsap.from(element, {
         opacity: 0,
-        y: 20,
+        ...(useTransform ? { y: 20 } : {}),
         duration: 0.8,
         delay,
-        clearProps: 'all'
+        clearProps: useTransform ? 'all' : 'opacity'
     });
 };
 
-const staggerFadeIn = (elements, stagger = 0.2) => {
+const staggerFadeIn = (elements, stagger = 0.2, useTransform = true) => {
     return gsap.from(elements, {
         opacity: 0,
-        y: 20,
+        ...(useTransform ? { y: 20 } : {}),
         duration: 0.8,
         stagger,
-        clearProps: 'all'
+        clearProps: useTransform ? 'all' : 'opacity'
     });
 };
 

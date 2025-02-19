@@ -15,20 +15,11 @@ if ( ! function_exists( 're_enqueue_gsap_scripts' ) ) {
      * Enqueue GSAP and related animation scripts
      */
     function re_enqueue_gsap_scripts() {
-        // Register GSAP Core
+        // Register GSAP bundle (includes core and ScrollTrigger)
         wp_register_script(
-            'gsap-core',
+            'gsap-bundle',
             RE_THEME_URL . 'build/vendors/gsap.js',
             array(),
-            RE_THEME_VERSION,
-            true
-        );
-
-        // Register ScrollTrigger
-        wp_register_script(
-            'gsap-scroll-trigger',
-            RE_THEME_URL . 'build/vendors/ScrollTrigger.js',
-            array('gsap-core'),
             RE_THEME_VERSION,
             true
         );
@@ -37,7 +28,7 @@ if ( ! function_exists( 're_enqueue_gsap_scripts' ) ) {
         wp_enqueue_script(
             're-gsap-config',
             RE_THEME_URL . 'build/js/gsap-config.js',
-            array('gsap-core', 'gsap-scroll-trigger'),
+            array('gsap-bundle'),
             RE_THEME_VERSION,
             true
         );
@@ -55,7 +46,7 @@ if ( ! function_exists( 're_enqueue_gsap_scripts' ) ) {
         wp_enqueue_script(
             're-pattern-intro-with-links',
             RE_THEME_URL . 'build/js/patterns/intro-with-links.js',
-            array('gsap-core', 'gsap-scroll-trigger'),
+            array('gsap-bundle'),
             RE_THEME_VERSION,
             true
         );

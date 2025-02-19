@@ -144,9 +144,10 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 gsap: {
-                    test: /[\\/]node_modules[\\/]gsap[\\/]/,
+                    test: /[\\/]node_modules[\\/](gsap|@gsap)[\\/]/,
                     name: 'vendors/gsap',
-                    chunks: 'all'
+                    chunks: 'all',
+                    priority: 10
                 }
             }
         }
