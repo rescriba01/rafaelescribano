@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const initIntroAnimations = () => {
     // Check if intro section exists using WordPress classes
-    const introGroup = document.querySelector('.intro-group');
+    const introGroup = document.querySelector('.wp-block-group.intro-group');
     const introColumns = document.querySelector('.intro-with-links-columns');
     const introText = document.querySelector('.introduction');
     const introLinks = document.querySelector('.project-links .link-list');
@@ -16,13 +16,27 @@ const initIntroAnimations = () => {
         return; // Exit if required elements don't exist
     }
 
+    // Create main timeline
+    const mainTimeline = gsap.timeline({
+        paused: true,
+        defaults: {
+            duration: 1,
+            ease: 'power2.out'
+        },
+        onStart: () => {
+            // Add animation-ready class when timeline starts
+            introGroup.classList.add('animation-ready');
+        }
+    });
+
     // Create and setup canvas only if intro group exists
+    let canvas;
     try {
         // Only create canvas if it doesn't already exist
         if (!introGroup.querySelector('.intro-canvas')) {
-            const canvas = document.createElement('canvas');
+            canvas = document.createElement('canvas');
             canvas.classList.add('intro-canvas');
-            introGroup.insertBefore(canvas, introColumns); // Insert before the columns
+            introGroup.insertBefore(canvas, introColumns);
             
             const ctx = canvas.getContext('2d');
             let width = canvas.width = window.innerWidth;
@@ -39,69 +53,50 @@ const initIntroAnimations = () => {
         }
     } catch (error) {
         console.warn('Error setting up canvas:', error);
-        // Continue with animations even if canvas fails
     }
 
-    // Reset any inline styles that might be present
-    gsap.set([introText, linkItems], {
-        clearProps: 'all'
-    });
+    // Add animations to timeline
+    mainTimeline
+        // Fade in the canvas first
+        .add(() => {
+            if (canvas) {
+                canvas.classList.add('is-ready');
+            }
+        })
+        // Animate intro text from left
+        .to(introText, {
+            opacity: 1,
+            x: 0,
+            visibility: 'visible',
+            duration: 1.2,
+            clearProps: 'transform'
+        }, 0.2)
+        // Animate project links from right with stagger
+        .to(linkItems, {
+            opacity: 1,
+            x: 0,
+            visibility: 'visible',
+            stagger: 0.2,
+            duration: 0.8,
+            clearProps: 'transform'
+        }, '-=0.8');
 
-    // Set initial states - hide elements before animation
-    gsap.set(introText, {
-        opacity: 0,
-        x: gsap.utils.clamp(-50, -100, window.innerWidth * -0.1),
-        visibility: 'visible',
-        immediateRender: true
+    // Start animation after a short delay to ensure DOM is ready
+    requestAnimationFrame(() => {
+        mainTimeline.play();
     });
-
-    gsap.set(linkItems, {
-        opacity: 0,
-        x: gsap.utils.clamp(50, 100, window.innerWidth * 0.1),
-        visibility: 'visible',
-        immediateRender: true
-    });
-
-    // Initial animations for intro content
-    const introTimeline = gsap.timeline({
-        defaults: {
-            duration: 1,
-            ease: 'power2.out'
-        },
-        onStart: () => {
-            // Ensure elements are visible when animation starts
-            introText.style.visibility = 'visible';
-            linkItems.forEach(li => {
-                li.style.visibility = 'visible';
-            });
-        }
-    });
-
-    // Animate intro text from left
-    introTimeline.to(introText, {
-        opacity: 1,
-        x: 0,
-        duration: 1.2,
-        clearProps: 'transform'
-    });
-
-    // Animate project links from right with stagger
-    introTimeline.to(linkItems, {
-        opacity: 1,
-        x: 0,
-        stagger: 0.2,
-        duration: 0.8,
-        clearProps: 'transform'
-    }, '-=0.8');
 
     // Handle resize events
     const handleResize = () => {
-        if (!introTimeline.progress() === 1) {
+        if (!mainTimeline.progress() === 1) {
+            const mobileOffset = window.innerWidth <= 781 ? 1 : 2;
+            const baseSpacing = 20; // Default spacing unit
+            
             gsap.set(introText, {
-                x: gsap.utils.clamp(-50, -100, window.innerWidth * -0.1)
+                x: -baseSpacing * mobileOffset
             });
             gsap.set(linkItems, {
-                x: gsap.utils.clamp(50, 100, window.innerWidth * 0.1)
+                x: baseSpacing * mobileOffset
             });
         }
     };

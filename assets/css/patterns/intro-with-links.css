@@ -5,6 +5,15 @@
     padding-block-end: 4rem;
 }
 
+/* Initial Animation States */
+.wp-block-group.intro-group:not(.animation-ready) {
+    visibility: hidden;
+}
+
+.wp-block-group.intro-group.animation-ready {
+    visibility: visible;
+}
+
 .intro-group .intro-with-links-columns .introduction p {
     padding-inline-end: 1em;
 }
@@ -12,10 +21,14 @@
 /* Initial Animation States */
 .intro-group .introduction {
     will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .intro-group .project-links .link-list li {
     will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Project Links Column */
@@ -50,6 +63,11 @@
     height: 300px;
     pointer-events: none;
     z-index: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.intro-canvas.is-ready {
     opacity: 0.5;
 }
 
@@ -61,6 +79,8 @@
 
 /* Ensure content is visible for no-js and reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+    .wp-block-group.intro-group:not(.animation-ready),
+    .wp-block-group.intro-group,
     .intro-group .introduction,
     .intro-group .project-links .link-list li {
         opacity: 1 !important;
