@@ -2,7 +2,7 @@
 .wp-block-group.intro-group {
     position: relative;
     overflow: hidden;
-    padding-block: 4rem;
+    padding-block-end: 4rem;
 }
 
 .intro-group .intro-with-links-columns .introduction p {
