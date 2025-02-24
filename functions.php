@@ -47,6 +47,7 @@ define('RE_THEME_URL', get_template_directory_uri() . '/');
  */
 require_once RE_THEME_PATH . 'includes/styles.php';
 require_once RE_THEME_PATH . 'includes/scripts.php';
+require_once RE_THEME_PATH . 'includes/helpers.php';
 require_once RE_THEME_PATH . 'includes/custom-blocks.php';
 require_once RE_THEME_PATH . 'includes/block-styles.php';
 require_once RE_THEME_PATH . 'includes/pattern-categories.php';
