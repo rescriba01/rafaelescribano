@@ -1,0 +1,92 @@
+---
+description: Considerations when working with svgs in WP's new markup
+globs: **/*.svg, **/svg/**/*, **/*icon*.php, **/patterns/**/*.php, **/includes/**/*.php, **/templates/**/*.php, **/template-parts/**/*.php, **/blocks/**/*.php, **/components/**/*.php
+---
+# SVG Handling in WordPress Blocks
+
+## Key Considerations
+
+When working with SVGs in WordPress blocks, there are several important considerations to ensure proper rendering and block validation:
+
+1. **XML Declaration**
+   - The WordPress block editor may have issues with XML declarations in inline SVGs
+   - Always remove `<?xml version="1.0" encoding="UTF-8"?>` from SVGs when inlining them
+   - Use the `re_get_icon()` helper function which handles this automatically
+
+2. **Dimensions**
+   - Always specify explicit width and height attributes on SVGs
+   - Default dimensions are set to 64x64 pixels
+   - Use CSS to control the actual display size
+   - This prevents layout shift and improves performance
+
+3. **Block Editor Compatibility**
+   - SVGs must be properly formatted HTML without self-closing tags
+   - Use standard HTML5 syntax (e.g., `<path>` not `<path/>`)
+   - Ensure all attributes are properly quoted
+
+4. **Accessibility**
+   - Include `role="img"` on SVG elements
+   - Add `aria-label` for screen readers
+   - Use meaningful alt text for image-based SVGs
+
+## Usage Examples
+
+### 1. Using SVG Sprites
+```php
+// For SVG sprites, use the fragment identifier
+echo re_get_icon('interface', 'icon3', 'service-icon');
+```
+
+### 2. Direct SVG Inclusion
+```php
+// For standalone SVGs
+echo re_get_icon('api-vector-icon', '', 'service-icon');
+```
+
+## CSS Best Practices
+
+```css
+.re-icon.service-icon {
+    width: 64px;
+    height: 64px;
+    display: block;
+    color: var(--wp--preset--color--primary);
+    object-fit: contain;
+    aspect-ratio: 1;
+}
+
+/* For responsive sizing */
+@media (max-width: 781px) {
+    .re-icon.service-icon {
+        width: 48px;
+        height: 48px;
+    }
+}
+```
+
+## Common Issues
+
+1. **Block Validation Errors**
+   - Caused by XML declarations in inline SVGs
+   - Solution: Use `re_get_icon()` which automatically removes XML declarations
+
+2. **SVG Size Issues**
+   - SVGs without explicit dimensions can cause layout shift
+   - Solution: Always include width and height attributes
+
+3. **Block Editor Formatting**
+   - Block editor may modify SVG markup
+   - Solution: Follow HTML5 syntax without self-closing tags
+
+## Helper Function
+
+The `re_get_icon()` function in `includes/helpers.php` handles these considerations automatically. It:
+- Removes XML declarations
+- Adds proper dimensions
+- Ensures accessibility attributes
+- Handles both sprite sheets and direct SVG inclusion
+
+## References
+
+- [WordPress Block Editor Handbook](mdc:https:/developer.wordpress.org/block-editor)
+- [SVG Accessibility Guidelines](mdc:https:/www.w3.org/WAI/GL/wiki/Using_aria-label_to_provide_labels_for_objects)

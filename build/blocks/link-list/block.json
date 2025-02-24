@@ -21,18 +21,6 @@
     },
     "metadata": {
       "type": "object"
-    },
-    "introText": {
-      "type": "string",
-      "source": "attribute",
-      "selector": "[data-intro-text]",
-      "attribute": "data-intro-text"
-    },
-    "introLinks": {
-      "type": "string",
-      "source": "attribute",
-      "selector": "[data-intro-links]",
-      "attribute": "data-intro-links"
     }
   },
   "supports": {
