@@ -6,7 +6,7 @@
 }
 
 .intro-with-links-columns {
-    gap: var(--wp--preset--spacing--50);
+    justify-content: space-between;
 }
 
 /* Initial Animation States */
