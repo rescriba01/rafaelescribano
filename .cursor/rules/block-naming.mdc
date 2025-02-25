@@ -1,0 +1,135 @@
+---
+description: Guidelines for naming blocks in WordPress block templates and patterns
+globs: ["templates/**/*.html", "patterns/**/*.php"]
+alwaysApply: true
+---
+# Block Naming Conventions
+
+## Core Principles
+
+- Every significant block must have a unique, descriptive name in its metadata
+- Names should be hierarchical to reflect block structure
+- Use PascalCase for block names
+- Include block type in name when relevant
+- Keep names concise but meaningful
+
+## Naming Structure
+
+### 1. Main Sections
+```html
+<!-- wp:group {"metadata":{"name":"IntroSection"}} -->
+<!-- wp:group {"metadata":{"name":"ServicesSection"}} -->
+<!-- wp:group {"metadata":{"name":"ProjectsGrid"}} -->
+```
+
+### 2. Sub-Components
+```html
+<!-- wp:group {"metadata":{"name":"Intro-Content"}} -->
+<!-- wp:columns {"metadata":{"name":"Services-Grid"}} -->
+<!-- wp:group {"metadata":{"name":"Projects-Featured"}} -->
+```
+
+### 3. Repeated Items
+```html
+<!-- wp:column {"metadata":{"name":"ServiceItem-WordPress"}} -->
+<!-- wp:column {"metadata":{"name":"ProjectCard-1"}} -->
+<!-- wp:group {"metadata":{"name":"TestimonialCard-Client1"}} -->
+```
+
+## Block Type Prefixes
+
+1. **Layout Blocks**
+   - Group: `SectionName`, `ContentWrapper`
+   - Columns: `GridName`, `LayoutColumns`
+   - Column: `Column-Purpose`
+
+2. **Content Blocks**
+   - Headings: `Title-Section`
+   - Paragraphs: `Content-Description`
+   - Lists: `List-Features`
+
+3. **Custom Blocks**
+   - Custom: `CustomBlock-Purpose`
+   - Dynamic: `Dynamic-Content`
+   - Reusable: `Shared-Component`
+
+## Examples by Component Type
+
+### 1. Page Sections
+```html
+<!-- wp:group {"metadata":{"name":"HeroSection"}} -->
+<!-- wp:group {"metadata":{"name":"AboutSection"}} -->
+<!-- wp:group {"metadata":{"name":"ContactSection"}} -->
+```
+
+### 2. Content Areas
+```html
+<!-- wp:group {"metadata":{"name":"Content-Main"}} -->
+<!-- wp:group {"metadata":{"name":"Sidebar-Primary"}} -->
+<!-- wp:group {"metadata":{"name":"Widget-Newsletter"}} -->
+```
+
+### 3. Grid Layouts
+```html
+<!-- wp:columns {"metadata":{"name":"Grid-Services"}} -->
+<!-- wp:column {"metadata":{"name":"Service-1"}} -->
+<!-- wp:column {"metadata":{"name":"Service-2"}} -->
+```
+
+## Best Practices
+
+1. **Hierarchy**
+   - Use parent-child relationships in names
+   - Keep nesting levels reflected in names
+   - Use consistent separators (-) for hierarchy
+
+2. **Descriptiveness**
+   - Names should indicate purpose/content
+   - Avoid generic names like "section-1"
+   - Include content type in name when useful
+
+3. **Consistency**
+   - Use same naming pattern across files
+   - Maintain naming convention in updates
+   - Document any pattern-specific naming
+
+4. **Editor Experience**
+   - Names should be easily identifiable
+   - Use consistent prefixes for similar blocks
+   - Keep names readable in editor interface
+
+## Common Patterns
+
+### 1. Card Grids
+```html
+<!-- wp:group {"metadata":{"name":"CardsSection"}} -->
+    <!-- wp:columns {"metadata":{"name":"Cards-Grid"}} -->
+        <!-- wp:column {"metadata":{"name":"Card-1"}} -->
+        <!-- wp:column {"metadata":{"name":"Card-2"}} -->
+    <!-- /wp:columns -->
+<!-- /wp:group -->
+```
+
+### 2. Feature Sections
+```html
+<!-- wp:group {"metadata":{"name":"FeaturesSection"}} -->
+    <!-- wp:group {"metadata":{"name":"Features-Intro"}} -->
+    <!-- wp:columns {"metadata":{"name":"Features-Grid"}} -->
+        <!-- wp:column {"metadata":{"name":"Feature-1"}} -->
+    <!-- /wp:columns -->
+<!-- /wp:group -->
+```
+
+### 3. Content Layouts
+```html
+<!-- wp:group {"metadata":{"name":"ContentSection"}} -->
+    <!-- wp:columns {"metadata":{"name":"Content-WithSidebar"}} -->
+        <!-- wp:column {"metadata":{"name":"Content-Main"}} -->
+        <!-- wp:column {"metadata":{"name":"Sidebar-Primary"}} -->
+    <!-- /wp:columns -->
+<!-- /wp:group -->
+```
+
+## References
+[Block Editor Handbook](mdc:https:/developer.wordpress.org/block-editor)
+[WordPress Coding Standards](mdc:https:/developer.wordpress.org/coding-standards/wordpress-coding-standards) 

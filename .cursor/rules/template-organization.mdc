@@ -1,0 +1,245 @@
+---
+description: Guidelines for organizing WordPress templates and patterns
+globs: ["templates/**/*.php", "templates/**/*.html", "patterns/**/*.php"]
+alwaysApply: true
+---
+# Template Organization Standards
+
+## Core Principles
+
+- Separate logic from markup for cleaner, more maintainable templates
+- Define all variables and process data at the top of the file
+- Use WordPress template tags and helper functions appropriately
+- Follow security best practices with proper escaping
+- Use alternative syntax for control structures in templates
+- Leverage block templates with PHP patterns for hybrid solutions
+- Always name blocks for better editor identification and maintainability
+
+## Block Naming Conventions
+
+### 1. Block Identification
+- Every significant block should have a `metadata.name` property
+- Names should be descriptive and follow a hierarchical structure
+- Use PascalCase for block names
+- Include the block type in the name when relevant
+
+Example:
+```html
+<!-- wp:group {"metadata":{"name":"ServicesSection"},"className":"services-section"} -->
+<!-- wp:columns {"metadata":{"name":"ServicesGrid"},"className":"services-grid"} -->
+<!-- wp:column {"metadata":{"name":"ServiceItem-WordPress"},"className":"service-item"} -->
+```
+
+### 2. Naming Structure
+- Main sections: `SectionName` (e.g., "ServicesSection")
+- Sub-components: `ParentName-ComponentName` (e.g., "Services-Grid")
+- Repeated items: `ComponentName-Identifier` (e.g., "ServiceItem-WordPress")
+
+### 3. Common Block Types
+```html
+<!-- Groups -->
+{"metadata":{"name":"HeaderGroup"}}
+{"metadata":{"name":"ContentWrapper"}}
+
+<!-- Columns -->
+{"metadata":{"name":"ServicesGrid"}}
+{"metadata":{"name":"FeaturedContent"}}
+
+<!-- Individual Columns -->
+{"metadata":{"name":"ServiceItem-1"}}
+{"metadata":{"name":"ContentColumn-Left"}}
+
+<!-- Custom Blocks -->
+{"metadata":{"name":"LinkList-Featured"}}
+{"metadata":{"name":"ProjectCard-1"}}
+```
+
+## Template Types
+
+### 1. Block Templates (`.html`)
+- Use for main template structure
+- Keep minimal, focusing on layout and pattern inclusion
+- Example:
+```html
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main"} -->
+<main class="wp-block-group">
+    <!-- wp:pattern {"slug":"theme/content-pattern"} /-->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
+```
+
+### 2. PHP Patterns (patterns/*.php)
+- Contains the logic and dynamic content
+- Use strict typing for better code quality
+- Use function prefixing to avoid conflicts
+- Namespacing is optional and only recommended for complex patterns with classes
+- Separates data processing from markup
+- Example header:
+```php
+/**
+ * Title: Pattern Name
+ * Slug: theme/pattern-name
+ * Categories: custom
+ * 
+ * @package theme_name
+ */
+
+declare(strict_types=1);
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+```
+
+### 3. Traditional PHP Templates (`.php`)
+- Use for non-block editor content
+- Follow standard template structure
+- Keep logic separate from markup
+
+## File Organization
+
+```
+theme/
+├── templates/
+│   ├── single-work.html      # Block template
+│   └── archive-work.html     # Block template
+├── patterns/
+│   ├── work-content.php      # Dynamic content pattern
+│   └── work-card-stack.php   # Reusable pattern
+└── template-parts/
+│   ├── header.html           # Block template part
+│   └── footer.html           # Block template part
+└── includes/
+    ├── helpers.php           # Helper functions
+    └── pattern-functions.php # Shared pattern functions
+```
+
+## Pattern Structure
+
+1. **File Header & Type Declaration**
+```php
+<?php
+/**
+ * Title: Pattern Name
+ * Slug: theme/pattern-name
+ * Categories: custom
+ * 
+ * @package theme_name
+ */
+
+declare(strict_types=1);
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+```
+
+2. **Helper Functions**
+```php
+/**
+ * Get pattern data
+ * 
+ * @return array Pattern data
+ */
+function theme_get_pattern_data(): array {
+    return array(
+        'key' => get_post_meta(get_the_ID(), '_meta_key', true)
+    );
+}
+```
+
+3. **Data Processing**
+```php
+// Process all data before markup
+$data = theme_get_pattern_data();
+$processed = theme_process_pattern_data($data);
+```
+
+4. **Markup with Block Comments**
+```php
+<!-- wp:group {"className":"pattern-wrapper"} -->
+<div class="wp-block-group pattern-wrapper">
+    <?php if ($processed) : ?>
+        <h1><?php echo esc_html($processed['title']); ?></h1>
+    <?php endif; ?>
+</div>
+<!-- /wp:group -->
+```
+
+## Best Practices
+
+1. **Pattern Organization**
+   - Group related functions within the pattern file
+   - Use type hints and return type declarations
+   - Keep pattern files focused and single-purpose
+   - Document pattern usage and dependencies
+   - Use function prefixing (e.g., `theme_`) to avoid conflicts
+   - Only use namespaces for complex patterns with classes
+
+2. **Block Template Structure**
+   - Keep block templates minimal
+   - Use patterns for dynamic content
+   - Maintain consistent spacing and organization
+   - Document block template relationships
+   - Always include metadata names for blocks
+   - Use consistent naming conventions across templates
+
+3. **Block Naming**
+   - Use descriptive, hierarchical names
+   - Follow naming convention consistently
+   - Include component type in name
+   - Use names that reflect content purpose
+   - Keep names concise but meaningful
+   - Document naming structure in pattern files
+
+4. **Data Processing**
+   - Process all data before markup begins
+   - Use typed arrays and objects
+   - Handle error cases and set defaults
+   - Document data structure
+
+5. **Security**
+   - Always escape output
+   - Validate data before processing
+   - Use WordPress security functions
+   - Check user capabilities where needed
+
+## When to Use Namespaces
+
+Namespaces are appropriate in the following scenarios:
+
+1. **Class-Based Patterns**: When your pattern includes PHP classes that might conflict with other code
+2. **Complex Functionality**: For patterns with complex business logic that benefit from OOP organization
+3. **Shared Libraries**: When creating reusable components that might be used across multiple themes/plugins
+4. **Plugin Integration**: When your pattern needs to integrate with plugins that use namespaces
+
+For most standard WordPress patterns, function prefixing (e.g., `theme_function_name()` or `re_function_name()`) is sufficient and more aligned with WordPress coding standards.
+
+## Example Pattern Structure
+
+```php
+<!-- wp:group {"metadata":{"name":"WorkContent"},"className":"work-content"} -->
+<div class="wp-block-group work-content">
+    <!-- wp:group {"metadata":{"name":"WorkHeader"},"className":"work-header"} -->
+    <div class="wp-block-group work-header">
+        <!-- wp:group {"metadata":{"name":"WorkMeta"},"className":"work-meta"} -->
+        <div class="wp-block-group work-meta">
+            <?php if ($meta_data) : ?>
+                <!-- Content -->
+            <?php endif; ?>
+        </div>
+        <!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+```
+
+## References
+[WordPress Block Editor Handbook](mdc:https:/developer.wordpress.org/block-editor)
+[WordPress Template Hierarchy](mdc:https:/developer.wordpress.org/themes/basics/template-hierarchy)
+[WordPress Coding Standards](mdc:https:/developer.wordpress.org/coding-standards/wordpress-coding-standards)
