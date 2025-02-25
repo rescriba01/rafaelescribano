@@ -6,6 +6,7 @@
 .project {
     background-color: #000;
     color: #fff;
+    margin-block-start: 0;
     padding-block: 1.5rem;
     position: relative;
 }

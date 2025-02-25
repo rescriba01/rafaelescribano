@@ -1,6 +1,7 @@
 ---
 description: Guidelines for PHP and WordPress development and best practices.
 globs: **/*.php
+alwaysApply: false
 ---
 # PHP & WordPress Coding Standards
 
@@ -58,7 +59,31 @@ if ( ! defined( 'PLUGIN_NAME_VERSION' ) ) {
 
 ## Naming Conventions
 - Use `snake_case` for PHP functions, variables, and constants.
-- Namespace theme-specific functions using `retheme_`.
+- Prefix theme-specific functions with the theme prefix (e.g., `re_`) to avoid conflicts.
+- Use proper DocBlocks for functions, classes, and methods.
+
+## Function Organization
+- Prefer function prefixing over namespacing for most WordPress theme development.
+- Use namespaces only when:
+  1. Creating class-based functionality that might conflict with other code
+  2. Developing complex plugins with multiple components
+  3. Building libraries intended for reuse across multiple projects
+  4. Integrating with third-party code that uses namespaces
+- For standard theme functions, use a consistent prefix (e.g., `re_function_name()`).
+- Group related functions in appropriate files based on functionality.
+- Use type hints and return type declarations when possible:
+```php
+/**
+ * Get post data
+ *
+ * @param int $post_id Post ID.
+ * @return array Post data.
+ */
+function re_get_post_data(int $post_id): array {
+    // Function code
+    return $data;
+}
+```
 
 ## Security
 - Validate and sanitize user input with WordPress functions.

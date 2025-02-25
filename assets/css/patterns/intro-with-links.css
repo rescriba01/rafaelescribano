@@ -1,7 +1,6 @@
 /* Intro with Links Pattern Styles */
 .wp-block-group.intro-group {
     position: relative;
-    padding: var(--wp--preset--spacing--60) 0;
     margin-bottom: 0;
 }
 
@@ -123,7 +122,6 @@
     max-width: var(--wp--style--global--content-size);
     margin-left: auto;
     margin-right: auto;
-    padding: 0 var(--wp--preset--spacing--30);
 }
 
 .services-title {
