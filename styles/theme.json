@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "title": "Light Off",
+    "settings": {
+    "color": {
+    "palette": [
+        {
+        "slug": "primary",
+        "color": "#ffffff",
+        "name": "Primary"
+        },
+        {
+        "slug": "primary-second",
+        "color": "#eee",
+        "name": "Primary Second"
+        },
+        {
+        "slug": "secondary",
+        "color": "#c8c8c8",
+        "name": "Secondary"
+        },
+        {
+        "slug": "background",
+        "color": "#111",
+        "name": "Background"
+        },
+        {
+        "slug": "background-secondary",
+        "color": "#2f2f2f",
+        "name": "Background Gray"
+        },
+        {
+                    "color": "#a1a1a1",
+                    "name": "Additional Gray",
+                    "slug": "additional"
+                }
+    ]
+    }
+},
+"styles": {
+    "color": {
+    "background": "var(--wp--preset--color--background)",
+    "text": "var(--wp--preset--color--primary)"
+    }
+}
+}
