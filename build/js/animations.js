@@ -1,1 +1,286 @@
-(()=>{"use strict";var r,e={977:(r,e,t)=>{var o=t(738);document.addEventListener("DOMContentLoaded",(function(){var r=document.querySelector(".site-header");r&&(0,o.qG)(r,0,!1);var e=document.querySelectorAll(".wp-block-navigation-item");e.length&&(0,o.lM)(e,.2,!1),document.querySelectorAll(".entry-content > *:not(.project):not(.intro-group):not(.introduction):not(.project-links)").forEach((function(r){o.os.from(r,{scrollTrigger:{trigger:r,start:"top 80%",toggleActions:"play none none reverse"},opacity:0,y:30,duration:.8,clearProps:"transform,opacity"})})),o.uY.refresh()})),window.addEventListener("unload",(function(){o.uY.getAll().forEach((function(r){return r.kill()}))}))},738:(r,e,t)=>{t.d(e,{lM:()=>f,os:()=>o.os,qG:()=>l,uY:()=>n.u});var o=t(880),n=t(575);function i(r){return i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(r){return typeof r}:function(r){return r&&"function"==typeof Symbol&&r.constructor===Symbol&&r!==Symbol.prototype?"symbol":typeof r},i(r)}function c(r,e){var t=Object.keys(r);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(r);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(r,e).enumerable}))),t.push.apply(t,o)}return t}function a(r){for(var e=1;e<arguments.length;e++){var t=null!=arguments[e]?arguments[e]:{};e%2?c(Object(t),!0).forEach((function(e){u(r,e,t[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(r,Object.getOwnPropertyDescriptors(t)):c(Object(t)).forEach((function(e){Object.defineProperty(r,e,Object.getOwnPropertyDescriptor(t,e))}))}return r}function u(r,e,t){return(e=function(r){var e=function(r){if("object"!=i(r)||!r)return r;var e=r[Symbol.toPrimitive];if(void 0!==e){var t=e.call(r,"string");if("object"!=i(t))return t;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(r)}(r);return"symbol"==i(e)?e:e+""}(e))in r?Object.defineProperty(r,e,{value:t,enumerable:!0,configurable:!0,writable:!0}):r[e]=t,r}o.os.registerPlugin(n.u),o.os.defaults({ease:"power2.out",duration:.8});var l=function(r){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,t=!(arguments.length>2&&void 0!==arguments[2])||arguments[2];return o.os.from(r,a(a({opacity:0},t?{y:20}:{}),{},{duration:.8,delay:e,clearProps:t?"all":"opacity"}))},f=function(r){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:.2,t=!(arguments.length>2&&void 0!==arguments[2])||arguments[2];return o.os.from(r,a(a({opacity:0},t?{y:20}:{}),{},{duration:.8,stagger:e,clearProps:t?"all":"opacity"}))}}},t={};function o(r){var n=t[r];if(void 0!==n)return n.exports;var i=t[r]={exports:{}};return e[r](i,i.exports,o),i.exports}o.m=e,r=[],o.O=(e,t,n,i)=>{if(!t){var c=1/0;for(f=0;f<r.length;f++){for(var[t,n,i]=r[f],a=!0,u=0;u<t.length;u++)(!1&i||c>=i)&&Object.keys(o.O).every((r=>o.O[r](t[u])))?t.splice(u--,1):(a=!1,i<c&&(c=i));if(a){r.splice(f--,1);var l=n();void 0!==l&&(e=l)}}return e}i=i||0;for(var f=r.length;f>0&&r[f-1][2]>i;f--)r[f]=r[f-1];r[f]=[t,n,i]},o.d=(r,e)=>{for(var t in e)o.o(e,t)&&!o.o(r,t)&&Object.defineProperty(r,t,{enumerable:!0,get:e[t]})},o.o=(r,e)=>Object.prototype.hasOwnProperty.call(r,e),(()=>{var r={151:0,396:0};o.O.j=e=>0===r[e];var e=(e,t)=>{var n,i,[c,a,u]=t,l=0;if(c.some((e=>0!==r[e]))){for(n in a)o.o(a,n)&&(o.m[n]=a[n]);if(u)var f=u(o)}for(e&&e(t);l<c.length;l++)i=c[l],o.o(r,i)&&r[i]&&r[i][0](),r[i]=0;return o.O(f)},t=globalThis.webpackChunkre_theme=globalThis.webpackChunkre_theme||[];t.forEach(e.bind(null,0)),t.push=e.bind(null,t.push.bind(t))})();var n=o.O(void 0,[770],(()=>o(977)));n=o.O(n)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./assets/js/animations.js":
+/*!*********************************!*\
+  !*** ./assets/js/animations.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/gsap-config */ "./assets/js/modules/gsap-config.js");
+
+(function () {
+  // Initialize animations when DOM is ready
+  document.addEventListener('DOMContentLoaded', function () {
+    // Header animations
+    var header = document.querySelector('.site-header');
+    if (header) {
+      (0,_modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__.fadeIn)(header, 0, false);
+    }
+
+    // Navigation items stagger animation
+    var navItems = document.querySelectorAll('.wp-block-navigation-item');
+    if (navItems.length) {
+      (0,_modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__.staggerFadeIn)(navItems, 0.2, false);
+    }
+
+    // Initialize ScrollTrigger for content sections
+    // Explicitly exclude intro-group and its children
+    var contentSections = document.querySelectorAll('.entry-content > *:not(.project):not(.intro-group):not(.introduction):not(.project-links)');
+    contentSections.forEach(function (section) {
+      _modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__.gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        clearProps: 'transform,opacity'
+      });
+    });
+
+    // Refresh ScrollTrigger on dynamic content changes
+    _modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__.ScrollTrigger.refresh();
+  });
+
+  // Clean up on page unload
+  window.addEventListener('unload', function () {
+    _modules_gsap_config__WEBPACK_IMPORTED_MODULE_0__.ScrollTrigger.getAll().forEach(function (trigger) {
+      return trigger.kill();
+    });
+  });
+})();
+
+/***/ }),
+
+/***/ "./assets/js/modules/gsap-config.js":
+/*!******************************************!*\
+  !*** ./assets/js/modules/gsap-config.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ScrollTrigger: () => (/* reexport safe */ gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_1__.ScrollTrigger),
+/* harmony export */   createScrollTrigger: () => (/* binding */ createScrollTrigger),
+/* harmony export */   fadeIn: () => (/* binding */ fadeIn),
+/* harmony export */   gsap: () => (/* reexport safe */ gsap__WEBPACK_IMPORTED_MODULE_0__.gsap),
+/* harmony export */   staggerFadeIn: () => (/* binding */ staggerFadeIn)
+/* harmony export */ });
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap/ScrollTrigger */ "./node_modules/gsap/ScrollTrigger.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+// Register GSAP plugins
+gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_1__.ScrollTrigger);
+
+// Default GSAP configuration
+gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.defaults({
+  ease: 'power2.out',
+  duration: 0.8
+});
+
+// Common animation utilities
+var fadeIn = function fadeIn(element) {
+  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var useTransform = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  return gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.from(element, _objectSpread(_objectSpread({
+    opacity: 0
+  }, useTransform ? {
+    y: 20
+  } : {}), {}, {
+    duration: 0.8,
+    delay: delay,
+    clearProps: useTransform ? 'all' : 'opacity'
+  }));
+};
+var staggerFadeIn = function staggerFadeIn(elements) {
+  var stagger = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.2;
+  var useTransform = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  return gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.from(elements, _objectSpread(_objectSpread({
+    opacity: 0
+  }, useTransform ? {
+    y: 20
+  } : {}), {}, {
+    duration: 0.8,
+    stagger: stagger,
+    clearProps: useTransform ? 'all' : 'opacity'
+  }));
+};
+var createScrollTrigger = function createScrollTrigger(element, animation) {
+  return gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_1__.ScrollTrigger.create({
+    trigger: element,
+    animation: animation,
+    start: 'top 80%',
+    toggleActions: 'play none none reverse'
+  });
+};
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"js/animations": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = globalThis["webpackChunkre_theme"] = globalThis["webpackChunkre_theme"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors/gsap"], () => (__webpack_require__("./assets/js/animations.js")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
+/******/ })()
+;
+//# sourceMappingURL=animations.js.map
