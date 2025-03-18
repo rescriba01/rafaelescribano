@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
  * Enqueue theme scripts
  */
 function re_enqueue_scripts() {
+    
     // Pattern: Work Card Stack
     wp_enqueue_script(
         're-pattern-work-card-stack',

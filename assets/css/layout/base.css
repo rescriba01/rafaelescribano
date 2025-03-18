@@ -1,6 +1,6 @@
 /* Global Layout Styles */
 :root {
-    --site-max-width: var(--wp--style--global--wide-size, 87.5rem);
+    --site-max-width: var(--wp--style--global--wide-size, 1240px);
     --content-padding: var(--wp--preset--spacing--40);
 }
 
@@ -8,7 +8,6 @@
 header.wp-block-template-part,
 .entry-content > *:not(.project),
 footer.wp-block-template-part {
-    padding-inline: var(--wp--preset--spacing--40);
     width: 100%;
     margin-inline: auto;
 }

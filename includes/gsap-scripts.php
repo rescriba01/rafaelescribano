@@ -42,15 +42,6 @@ if ( ! function_exists( 're_enqueue_gsap_scripts' ) ) {
             true
         );
 
-        // Pattern: Intro with Links
-        wp_enqueue_script(
-            're-pattern-intro-with-links',
-            RE_THEME_URL . 'build/js/patterns/intro-with-links.js',
-            array('gsap-bundle'),
-            RE_THEME_VERSION,
-            true
-        );
-
         // Add dynamic data for animations if needed
         wp_localize_script(
             're-animations',
