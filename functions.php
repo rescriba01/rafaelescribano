@@ -28,6 +28,25 @@ function re_theme_data() {
 $theme_data = re_theme_data();
 
 /**
+ * Theme Setup
+ * 
+ * Sets up theme defaults and registers support for various WordPress features.
+ *
+ * @since 1.0.0
+ */
+if ( ! function_exists( 're_setup' ) ) {
+    function re_setup() {
+        add_theme_support( 'wp-block-styles' );
+        add_editor_style( 'style.css' );
+        remove_theme_support( 'core-block-patterns' );
+    }
+}
+add_action( 'after_setup_theme', 're_setup' );
+
+// Disable remote pattern loading
+add_filter( 'should_load_remote_block_patterns', '__return_false' );
+
+/**
  * Set Theme Constants
  *
  * Sets constants for use throughout the theme.
