@@ -10,10 +10,12 @@
 
 <!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"right":"var:preset|spacing|30","left":"var:preset|spacing|30","top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <main class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--30)"><!-- wp:columns {"verticalAlignment":"center","metadata":{"name":"Cover"},"className":"mobile\u002d\u002dno-padding-top","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":{"left":"var:preset|spacing|60"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-center mobile--no-padding-top" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:column {"verticalAlignment":"center","width":"300px","className":"mobile-order-1"} -->
-<div class="wp-block-column is-vertically-aligned-center mobile-order-1" style="flex-basis:300px"><!-- wp:image {"id":73,"width":"300px","aspectRatio":"3/4","scale":"cover","sizeSlug":"full","linkDestination":"none","className":"mobile-align-none","style":{"color":[]}} -->
+<div class="wp-block-columns are-vertically-aligned-center mobile--no-padding-top" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:column {"verticalAlignment":"center","width":"300px","className":"mobile-order-1 image-column"} -->
+<div class="wp-block-column is-vertically-aligned-center mobile-order-1 image-column" style="flex-basis:300px"><!-- wp:group {"className":"image-wrapper","layout":{"type":"constrained"}} -->
+<div class="wp-block-group image-wrapper"><!-- wp:image {"id":73,"width":"300px","aspectRatio":"3/4","scale":"cover","sizeSlug":"full","linkDestination":"none","className":"mobile-align-none","style":{"color":[]}} -->
 <figure class="wp-block-image size-full is-resized mobile-align-none"><img src="https://rafaelescribano.com/wp-content/uploads/2025/03/headshot-scaled.jpg" alt="Picture of Rafael" class="wp-image-73" style="aspect-ratio:3/4;object-fit:cover;width:300px"/></figure>
 <!-- /wp:image --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"mobile-order-2"} -->
