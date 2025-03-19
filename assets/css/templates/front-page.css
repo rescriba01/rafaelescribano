@@ -1,0 +1,45 @@
+.image-column {
+    position: relative;
+}
+
+.image-column::before {
+    display: block;
+    content: "";
+    height: 90%;
+    width: 160%;
+    position: absolute;
+    background-image: url(../../images/shadow.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    top: 93%;
+    left: -30%;
+    right: 0;
+    transform-origin: 30% 50%;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+}
+
+.image-column:hover::before {
+    opacity: 0;
+}
+
+.image-wrapper {
+    background: #000;
+    border: solid 8px #000;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    transform: scale(.84) translateX(15%) rotateZ(calc( -1*(11* 1deg)));
+    transform-origin: 0 100%;
+    transition: transform 0.2s ease-out;
+}
+
+.image-wrapper:hover {
+    transform: scale(1) translateX(15%) rotateZ(0);
+}
+
+.image-wrapper img {
+    transform: scale(1.1) rotateZ(calc(5* 1deg));
+    transition: transform .2s ease-out;
+}
