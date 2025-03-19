@@ -14,19 +14,193 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-/* Styles intended only for the front.*/
-html {
-	scroll-behavior: smooth;
+/* --- Navigation on mobile --- */
+
+@media (max-width: 767px) {
+
+    header .wp-block-navigation {
+        justify-content: flex-end;
+    }
+
+    .wp-site-blocks > .wp-block-group:first-child {
+        padding-top: 0 !important;
+    }
+    
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+/* --- Navigation fix --- */
 
-	html {
-		scroll-behavior: auto;
-	}
+.wp-block-navigation__container > .wp-block-navigation-item:last-child {
+    flex: 1;
 }
 
-body {
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
+
+/* --- Submenu background and colors --- */
+
+.wp-block-navigation ul.wp-block-navigation-submenu {
+    background: var(--wp--preset--color--background-secondary) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
 }
+
+.wp-block-navigation .wp-block-navigation-submenu li a {
+    color: var(--wp--preset--color--primary) !important;
+}
+
+.wp-block-navigation li a:hover {
+    color: var(--wp--preset--color--secondary) !important;
+}
+
+/* --- Links border control --- */
+
+.wp-block-site-logo a {
+    border: none;
+}
+
+a:has(img) {
+    border: none;
+}
+
+/* --- Stick footer to bottom --- */
+
+.wp-site-blocks {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.wp-site-blocks > footer {
+    margin-block-start: 0px !important;
+}
+
+.wp-site-blocks > .wp-block-group {
+    margin-bottom: auto !important;
+}
+
+.wp-block-social-links .wp-social-link span:not(.screen-reader-text) {
+    font-size: var(--wp--preset--font-size--normal);
+}
+
+
+/* --- Helpers for block stylization --- */
+
+.border-radius-default {
+    border-radius: var(--wp--preset--spacing--10);
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.full-height {
+    height: 100%;
+}
+
+
+/* Block Style: Space Between */
+
+.is-style-re-rounded-borders {
+    border-radius: var(--wp--preset--spacing--10);
+    overflow: hidden;
+}
+
+
+/* --- Helper classes for mobile devices --- */
+
+@media (max-width: 767px) {
+
+    .mobile-hide {
+        display: none !important
+    }
+
+    .mobile-max-height-40 {
+        max-height: 40px;
+    }
+
+    .mobile-order-1 {
+        order: 1;
+    }
+
+    .mobile-order-2 {
+        order: 2;
+    }
+
+    .mobile-order-3 {
+        order: 3;
+    }
+
+    .mobile-align-none {
+        float: none !important;
+        margin-inline-start: 0 !important;
+    }
+
+    .mobile-no-br br {
+        display: none;
+    }
+
+    .mobile--no-padding-top {
+        padding-top: 0 !important;
+    }
+
+    .mobile--no-padding-bottom {
+        padding-bottom: 0 !important;
+    }
+
+    .mobile-gallery-column > .wp-block-image {
+        width: 100% !important;
+    }
+
+}
+
+
+/* --- Material buttons --- */
+
+.wp-element-button, .wp-block-button a {
+    transition: 0.2s ease;
+    -webkit-transition: 0.2s ease;
+    box-sizing: border-box;
+}
+
+.wp-element-button:hover, .wp-block-button:hover a {
+    transform: scale(1.02);
+}
+
+.wp-element-button:focus, .wp-block-button:focus a {
+    transform: scale(1);
+}
+
+.wp-element-button:active, .wp-block-button:active a {
+    transform: scale(1);
+}
+
+
+/* --- Material lightbox --- */
+
+.wp-lightbox-container {
+    transition: 0.2s ease;
+    -webkit-transition: 0.2s ease;  
+}
+
+.wp-lightbox-container:hover {
+    transform: scale(1.02);
+}
+
+
+.wp-block-navigation__responsive-container.is-menu-open {
+    padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+}
+
+ul.wp-block-categories-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--wp--preset--spacing--40);
+}
+
+.wp-block-query-pagination-numbers {
+    display: flex;
+    gap: var(--wp--preset--spacing--30);
+}
+

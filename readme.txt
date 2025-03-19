@@ -61,7 +61,7 @@ License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Images
-Images from pxhere.com. Public domain:
-https://pxhere.com/en/photo/927190 -woman with curly hair
-https://pxhere.com/en/photo/1049910 -woman with t-shirt
-https://pxhere.com/en/photo/1604358 -woman with headphones
+Images in /assets/images/ from Pxhere.com
+https://pxhere.com/en/license (Creative Commons Zero (CC0) license - https://creativecommons.org/publicdomain/zero/1.0/)
+Minimal-Elegance.jpg https://pxhere.com/id/photo/1087225
+Timeless-Gray.jpg https://pxhere.com/id/photo/1200849
