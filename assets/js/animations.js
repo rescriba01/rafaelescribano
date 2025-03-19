@@ -1,43 +1,40 @@
-import { gsap, ScrollTrigger, fadeIn, staggerFadeIn } from './modules/gsap-config';
+import { gsap, fadeIn, staggerFadeIn } from './modules/gsap-config';
 
 (() => {
     // Initialize animations when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
         // Header animations
-        const header = document.querySelector('.site-header');
+        const header = document.querySelector('.site-header.wp-block-template-part');
+        const navItems = document.querySelectorAll('.wp-block-navigation-item');
         if (header) {
-            fadeIn(header, 0, false);
+            gsap.from(header, {
+                opacity: 0,
+                duration: 0.75,
+                ease: 'power2.inOut'
+            })
         }
 
         // Navigation items stagger animation
-        const navItems = document.querySelectorAll('.wp-block-navigation-item');
         if (navItems.length) {
-            staggerFadeIn(navItems, 0.2, false);
-        }
-
-        // Initialize ScrollTrigger for content sections
-        // Explicitly exclude intro-group and its children
-        const contentSections = document.querySelectorAll('.entry-content > *:not(.project):not(.intro-group):not(.introduction):not(.project-links)');
-        contentSections.forEach((section) => {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                },
+            gsap.from(navItems, {
                 opacity: 0,
-                y: 30,
-                duration: 0.8,
-                clearProps: 'transform,opacity'
+                y: -20,
+                duration: 0.5,
+                stagger: {
+                    amount: 0.3,
+                    ease: 'power2.out'
+                },
+                delay: 0.2 // Slight delay after header animation
             });
-        });
-
-        // Refresh ScrollTrigger on dynamic content changes
-        ScrollTrigger.refresh();
+        }
     });
 
-    // Clean up on page unload
-    window.addEventListener('unload', () => {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    });
+    // Clean up animations before page transitions or when page is hidden
+    const cleanupAnimations = () => {
+        // Kill any remaining GSAP animations if needed
+        gsap.killTweensOf('*');
+    };
+
+    // Use pagehide for better compatibility with browser caching
+    window.addEventListener('pagehide', cleanupAnimations);
 })(); 
