@@ -20,7 +20,7 @@
 
 <!-- wp:column {"verticalAlignment":"center","className":"mobile-order-2"} -->
 <div class="wp-block-column is-vertically-aligned-center mobile-order-2"><!-- wp:heading {"level":1,"style":{"spacing":{"margin":{"bottom":"0","top":"0"}}},"fontSize":"huge-mobile"} -->
-<h1 class="wp-block-heading has-huge-mobile-font-size" style="margin-top:0;margin-bottom:0">Hi, I’m Rafael!<br>WordPress Specialist.<br>Coffee and Beer Enthusiast.<br>Comic Book Connoisseur.</h1>
+<h1 class="wp-block-heading has-huge-mobile-font-size" style="margin-top:0;margin-bottom:0">Hi, I'm Rafael!<br>WordPress Specialist.<br>Coffee and Beer Enthusiast.<br>Comic Book Connoisseur.</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"mobile-no-br","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|40","top":"var:preset|spacing|20"}},"typography":{"lineHeight":"1.5","fontSize":"20px"}}} -->
@@ -91,23 +91,23 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>My passion for reading (comics and traditional books) has helped me understand that a visitor’s journey should feel natural and subtle, so I craft digital experiences that are both impactful and engaging. I love a good story and enhancing digital content, and at the core of my work is a commitment to building solutions that are as functional as they are immersive.</p>
+<p>My passion for reading (comics and traditional books) has helped me understand that a visitor's journey should feel natural and subtle, so I craft digital experiences that are both impactful and engaging. I love a good story and enhancing digital content, and at the core of my work is a commitment to building solutions that are as functional as they are immersive.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>When I’m not creating engaging and intuitive digital experiences, you’ll likely find me at my local coffee shop, sipping a nitro cold brew while reading a Stephen King or Joe Hill book (flavor of the month, lol), at my local brew house on game night with a crew of four debating whether to include our house rules, or just kicking back, trying to catch up on one of the many streaming shows on my list.</p>
+<p>When I'm not creating engaging and intuitive digital experiences, you'll likely find me at my local coffee shop, sipping a nitro cold brew while reading a Stephen King or Joe Hill book (flavor of the month, lol), at my local brew house on game night with a crew of four debating whether to include our house rules, or just kicking back, trying to catch up on one of the many streaming shows on my list.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"metadata":{"name":"Projects"},"style":{"spacing":{"blockGap":"var:preset|spacing|40","padding":{"right":"0","left":"0","top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--50);padding-right:0;padding-bottom:var(--wp--preset--spacing--50);padding-left:0"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group"><!-- wp:heading -->
-<h2 class="wp-block-heading">Projects</h2>
+<h2 class="wp-block-heading">My Work</h2>
 <!-- /wp:heading -->
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://rafaelescribano.local/projects/">Go to projects</a></div>
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url(get_post_type_archive_link('work')); ?>">Go to my work</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group -->
