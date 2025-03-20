@@ -116,15 +116,18 @@ if (!empty($gallery_sections)) {
                 <?php if (!empty($all_images)) : ?>
                     <!-- wp:group {"metadata":{"name":"WorkCarousel"},"className":"work-carousel-container swiper"} -->
                     <div class="wp-block-group work-carousel-container swiper">
-                        <!-- Swiper wrapper -->
-                        <div class="swiper-wrapper">
+                        <!-- wp:group {"metadata":{"name":"WorkCarouselWrapper"},"className":"swiper-wrapper"} -->
+                        <div class="wp-block-group swiper-wrapper">
                             <?php foreach ($all_images as $index => $image) : 
                                 $image_url = $image['full_url'];
                                 $image_width = isset($image['meta']['width']) ? $image['meta']['width'] : 1200;
                                 $image_height = isset($image['meta']['height']) ? $image['meta']['height'] : 800;
                                 $image_alt = get_post_meta($image['id'], '_wp_attachment_image_alt', true) ?: get_the_title($image['id']);
+                                $slide_class = 'slide-' . esc_attr($index);
                             ?>
-                                <div class="swiper-slide" data-slide="<?php echo esc_attr($index); ?>">
+                                <!-- wp:group {"metadata":{"name":"WorkCarouselSlide"},"className":"swiper-slide","layout":{"type":"constrained"}} -->
+                                <div class="wp-block-group swiper-slide <?php echo $slide_class; ?>">
+                                    <!-- wp:html -->
                                     <a 
                                         href="<?php echo esc_url($image_url); ?>" 
                                         data-pswp-width="<?php echo esc_attr($image_width); ?>" 
@@ -134,17 +137,23 @@ if (!empty($gallery_sections)) {
                                     >
                                         <?php echo $image['html']; ?>
                                     </a>
+                                    <!-- /wp:html -->
                                 </div>
+                                <!-- /wp:group -->
                             <?php endforeach; ?>
                         </div>
+                        <!-- /wp:group -->
                         
                         <?php if (count($all_images) > 1) : ?>
-                            <!-- Add Pagination -->
-                            <div class="swiper-pagination"></div>
-                            
-                            <!-- Add Navigation -->
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
+                            <!-- wp:group {"metadata":{"name":"WorkCarouselControls"},"className":"carousel-controls"} -->
+                            <div class="wp-block-group carousel-controls">
+                                <!-- wp:html -->
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <!-- /wp:html -->
+                            </div>
+                            <!-- /wp:group -->
                         <?php endif; ?>
                     </div>
                     <!-- /wp:group -->
@@ -158,11 +167,25 @@ if (!empty($gallery_sections)) {
         <div class="wp-block-column work-column-details" style="flex-basis:40%">
             <!-- wp:group {"metadata":{"name":"WorkMeta"},"className":"work-meta"} -->
             <div class="wp-block-group work-meta">
-                <p class="work-employer"><?php echo esc_html($meta['employer']); ?></p>
-                <p class="work-project"><?php echo esc_html($meta['project']); ?></p>
-                <p class="work-role"><?php echo esc_html($meta['role']); ?></p>
-                <p class="work-location"><?php echo esc_html($meta['location']); ?></p>
-                <p class="work-dates"><?php echo esc_html($date_display); ?></p>
+                <!-- wp:paragraph {"className":"work-meta__employer"} -->
+                <p class="work-meta__employer"><?php echo esc_html($meta['employer']); ?></p>
+                <!-- /wp:paragraph -->
+
+                <!-- wp:paragraph {"className":"work-meta__project"} -->
+                <p class="work-meta__project"><?php echo esc_html($meta['project']); ?></p>
+                <!-- /wp:paragraph -->
+
+                <!-- wp:paragraph {"className":"work-meta__role"} -->
+                <p class="work-meta__role"><?php echo esc_html($meta['role']); ?></p>
+                <!-- /wp:paragraph -->
+
+                <!-- wp:paragraph {"className":"work-meta__location"} -->
+                <p class="work-meta__location"><?php echo esc_html($meta['location']); ?></p>
+                <!-- /wp:paragraph -->
+
+                <!-- wp:paragraph {"className":"work-meta__dates"} -->
+                <p class="work-meta__dates"><?php echo esc_html($date_display); ?></p>
+                <!-- /wp:paragraph -->
             </div>
             <!-- /wp:group -->
 
@@ -182,12 +205,18 @@ if (!empty($gallery_sections)) {
         <h2>Technologies Used</h2>
         <!-- /wp:heading -->
 
-        <?php if ($has_tech_terms) : ?>
+        <?php if ($has_tech_terms) : 
+            $tech_links = array_map(function($term) {
+                return sprintf(
+                    '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><a href="%s">%s</a></p><!-- /wp:paragraph -->',
+                    esc_url(get_term_link($term)),
+                    esc_html($term->name)
+                );
+            }, $tech_terms);
+        ?>
             <!-- wp:group {"metadata":{"name":"WorkTechnologies-Tags"},"className":"work-tags"} -->
             <div class="wp-block-group work-tags">
-                <?php foreach ($tech_terms as $term) : ?>
-                    <a href="<?php echo esc_url(get_term_link($term)); ?>"><?php echo esc_html($term->name); ?></a>
-                <?php endforeach; ?>
+                <?php echo implode("\n", $tech_links); ?>
             </div>
             <!-- /wp:group -->
         <?php endif; ?>

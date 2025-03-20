@@ -14,38 +14,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<!-- wp:group {"tagName":"section","metadata":{"name":"Intro-group","categories":["featured"],"patternName":"re/intro-with-links"},"align":"full","className":"intro-group","layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull intro-group">
-    <!-- wp:columns {"metadata":{"categories":["featured"],"patternName":"re/intro-with-links","name":"Intro-columns"},"align":"full","className":"intro-with-links-columns"} -->
-    <div class="wp-block-columns alignfull intro-with-links-columns">
-        <!-- wp:column {"width":"66.66%","className":"introduction"} -->
-        <div class="wp-block-column introduction" style="flex-basis:66.66%">
-            <!-- wp:heading {"level":1,"className":"is-style-display"} -->
-            <h1 class="wp-block-heading is-style-display">Your Name Here</h1>
-            <!-- /wp:heading -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"IntroWithLinks"},"align":"full","className":"intro-with-links","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull intro-with-links">
+    <!-- wp:group {"metadata":{"name":"IntroContent"},"className":"intro-content","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group intro-content">
+        <!-- wp:heading {"metadata":{"name":"IntroHeading"},"level":1,"className":"intro-heading"} -->
+        <h1 class="wp-block-heading intro-heading"><?php echo esc_html($heading); ?></h1>
+        <!-- /wp:heading -->
 
-            <!-- wp:paragraph -->
-            <p>Add your professional introduction here. Describe your expertise, experience, and what makes your work unique. This is a great place to make a strong first impression.</p>
-            <!-- /wp:paragraph -->
-        </div>
-        <!-- /wp:column -->
-
-        <!-- wp:column {"width":"28%","className":"project-links"} -->
-        <div class="wp-block-column project-links" style="flex-basis:28%">
-            <!-- wp:re/link-list {"title":"Featured Projects","links":[{"text":"Project One","url":"#"},{"text":"Project Two","url":"#"},{"text":"Project Three","url":"#"}]} -->
-            <div class="wp-block-re-link-list">
-                <h3 class="link-list-title">Featured Projects</h3>
-                <ul class="link-list">
-                    <li><a href="#">Project One</a></li>
-                    <li><a href="#">Project Two</a></li>
-                    <li><a href="#">Project Three</a></li>
-                </ul>
-            </div>
-            <!-- /wp:re/link-list -->
-        </div>
-        <!-- /wp:column -->
+        <!-- wp:paragraph {"metadata":{"name":"IntroText"},"className":"intro-text"} -->
+        <p class="intro-text"><?php echo wp_kses_post($text); ?></p>
+        <!-- /wp:paragraph -->
     </div>
-    <!-- /wp:columns -->
+    <!-- /wp:group -->
+
+    <?php if (!empty($links)): ?>
+    <!-- wp:group {"metadata":{"name":"IntroLinks"},"className":"intro-links","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group intro-links">
+        <!-- wp:list {"metadata":{"name":"IntroLinksList"},"className":"intro-links__list"} -->
+        <ul class="wp-block-list intro-links__list">
+            <?php foreach ($links as $link): ?>
+            <!-- wp:list-item {"metadata":{"name":"IntroLinkItem"},"className":"intro-links__item"} -->
+            <li class="wp-block-list-item intro-links__item">
+                <!-- wp:html -->
+                <a href="<?php echo esc_url($link['url']); ?>" class="intro-links__link">
+                    <?php echo esc_html($link['text']); ?>
+                </a>
+                <!-- /wp:html -->
+            </li>
+            <!-- /wp:list-item -->
+            <?php endforeach; ?>
+        </ul>
+        <!-- /wp:list -->
+    </div>
+    <!-- /wp:group -->
+    <?php endif; ?>
 </section>
 <!-- /wp:group -->
 
@@ -61,6 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="wp-block-columns services-columns">
             <!-- wp:column {"className":"service-item","metadata":{"name":"WordPress Development"}} -->
             <div class="wp-block-column service-item">
+                <!-- wp:html -->
                 <?php 
                 $wp_icon = re_get_icon( 'web-development', '', 'service-icon' );
                 if ( $wp_icon ) {
@@ -69,12 +73,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ));
                 }
                 ?>
-                <h3>Custom Web/WordPress Development</h3>
+                <!-- /wp:html -->
+                <!-- wp:heading {"level":3} -->
+                <h3 class="wp-block-heading">Custom Web/WordPress Development</h3>
+                <!-- /wp:heading -->
             </div>
             <!-- /wp:column -->
 
             <!-- wp:column {"className":"service-item","metadata":{"name":"API Integration"}} -->
             <div class="wp-block-column service-item">
+                <!-- wp:html -->
                 <?php 
                 $api_icon = re_get_icon( 'api-vector-icon', '', 'service-icon' );
                 if ( $api_icon ) {
@@ -83,12 +91,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ));
                 }
                 ?>
-                <h3>API Integrations</h3>
+                <!-- /wp:html -->
+                <!-- wp:heading {"level":3} -->
+                <h3 class="wp-block-heading">API Integrations</h3>
+                <!-- /wp:heading -->
             </div>
             <!-- /wp:column -->
 
             <!-- wp:column {"className":"service-item","metadata":{"name":"Design Systems"}} -->
             <div class="wp-block-column service-item">
+                <!-- wp:html -->
                 <?php 
                 $scale_icon = re_get_icon( 'scalability-vector-icon', '', 'service-icon' );
                 if ( $scale_icon ) {
@@ -97,7 +109,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ));
                 }
                 ?>
-                <h3>Scalable Design Systems</h3>
+                <!-- /wp:html -->
+                <!-- wp:heading {"level":3} -->
+                <h3 class="wp-block-heading">Scalable Design Systems</h3>
+                <!-- /wp:heading -->
             </div>
             <!-- /wp:column -->
         </div>
