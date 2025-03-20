@@ -1,8 +1,8 @@
 /**
- * Project Pattern Styles
+ * Projects and Project Pattern Styles
  */
 
-/* Layout */
+/* Layout for single project page */
 .project {
     background-color: #000;
     color: #fff;
@@ -128,6 +128,109 @@
     min-width: 300px;
 }
 
+/* Grid Layout */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    gap: var(--wp--preset--spacing--40);
+    width: 100%;
+}
+
+/* Grid Item */
+.project-grid-item {
+    position: relative;
+    transition: all 0.3s ease;
+    background: var(--wp--preset--color--base);
+    overflow: hidden;
+    height: 100%;
+}
+
+.project-grid-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Wrapper */
+.project-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin: -10px -10px 0;
+}
+
+.project-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.project-grid-item:hover .project-image-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Overlay */
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-block-start: 0;
+    padding: var(--wp--preset--spacing--30);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-grid-item:hover .project-overlay {
+    opacity: 1;
+}
+
+/* Meta Tags in Overlay */
+.project-overlay .project-details__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--wp--preset--spacing--20);
+}
+
+.project-overlay .project-details__meta p {
+    background: var(--wp--preset--color--primary);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: var(--wp--preset--font-size--tiny) !important;
+    margin: 0;
+}
+
+/* Project Details */
+.project-details {
+    padding: var(--wp--preset--spacing--20);
+}
+
+.project-details h3 {
+    margin: 0;
+}
+
+.project-details h3 a {
+    color: var(--wp--preset--color--contrast);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.project-details h3 a:hover {
+    color: var(--wp--preset--color--primary);
+}
+
+.project-details__description {
+    color: var(--wp--preset--color--secondary);
+    font-size: var(--wp--preset--font-size--small);
+    line-height: 1.5;
+    margin: var(--wp--preset--spacing--20) 0 0;
+}
+
 /* Responsive Styles */
 @media (max-width: 781px) {
     .project-meta-columns {
@@ -146,6 +249,18 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    }
+    
+    .project-overlay {
+        padding: var(--wp--preset--spacing--20);
+    }
+    
+    .project-overlay .project-details__meta {
+        gap: var(--wp--preset--spacing--10);
     }
 }
 
