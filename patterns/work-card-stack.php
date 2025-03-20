@@ -43,23 +43,45 @@ if (!empty($employers)):
 
 <!-- wp:group {"className":"re-work-grid","align":"wide","layout":{"type":"constrained"}} -->
 <div class="wp-block-group re-work-grid alignwide">
-    <?php foreach ($employers as $employer => $projects): ?>
+    <?php foreach ($employers as $employer => $projects): 
+        $employer_class = 're-work-employer employer-' . sanitize_title($employer);
+    ?>
     <!-- wp:group {"className":"re-work-employer","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group re-work-employer" data-employer="<?php echo esc_attr($employer); ?>">
+    <div class="wp-block-group <?php echo esc_attr($employer_class); ?>">
         <!-- wp:group {"className":"re-project-stack","layout":{"type":"constrained"}} -->
         <div class="wp-block-group re-project-stack">
             <!-- wp:group {"className":"re-project-card re-project-card--hidden","layout":{"type":"constrained"}} -->
             <div class="wp-block-group re-project-card re-project-card--hidden">
-                <div class="re-project-card__content">
-                    <div class="re-project-card__header">
+                <!-- wp:group {"className":"re-project-card__content","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group re-project-card__content">
+                    <!-- wp:group {"className":"re-project-card__header","layout":{"type":"constrained"}} -->
+                    <div class="wp-block-group re-project-card__header">
+                        <!-- wp:html -->
                         <div class="re-project-card__avatar"></div>
-                        <div class="re-project-card__employer"></div>
+                        <!-- /wp:html -->
+                        <!-- wp:paragraph {"className":"re-project-card__employer"} -->
+                        <p class="re-project-card__employer"></p>
+                        <!-- /wp:paragraph -->
                     </div>
-                    <div class="text has-large-font-size"></div>
-                    <div class="text has-medium-font-size"></div>
-                    <div class="text has-small-font-size"></div>
+                    <!-- /wp:group -->
+
+                    <!-- wp:paragraph {"className":"text has-large-font-size"} -->
+                    <p class="text has-large-font-size"></p>
+                    <!-- /wp:paragraph -->
+
+                    <!-- wp:paragraph {"className":"text has-medium-font-size"} -->
+                    <p class="text has-medium-font-size"></p>
+                    <!-- /wp:paragraph -->
+
+                    <!-- wp:paragraph {"className":"text has-small-font-size"} -->
+                    <p class="text has-small-font-size"></p>
+                    <!-- /wp:paragraph -->
+
+                    <!-- wp:html -->
                     <div class="re-project-card__button"></div>
+                    <!-- /wp:html -->
                 </div>
+                <!-- /wp:group -->
             </div>
             <!-- /wp:group -->
 
@@ -68,18 +90,38 @@ if (!empty($employers)):
             ?>
             <!-- wp:group {"className":"re-project-card","layout":{"type":"constrained"}} -->
             <div class="wp-block-group re-project-card">
-                <div class="re-project-card__content">
-                    <div class="re-project-card__header">
+                <!-- wp:group {"className":"re-project-card__content","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group re-project-card__content">
+                    <!-- wp:group {"className":"re-project-card__header","layout":{"type":"constrained"}} -->
+                    <div class="wp-block-group re-project-card__header">
+                        <!-- wp:html -->
                         <div class="re-project-card__avatar" data-letter="<?php echo esc_attr($first_letter); ?>"></div>
-                        <div class="re-project-card__employer has-medium-font-size"><?php echo esc_html($employer); ?></div>
+                        <!-- /wp:html -->
+                        <!-- wp:paragraph {"className":"re-project-card__employer has-medium-font-size"} -->
+                        <p class="re-project-card__employer has-medium-font-size"><?php echo esc_html($employer); ?></p>
+                        <!-- /wp:paragraph -->
                     </div>
-                    <div class="text has-large-font-size"><?php echo esc_html($project['title']); ?></div>
+                    <!-- /wp:group -->
+                    
+                    <!-- wp:paragraph {"className":"text has-large-font-size"} -->
+                    <p class="text has-large-font-size"><?php echo esc_html($project['title']); ?></p>
+                    <!-- /wp:paragraph -->
+
                     <?php if (!empty($project['project'])): ?>
-                    <div class="text has-medium-font-size"><?php echo esc_html($project['project']); ?></div>
+                    <!-- wp:paragraph {"className":"text has-medium-font-size"} -->
+                    <p class="text has-medium-font-size"><?php echo esc_html($project['project']); ?></p>
+                    <!-- /wp:paragraph -->
                     <?php endif; ?>
-                    <div class="text has-small-font-size"><?php echo wp_kses_post($project['excerpt']); ?></div>
+
+                    <!-- wp:paragraph {"className":"text has-small-font-size"} -->
+                    <p class="text has-small-font-size"><?php echo wp_kses_post($project['excerpt']); ?></p>
+                    <!-- /wp:paragraph -->
+
+                    <!-- wp:html -->
                     <a href="<?php echo esc_url(get_permalink($project['id'])); ?>" class="re-project-card__button has-small-font-size">View Details</a>
+                    <!-- /wp:html -->
                 </div>
+                <!-- /wp:group -->
             </div>
             <!-- /wp:group -->
             <?php endforeach; ?>

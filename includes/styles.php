@@ -54,8 +54,8 @@ function re_enqueue_styles() {
     );
 
     wp_enqueue_style(
-        're-pattern-project',
-        RE_THEME_URL . 'assets/css/patterns/project.css',
+        're-pattern-projects',
+        RE_THEME_URL . 'assets/css/patterns/projects.css',
         array( 're-style' ),
         RE_THEME_VERSION
     );

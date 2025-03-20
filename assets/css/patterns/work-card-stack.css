@@ -8,6 +8,8 @@
     --card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     --grid-gap: 2rem;
     --grid-padding: clamp(1.75rem, 5vw, 2rem);
+    --meta-spacing: clamp(0.75rem, 2vw, 1rem);
+    --meta-font-size: var(--wp--preset--font-size--small);
 }
 
 /* Grid Layout */
@@ -67,6 +69,10 @@
     /* Hide placeholder card on mobile */
     .re-project-card.re-project-card--hidden {
         display: none;
+    }
+
+    .work-meta {
+        margin-bottom: var(--grid-gap);
     }
 }
 
@@ -285,4 +291,59 @@
     .re-project-stack {
         min-height: 500px;
     }
+}
+
+.work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.work-tags .tech-tag {
+    margin: 0;
+}
+
+.work-tags .tech-tag a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--wp--preset--color--contrast-2, #f5f5f5);
+    border-radius: 2rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.work-tags .tech-tag a:hover {
+    background: var(--wp--preset--color--contrast-3, #e5e5e5);
+}
+
+/* Work Meta Section */
+.work-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--meta-spacing);
+    padding: var(--meta-spacing);
+    border: 1px solid var(--wp--preset--color--contrast-soft);
+    border-radius: var(--card-border-radius);
+    background: var(--wp--preset--color--base);
+}
+
+.work-meta p {
+    margin: 0;
+    font-size: var(--meta-font-size);
+    line-height: 1.4;
+}
+
+.work-meta__employer {
+    font-weight: 600;
+    color: var(--wp--preset--color--contrast);
+}
+
+.work-meta__project {
+    color: var(--wp--preset--color--primary);
+}
+
+.work-meta__role,
+.work-meta__location,
+.work-meta__dates {
+    color: var(--wp--preset--color--contrast-3);
 } 
