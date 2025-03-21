@@ -542,4 +542,34 @@
     } else {
         initWorkMetaBox();
     }
+
+    /**
+     * Toggle external link field visibility
+     */
+    function toggleExternalLink() {
+        const checkbox = document.getElementById('work_has_external_link');
+        const wrapper = document.getElementById('work_external_link_wrapper');
+        
+        if (checkbox && wrapper) {
+            wrapper.style.display = checkbox.checked ? 'block' : 'none';
+        }
+    }
+
+    /**
+     * Initialize work meta box functionality
+     */
+    function init() {
+        const checkbox = document.getElementById('work_has_external_link');
+        if (checkbox) {
+            checkbox.addEventListener('change', toggleExternalLink);
+            toggleExternalLink(); // Run on page load
+        }
+    }
+
+    // Initialize when document is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 } )(); 

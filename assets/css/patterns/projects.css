@@ -152,6 +152,7 @@
 
 /* Image Wrapper */
 .project-image-wrapper {
+    border-radius: 20px;
     position: relative;
     overflow: hidden;
     margin: -10px -10px 0;
@@ -176,6 +177,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
