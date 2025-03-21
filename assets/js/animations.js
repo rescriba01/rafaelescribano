@@ -1,4 +1,7 @@
-import { gsap, fadeIn, staggerFadeIn } from './modules/gsap-config';
+import { gsap, ScrollTrigger, fadeIn, staggerFadeIn } from './modules/gsap-config';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 (() => {
     // Initialize animations when DOM is ready
@@ -56,6 +59,37 @@ import { gsap, fadeIn, staggerFadeIn } from './modules/gsap-config';
 
                 // Add this element's timeline to the main timeline
                 animationTimeline.add(elementTimeline, index * 0.1);
+            });
+        }
+
+        // Service columns shake animation
+        const serviceColumns = document.querySelectorAll('.service-column');
+        if (serviceColumns.length) {
+            gsap.utils.toArray(serviceColumns).forEach((column) => {
+                ScrollTrigger.create({
+                    trigger: column,
+                    start: "top center", // Changed from "top bottom" to "top center"
+                    end: "bottom center",
+                    onEnter: () => {
+                        gsap.fromTo(
+                            column,
+                            { x: -10 },
+                            {
+                                x: 10,
+                                duration: 0.2,
+                                repeat: 3,
+                                yoyo: true,
+                                onComplete: () => gsap.to(column, { 
+                                    x: 0,
+                                    duration: 0.2,
+                                    ease: "power2.out"
+                                }),
+                                ease: "none" // Linear movement for shake effect
+                            }
+                        );
+                    },
+                    once: true // Only trigger once per element
+                });
             });
         }
     });
