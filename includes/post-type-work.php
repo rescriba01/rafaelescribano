@@ -120,6 +120,31 @@ function re_add_work_meta_boxes() {
 add_action('add_meta_boxes', 're_add_work_meta_boxes');
 
 /**
+ * Enqueue admin scripts for work post type
+ *
+ * @param string $hook The current admin page
+ */
+function re_enqueue_work_admin_scripts($hook) {
+    global $post;
+
+    // Only enqueue on work post edit screen
+    if ($hook !== 'post.php' && $hook !== 'post-new.php') {
+        return;
+    }
+
+    if (isset($post) && 'work' === $post->post_type) {
+        wp_enqueue_script(
+            're-work-meta',
+            RE_THEME_URL . 'assets/js/admin/work-meta.js',
+            array(),
+            RE_THEME_VERSION,
+            true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 're_enqueue_work_admin_scripts');
+
+/**
  * Render tabbed meta box HTML
  *
  * @param WP_Post $post Current post object
@@ -132,6 +157,8 @@ function re_work_meta_tabs_html($post) {
     $end_date = get_post_meta($post->ID, '_work_end_date', true);
     $location = get_post_meta($post->ID, '_work_location', true);
     $project = get_post_meta($post->ID, '_work_project', true);
+    $has_external_link = get_post_meta($post->ID, '_work_has_external_link', true);
+    $external_link = get_post_meta($post->ID, '_work_external_link', true);
     $gallery_images = get_post_meta($post->ID, '_work_gallery_images', true);
     $gallery_layout = get_post_meta($post->ID, '_work_gallery_layout', true);
 
@@ -156,6 +183,22 @@ function re_work_meta_tabs_html($post) {
                     <input type="text" id="work_project" name="work_project" value="<?php echo esc_attr($project); ?>" class="widefat">
                     <span class="description"><?php esc_html_e('The name of the specific project or product worked on', 're'); ?></span>
                 </p>
+
+                <!-- External Link Toggle and Field -->
+                <p>
+                    <label for="work_has_external_link">
+                        <input type="checkbox" id="work_has_external_link" name="work_has_external_link" value="1" <?php checked($has_external_link, '1'); ?>>
+                        <?php esc_html_e('Use External Link?', 're'); ?>
+                    </label>
+                    <span class="description"><?php esc_html_e('Check this to use an external URL instead of defualting to the work post.', 're'); ?></span>
+                </p>
+
+                <p id="work_external_link_wrapper">
+                    <label for="work_external_link"><?php esc_html_e('External Link', 're'); ?></label><br>
+                    <input type="url" id="work_external_link" name="work_external_link" value="<?php echo esc_url($external_link); ?>" class="widefat">
+                    <span class="description"><?php esc_html_e('The URL where this project can be viewed. Make sure to include https://', 're'); ?></span>
+                </p>
+
                 <p>
                     <label for="work_employer"><?php esc_html_e('Employer/Client', 're'); ?></label><br>
                     <input type="text" id="work_employer" name="work_employer" value="<?php echo esc_attr($employer); ?>" class="widefat">
@@ -318,6 +361,21 @@ function re_save_work_meta_box($post_id) {
                 sanitize_text_field($_POST[$field])
             );
         }
+    }
+
+    // Handle external link checkbox
+    $has_external_link = isset($_POST['work_has_external_link']) ? '1' : '';
+    update_post_meta($post_id, '_work_has_external_link', $has_external_link);
+
+    // Handle external link URL
+    if ($has_external_link && isset($_POST['work_external_link'])) {
+        update_post_meta(
+            $post_id,
+            '_work_external_link',
+            esc_url_raw($_POST['work_external_link'])
+        );
+    } else {
+        delete_post_meta($post_id, '_work_external_link');
     }
 
     // Handle gallery data with debugging
