@@ -208,8 +208,7 @@ if (!empty($gallery_sections)) {
                 <?php if ($has_tech_terms) : 
                     $tech_links = array_map(function($term) {
                         return sprintf(
-                            '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><a href="%s">%s</a></p><!-- /wp:paragraph -->',
-                            esc_url(get_term_link($term)),
+                            '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><span>%s</span></p><!-- /wp:paragraph -->',
                             esc_html($term->name)
                         );
                     }, $tech_terms);
@@ -236,29 +235,5 @@ if (!empty($gallery_sections)) {
         <!-- /wp:column -->
     </div>
     <!-- /wp:columns -->
-
-    <!-- wp:group {"metadata":{"name":"WorkCTA"},"className":"work-cta"} -->
-    <div class="wp-block-group work-cta">
-        <!-- wp:heading {"metadata":{"name":"WorkCTA-Title"},"level":2} -->
-        <h2>Want to Build Something Similar?</h2>
-        <!-- /wp:heading -->
-
-        <!-- wp:buttons {"metadata":{"name":"WorkCTA-Buttons"},"layout":{"type":"flex","justifyContent":"center"}} -->
-        <div class="wp-block-buttons">
-            <!-- wp:button {"metadata":{"name":"WorkCTA-ContactButton"},"className":"is-style-fill"} -->
-            <div class="wp-block-button is-style-fill">
-                <a class="wp-block-button__link wp-element-button" href="<?php echo esc_url(home_url('/contact')); ?>">Get in Touch</a>
-            </div>
-            <!-- /wp:button -->
-
-            <!-- wp:button {"metadata":{"name":"WorkCTA-PortfolioButton"},"className":"is-style-outline"} -->
-            <div class="wp-block-button is-style-outline">
-                <a class="wp-block-button__link wp-element-button" href="<?php echo esc_url(home_url('/work')); ?>">View More Projects</a>
-            </div>
-            <!-- /wp:button -->
-        </div>
-        <!-- /wp:buttons -->
-    </div>
-    <!-- /wp:group -->
 </div>
 <!-- /wp:group --> 
