@@ -38,14 +38,28 @@
     margin-bottom: var(--wp--preset--spacing--40);
 }
 
-.work-employer {
+.work-meta__employer,
+.work-meta__project,
+.work-meta__role,
+.work-meta__dates {
+    font-weight: 600;
+}
+
+.work-meta__employer-name,
+.work-meta__project-name,
+.work-meta__role-name,
+.work-meta__dates-range {
+    font-weight: 400;
+}
+
+.work-meta__employer {
     font-size: var(--wp--preset--font-size--large);
     margin-bottom: var(--wp--preset--spacing--20);
 }
 
-.work-role,
-.work-location,
-.work-dates {
+.work-meta__project,
+.work-meta__role,
+.work-meta__dates {
     color: var(--wp--preset--color--contrast-2);
     font-size: var(--wp--preset--font-size--small);
     margin: 0 0 var(--wp--preset--spacing--10) 0;
@@ -235,41 +249,31 @@
 .work-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--wp--preset--spacing--30);
-    list-style: none;
-    padding: 0;
-    justify-content: flex-start;
-}
-
-.work-tags a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--wp--preset--spacing--10) var(--wp--preset--spacing--40);
-    background: var(--wp--preset--color--contrast-4, #f0f0f0);
-    border-radius: 50px;
-    color: var(--wp--preset--color--contrast);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: var(--wp--preset--font-size--small);
-    font-weight: 500;
-    margin-block-start: 0;
-    min-height: 36px;
-    min-width: 120px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    white-space: nowrap;
-}
-
-.work-tags a:hover {
-    background: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
-    transform: translateY(-2px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    gap: var(--wp--preset--spacing--20);
+    margin-top: var(--wp--preset--spacing--20);
 }
 
 .tech-tag {
     margin: 0;
+    padding: 0;
+}
+
+.tech-tag a {
+    text-decoration: none;
+    color: var(--wp--preset--color--contrast-2);
+    background-color: var(--wp--preset--color--contrast-3, rgba(0, 0, 0, 0.05));
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: var(--wp--preset--font-size--small);
+    pointer-events: none;
+    cursor: default;
+    display: inline-block;
+}
+
+/* Remove hover effects */
+.tech-tag a:hover {
+    background-color: var(--wp--preset--color--contrast-3, rgba(0, 0, 0, 0.05));
+    color: var(--wp--preset--color--contrast-2);
 }
 
 .work-overview .entry-content > * {
