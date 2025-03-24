@@ -67,13 +67,6 @@ function re_enqueue_styles() {
         RE_THEME_VERSION
     );
 
-    wp_enqueue_style(
-        're-pattern-work-card-stack',
-        RE_THEME_URL . 'assets/css/patterns/work-card-stack.css',
-        array( 're-style' ),
-        RE_THEME_VERSION
-    );
-
     // Component styles
     wp_enqueue_style(
         're-forms',
