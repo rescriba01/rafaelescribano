@@ -251,6 +251,7 @@
     flex-wrap: wrap;
     gap: var(--wp--preset--spacing--20);
     margin-top: var(--wp--preset--spacing--20);
+    justify-content: flex-start;
 }
 
 .tech-tag {
@@ -258,22 +259,16 @@
     padding: 0;
 }
 
-.tech-tag a {
-    text-decoration: none;
-    color: var(--wp--preset--color--contrast-2);
+.tech-tag span {
     background-color: var(--wp--preset--color--contrast-3, rgba(0, 0, 0, 0.05));
-    padding: 4px 12px;
     border-radius: 4px;
-    font-size: var(--wp--preset--font-size--small);
-    pointer-events: none;
-    cursor: default;
-    display: inline-block;
-}
-
-/* Remove hover effects */
-.tech-tag a:hover {
-    background-color: var(--wp--preset--color--contrast-3, rgba(0, 0, 0, 0.05));
     color: var(--wp--preset--color--contrast-2);
+    display: inline-block;
+    font-size: var(--wp--preset--font-size--small);
+    padding: 4px 12px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.05));
 }
 
 .work-overview .entry-content > * {
@@ -292,56 +287,6 @@
 
 .work-cta h2 {
     margin-bottom: var(--wp--preset--spacing--40);
-}
-
-/* Button Styling */
-.work-cta .wp-block-buttons {
-    gap: var(--wp--preset--spacing--30);
-    margin: 0 !important;
-}
-
-.work-cta .wp-block-button {
-    margin: 0 var(--wp--preset--spacing--20);
-}
-
-.work-cta .wp-block-button .wp-block-button__link {
-    min-width: 180px;
-    padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
-    border-radius: 50px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: var(--wp--preset--font-size--small);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.work-cta .wp-block-button.is-style-fill .wp-block-button__link {
-    background-color: var(--wp--preset--color--primary);
-    border: 2px solid var(--wp--preset--color--primary);
-    transition: all 0.3s ease;
-}
-
-.work-cta .wp-block-button.is-style-fill .wp-block-button__link:hover {
-    background-color: var(--wp--preset--color--contrast);
-    border-color: var(--wp--preset--color--contrast);
-    color: var(--wp--preset--color--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.work-cta .wp-block-button.is-style-outline .wp-block-button__link {
-    background-color: transparent;
-    border: 2px solid var(--wp--preset--color--secondary);
-    color: var(--wp--preset--color--secondary);
-    transition: all 0.3s ease;
-}
-
-.work-cta .wp-block-button.is-style-outline .wp-block-button__link:hover {
-    background-color: var(--wp--preset--color--contrast);
-    border-color: var(--wp--preset--color--primary-second);
-    color: var(--wp--preset--color--primary-second);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive */
@@ -396,50 +341,11 @@
         margin: 0 3px !important;
     }
     
-    .work-technologies {
-        padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--20);
-        max-width: calc(100% - var(--wp--preset--spacing--20) * 2);
-        margin: var(--wp--preset--spacing--50) auto;
-    }
-    
     .work-tags {
         gap: var(--wp--preset--spacing--20);
     }
     
-    .work-tags a {
-        padding: var(--wp--preset--spacing--10) var(--wp--preset--spacing--30);
-        min-height: 32px;
-        min-width: 80px;
-        font-size: calc(var(--wp--preset--font-size--small) - 1px);
-    }
-    
-    .work-cta {
-        margin: var(--wp--preset--spacing--50) auto;
-        padding: var(--wp--preset--spacing--30);
-        max-width: calc(100% - var(--wp--preset--spacing--20) * 2);
-        border-radius: var(--wp--preset--spacing--20);
-    }
-    
-    .work-cta h2 {
-        font-size: var(--wp--preset--font-size--large);
-        margin-bottom: var(--wp--preset--spacing--30);
-    }
-    
-    .work-cta .wp-block-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--wp--preset--spacing--20);
-    }
-    
-    .work-cta .wp-block-button {
-        margin: 0;
-        width: 100%;
-    }
-    
-    .work-cta .wp-block-button .wp-block-button__link {
-        min-width: 0;
-        width: 100%;
-        padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+    .tech-tag span {
         font-size: calc(var(--wp--preset--font-size--small) - 1px);
     }
 }
