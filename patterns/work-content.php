@@ -189,39 +189,43 @@ if (!empty($gallery_sections)) {
             </div>
             <!-- /wp:group -->
 
-            <!-- wp:heading {"metadata":{"name":"WorkOverview-Title"},"level":2} -->
-            <h2>Project Overview</h2>
+            <!-- wp:group {"metadata":{"name":"WorkTechnologies"},"className":"work-technologies"} -->
+            <div class="wp-block-group work-technologies">
+            <!-- wp:heading {"metadata":{"name":"WorkTechnologies-Title"},"level":2} -->
+            <h2>Technologies Used</h2>
             <!-- /wp:heading -->
 
-            <!-- wp:post-content {"metadata":{"name":"WorkOverview-Content"}} /-->
+                <?php if ($has_tech_terms) : 
+                    $tech_links = array_map(function($term) {
+                        return sprintf(
+                            '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><a href="%s">%s</a></p><!-- /wp:paragraph -->',
+                            esc_url(get_term_link($term)),
+                            esc_html($term->name)
+                        );
+                    }, $tech_terms);
+                ?>
+                    <!-- wp:group {"metadata":{"name":"WorkTechnologies-Tags"},"className":"work-tags"} -->
+                    <div class="wp-block-group work-tags">
+                        <?php echo implode("\n", $tech_links); ?>
+                    </div>
+                    <!-- /wp:group -->
+                <?php endif; ?>
+            </div>
+            <!-- /wp:group -->
+
+            <!-- wp:group {"metadata":{"name":"WorkOverview"},"className":"work-overview"} -->
+            <div class="wp-block-group work-overview">
+                <!-- wp:heading {"metadata":{"name":"WorkOverview-Title"},"level":2} -->
+                <h2>Project Overview</h2>
+                <!-- /wp:heading -->
+
+                <!-- wp:post-content {"metadata":{"name":"WorkOverview-Content"}} /-->
+            </div>
+            <!-- /wp:group -->
         </div>
         <!-- /wp:column -->
     </div>
     <!-- /wp:columns -->
-
-    <!-- wp:group {"metadata":{"name":"WorkTechnologies"},"className":"work-technologies"} -->
-    <div class="wp-block-group work-technologies">
-        <!-- wp:heading {"metadata":{"name":"WorkTechnologies-Title"},"level":2} -->
-        <h2>Technologies Used</h2>
-        <!-- /wp:heading -->
-
-        <?php if ($has_tech_terms) : 
-            $tech_links = array_map(function($term) {
-                return sprintf(
-                    '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><a href="%s">%s</a></p><!-- /wp:paragraph -->',
-                    esc_url(get_term_link($term)),
-                    esc_html($term->name)
-                );
-            }, $tech_terms);
-        ?>
-            <!-- wp:group {"metadata":{"name":"WorkTechnologies-Tags"},"className":"work-tags"} -->
-            <div class="wp-block-group work-tags">
-                <?php echo implode("\n", $tech_links); ?>
-            </div>
-            <!-- /wp:group -->
-        <?php endif; ?>
-    </div>
-    <!-- /wp:group -->
 
     <!-- wp:group {"metadata":{"name":"WorkCTA"},"className":"work-cta"} -->
     <div class="wp-block-group work-cta">
