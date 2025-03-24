@@ -145,6 +145,30 @@ function re_enqueue_work_admin_scripts($hook) {
 add_action('admin_enqueue_scripts', 're_enqueue_work_admin_scripts');
 
 /**
+ * Restrict allowed blocks in the work post type editor
+ *
+ * @param bool|array $allowed_block_types Array of block type slugs, or boolean to enable/disable all.
+ * @param WP_Block_Editor_Context $editor_context The current block editor context.
+ * @return bool|array Array of allowed block types or boolean to enable/disable all.
+ */
+function re_work_allowed_block_types($allowed_block_types, $editor_context) {
+    if (!empty($editor_context->post) && 'work' === $editor_context->post->post_type) {
+        return array(
+            'core/paragraph',
+            'core/heading',
+            'core/quote',
+            'core/list',
+            'core/code',
+            'core/details',
+            'core/preformatted',
+            'core/pullquote'
+        );
+    }
+    return $allowed_block_types;
+}
+add_filter('allowed_block_types_all', 're_work_allowed_block_types', 10, 2);
+
+/**
  * Render tabbed meta box HTML
  *
  * @param WP_Post $post Current post object
