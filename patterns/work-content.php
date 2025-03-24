@@ -78,9 +78,23 @@ function re_get_gallery_sections() {
     return $gallery_sections;
 }
 
+/**
+ * Format date to mm/yyyy
+ * 
+ * @param string $date Date in Y-m format
+ * @return string Formatted date in mm/yyyy format
+ */
+function re_format_work_date($date) {
+    if (empty($date)) return '';
+    $timestamp = strtotime($date . '-01'); // Add day to make a valid date
+    return date('m/Y', $timestamp);
+}
+
 // Get all necessary data
 $meta = re_get_work_meta();
-$date_display = $meta['start_date'] . ($meta['end_date'] ? ' - ' . $meta['end_date'] : ' - Present');
+$start_date = re_format_work_date($meta['start_date']);
+$end_date = $meta['end_date'] ? re_format_work_date($meta['end_date']) : 'Present';
+$date_display = $start_date . ' - ' . $end_date;
 $gallery_sections = re_get_gallery_sections();
 $tech_terms = get_the_terms(get_the_ID(), 'work_tag');
 $has_tech_terms = $tech_terms && !is_wp_error($tech_terms);
@@ -168,23 +182,19 @@ if (!empty($gallery_sections)) {
             <!-- wp:group {"metadata":{"name":"WorkMeta"},"className":"work-meta"} -->
             <div class="wp-block-group work-meta">
                 <!-- wp:paragraph {"className":"work-meta__employer"} -->
-                <p class="work-meta__employer"><?php echo esc_html($meta['employer']); ?></p>
+                <p class="work-meta__employer">Company: <span class="work-meta__employer-name"><?php echo esc_html($meta['employer']); ?></span></p>
                 <!-- /wp:paragraph -->
 
                 <!-- wp:paragraph {"className":"work-meta__project"} -->
-                <p class="work-meta__project"><?php echo esc_html($meta['project']); ?></p>
+                <p class="work-meta__project">Project: <span class="work-meta__project-name"><?php echo esc_html($meta['project']); ?></span></p>
                 <!-- /wp:paragraph -->
 
                 <!-- wp:paragraph {"className":"work-meta__role"} -->
-                <p class="work-meta__role"><?php echo esc_html($meta['role']); ?></p>
-                <!-- /wp:paragraph -->
-
-                <!-- wp:paragraph {"className":"work-meta__location"} -->
-                <p class="work-meta__location"><?php echo esc_html($meta['location']); ?></p>
+                <p class="work-meta__role">Role: <span class="work-meta__role-name"><?php echo esc_html($meta['role']); ?></span></p>
                 <!-- /wp:paragraph -->
 
                 <!-- wp:paragraph {"className":"work-meta__dates"} -->
-                <p class="work-meta__dates"><?php echo esc_html($date_display); ?></p>
+                <p class="work-meta__dates">Dates: <span class="work-meta__dates-range"><?php echo esc_html($date_display); ?></span></p>
                 <!-- /wp:paragraph -->
             </div>
             <!-- /wp:group -->
@@ -198,8 +208,7 @@ if (!empty($gallery_sections)) {
                 <?php if ($has_tech_terms) : 
                     $tech_links = array_map(function($term) {
                         return sprintf(
-                            '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><a href="%s">%s</a></p><!-- /wp:paragraph -->',
-                            esc_url(get_term_link($term)),
+                            '<!-- wp:paragraph {"className":"tech-tag"} --><p class="tech-tag"><span>%s</span></p><!-- /wp:paragraph -->',
                             esc_html($term->name)
                         );
                     }, $tech_terms);
@@ -226,29 +235,5 @@ if (!empty($gallery_sections)) {
         <!-- /wp:column -->
     </div>
     <!-- /wp:columns -->
-
-    <!-- wp:group {"metadata":{"name":"WorkCTA"},"className":"work-cta"} -->
-    <div class="wp-block-group work-cta">
-        <!-- wp:heading {"metadata":{"name":"WorkCTA-Title"},"level":2} -->
-        <h2>Want to Build Something Similar?</h2>
-        <!-- /wp:heading -->
-
-        <!-- wp:buttons {"metadata":{"name":"WorkCTA-Buttons"},"layout":{"type":"flex","justifyContent":"center"}} -->
-        <div class="wp-block-buttons">
-            <!-- wp:button {"metadata":{"name":"WorkCTA-ContactButton"},"className":"is-style-fill"} -->
-            <div class="wp-block-button is-style-fill">
-                <a class="wp-block-button__link wp-element-button" href="<?php echo esc_url(home_url('/contact')); ?>">Get in Touch</a>
-            </div>
-            <!-- /wp:button -->
-
-            <!-- wp:button {"metadata":{"name":"WorkCTA-PortfolioButton"},"className":"is-style-outline"} -->
-            <div class="wp-block-button is-style-outline">
-                <a class="wp-block-button__link wp-element-button" href="<?php echo esc_url(home_url('/work')); ?>">View More Projects</a>
-            </div>
-            <!-- /wp:button -->
-        </div>
-        <!-- /wp:buttons -->
-    </div>
-    <!-- /wp:group -->
 </div>
 <!-- /wp:group --> 
