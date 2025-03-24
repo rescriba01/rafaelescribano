@@ -312,20 +312,22 @@
 .work-cta .wp-block-button.is-style-fill .wp-block-button__link:hover {
     background-color: var(--wp--preset--color--contrast);
     border-color: var(--wp--preset--color--contrast);
+    color: var(--wp--preset--color--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .work-cta .wp-block-button.is-style-outline .wp-block-button__link {
     background-color: transparent;
-    border: 2px solid var(--wp--preset--color--contrast);
-    color: var(--wp--preset--color--contrast);
+    border: 2px solid var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--secondary);
     transition: all 0.3s ease;
 }
 
 .work-cta .wp-block-button.is-style-outline .wp-block-button__link:hover {
     background-color: var(--wp--preset--color--contrast);
-    color: var(--wp--preset--color--base);
+    border-color: var(--wp--preset--color--primary-second);
+    color: var(--wp--preset--color--primary-second);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
