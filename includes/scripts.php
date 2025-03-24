@@ -14,7 +14,6 @@ if (!defined('ABSPATH')) {
  * Enqueue theme scripts
  */
 function re_enqueue_scripts() {
-    
     // Pattern: Work Card Stack
     wp_enqueue_script(
         're-pattern-work-card-stack',
@@ -24,23 +23,8 @@ function re_enqueue_scripts() {
         true
     );
 
-    // Work template scripts
+    // Vendor Scripts
     if (is_singular('work')) {
-        wp_enqueue_style(
-            're-work-template',
-            RE_THEME_URL . 'assets/css/templates/single-work.css',
-            array(),
-            RE_THEME_VERSION
-        );
-
-        // Swiper CSS
-        wp_enqueue_style(
-            'swiper',
-            RE_THEME_URL . 'assets/vendor/swiper/swiper-bundle.min.css',
-            array(),
-            '11.2.4'
-        );
-
         // Swiper JS
         wp_enqueue_script(
             'swiper',
@@ -48,14 +32,6 @@ function re_enqueue_scripts() {
             array(),
             '11.2.4',
             true
-        );
-
-        // PhotoSwipe CSS
-        wp_enqueue_style(
-            'photoswipe',
-            RE_THEME_URL . 'assets/vendor/photoswipe/photoswipe.css',
-            array(),
-            '5.4.4'
         );
 
         // PhotoSwipe JS
@@ -76,7 +52,7 @@ function re_enqueue_scripts() {
             true
         );
 
-        // PhotoSwipe Helper
+        // Theme Scripts
         wp_enqueue_script(
             'photoswipe-helper',
             RE_THEME_URL . 'assets/js/modules/photoswipe-helper.js',
@@ -85,7 +61,6 @@ function re_enqueue_scripts() {
             true
         );
 
-        // Work Carousel (Swiper implementation)
         wp_enqueue_script(
             're-work-carousel',
             RE_THEME_URL . 'assets/js/templates/work-carousel.js',

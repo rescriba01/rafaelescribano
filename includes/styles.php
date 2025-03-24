@@ -90,5 +90,22 @@ function re_enqueue_styles() {
         array( 're-style' ),
         RE_THEME_VERSION
     );
+
+    // Vendor Styles
+    if (is_singular('work')) {
+        wp_enqueue_style(
+            'swiper',
+            RE_THEME_URL . 'assets/vendor/swiper/swiper-bundle.min.css',
+            array(),
+            '11.2.4'
+        );
+
+        wp_enqueue_style(
+            'photoswipe',
+            RE_THEME_URL . 'assets/vendor/photoswipe/photoswipe.css',
+            array(),
+            '5.4.4'
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 're_enqueue_styles' );
