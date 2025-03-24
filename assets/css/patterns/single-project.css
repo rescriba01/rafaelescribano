@@ -268,6 +268,14 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
+.tech-tag {
+    margin: 0;
+}
+
+.work-overview .entry-content > * {
+    padding: 0;
+}
+
 /* CTA Section */
 .work-cta {
     text-align: center;
