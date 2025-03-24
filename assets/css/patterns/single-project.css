@@ -223,7 +223,7 @@
 /* Technologies */
 .work-technologies {
     margin-top: 0;
-    padding: var(--wp--preset--spacing--40) var(--wp--preset--spacing--30);
+    padding: var(--wp--preset--spacing--40) 0;
     text-align: center;
 }
 
