@@ -1,7 +1,7 @@
 ---
-description: Guidelines for naming blocks in WordPress block templates and patterns
-globs: ["templates/**/*.html", "patterns/**/*.php"]
-alwaysApply: true
+description: 
+globs: ["templates/**/*.html",patterns/*.php,parts/*.html
+alwaysApply: false
 ---
 # Block Naming Conventions
 

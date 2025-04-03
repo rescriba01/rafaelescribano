@@ -1,6 +1,7 @@
 ---
-description: When theme building these should be considered
+description: When theme building, making site wide editor adjustments, or making global style adjustments these should be considered
 globs: 
+alwaysApply: false
 ---
 ## Core Principles
 - Use `theme.json` for global styles instead of hardcoded CSS.

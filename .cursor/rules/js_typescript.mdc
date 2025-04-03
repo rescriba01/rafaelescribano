@@ -1,6 +1,7 @@
 ---
 description: JS & TypeScript Best Practices.
 globs: **/*.js, **/*.ts
+alwaysApply: false
 ---
 # JavaScript Coding Standards
 
@@ -12,6 +13,7 @@ globs: **/*.js, **/*.ts
 - Avoid jQuery unless required for compatibility with third-party plugins.
 - Use wp_localize_script() for passing PHP data to JS instead of global variables.
 - Defer or asynchronously load scripts for performance `(wp_enqueue_script( ..., ..., [ 'async' => true ]))`.
+- Stick to Class-based structure when possible to stick closer to OOP.
 
 ## Best Practices
 - Use `async/await` and Promises for API requests.

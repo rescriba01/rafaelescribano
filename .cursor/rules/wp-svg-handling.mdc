@@ -1,6 +1,7 @@
 ---
 description: Considerations when working with svgs in WP's new markup
-globs: **/*.svg, **/svg/**/*, **/*icon*.php, **/patterns/**/*.php, **/includes/**/*.php, **/templates/**/*.php, **/template-parts/**/*.php, **/blocks/**/*.php, **/components/**/*.php
+globs: 
+alwaysApply: false
 ---
 # SVG Handling in WordPress Blocks
 

@@ -1,6 +1,7 @@
 ---
 description: 
-globs: **/*.html, **/*.css, **/*.js, **/*.ts, **/*.php, **/*.json
+globs: 
+alwaysApply: true
 ---
 # General Coding Standards
 
