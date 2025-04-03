@@ -120,31 +120,6 @@ function re_add_work_meta_boxes() {
 add_action('add_meta_boxes', 're_add_work_meta_boxes');
 
 /**
- * Enqueue admin scripts for work post type
- *
- * @param string $hook The current admin page
- */
-function re_enqueue_work_admin_scripts($hook) {
-    global $post;
-
-    // Only enqueue on work post edit screen
-    if ($hook !== 'post.php' && $hook !== 'post-new.php') {
-        return;
-    }
-
-    if (isset($post) && 'work' === $post->post_type) {
-        wp_enqueue_script(
-            're-work-meta',
-            RE_THEME_URL . 'assets/js/admin/work-meta.js',
-            array(),
-            RE_THEME_VERSION,
-            true
-        );
-    }
-}
-add_action('admin_enqueue_scripts', 're_enqueue_work_admin_scripts');
-
-/**
  * Restrict allowed blocks in the work post type editor
  *
  * @param bool|array $allowed_block_types Array of block type slugs, or boolean to enable/disable all.
@@ -183,8 +158,7 @@ function re_work_meta_tabs_html($post) {
     $project = get_post_meta($post->ID, '_work_project', true);
     $has_external_link = get_post_meta($post->ID, '_work_has_external_link', true);
     $external_link = get_post_meta($post->ID, '_work_external_link', true);
-    $gallery_images = get_post_meta($post->ID, '_work_gallery_images', true);
-    $gallery_layout = get_post_meta($post->ID, '_work_gallery_layout', true);
+    $gallery_data = json_decode(get_post_meta($post->ID, '_work_gallery_data', true) ?: '[]', true);
 
     // Add nonce for security
     wp_nonce_field('re_work_meta_box', 're_work_meta_box_nonce');
@@ -255,43 +229,36 @@ function re_work_meta_tabs_html($post) {
                     ?>">
                     
                     <div class="work-gallery-controls">
-                        <select id="work_gallery_layout_select" class="widefat">
-                            <option value=""><?php esc_html_e('Select Image Layout', 're'); ?></option>
-                            <option value="full"><?php esc_html_e('Full Width Image', 're'); ?></option>
-                            <option value="split"><?php esc_html_e('50/50 Split Images', 're'); ?></option>
-                        </select>
-                        
-                        <button type="button" class="button" id="work_gallery_upload" disabled>
+                        <button type="button" class="button" id="work_gallery_upload">
                             <?php esc_html_e('Add Images', 're'); ?>
                         </button>
                     </div>
 
                     <p class="gallery-help-text">
-                        <?php esc_html_e('Select a layout first. Full Width allows one image, 50/50 Split requires exactly two images.', 're'); ?>
+                        <?php esc_html_e('Select one or more images to add to the project gallery.', 're'); ?>
                     </p>
                     
                     <div class="work-gallery-sections">
                         <?php
-                        $gallery_data = json_decode(get_post_meta($post->ID, '_work_gallery_data', true) ?: '[]', true);
                         
-                        foreach ($gallery_data as $section) {
-                            $layout = $section['layout'];
-                            $images = $section['images'];
-                            
-                            echo '<div class="gallery-section" data-layout="' . esc_attr($layout) . '">';
+                        if (!empty($gallery_data)) {
+                            echo '<div class="gallery-section">';
                             echo '<div class="gallery-section-header">';
-                            echo '<h4>' . ($layout === 'full' ? esc_html__('Full Width Section', 're') : esc_html__('50/50 Split Section', 're')) . '</h4>';
-                            echo '<button type="button" class="button-link remove-section">' . esc_html__('Remove Section', 're') . '</button>';
+                            echo '<h4>' . esc_html__('Project Images Gallery', 're') . '</h4>';
                             echo '</div>';
                             
-                            echo '<div class="gallery-section-images ' . esc_attr($layout) . '">';
-                            foreach ($images as $image_id) {
-                                $image = wp_get_attachment_image($image_id, 'thumbnail');
-                                if ($image) {
-                                    echo '<div class="gallery-image-preview">';
-                                    echo $image;
-                                    echo '<button type="button" class="remove-image" data-id="' . esc_attr($image_id) . '">×</button>';
-                                    echo '</div>';
+                            echo '<div class="gallery-images-container">';
+                            foreach ($gallery_data as $section) {
+                                if (isset($section['images']) && is_array($section['images'])) {
+                                    foreach ($section['images'] as $image_id) {
+                                        $image = wp_get_attachment_image($image_id, 'thumbnail');
+                                        if ($image) {
+                                            echo '<div class="gallery-image-preview">';
+                                            echo $image;
+                                            echo '<button type="button" class="remove-image" data-id="' . esc_attr($image_id) . '">×</button>';
+                                            echo '</div>';
+                                        }
+                                    }
                                 }
                             }
                             echo '</div>';
@@ -317,38 +284,27 @@ function re_validate_gallery_data($gallery_data) {
         return false;
     }
 
-    $valid_layouts = array('full', 'split');
     $sanitized_data = array();
 
     foreach ($gallery_data as $section) {
         // Check required keys exist
         if (!isset($section['layout']) || !isset($section['images']) || !is_array($section['images'])) {
-            return false;
+            continue; // Skip invalid sections instead of failing completely
         }
 
-        // Validate layout
-        if (!in_array($section['layout'], $valid_layouts)) {
-            return false;
-        }
-
-        // Validate images based on layout
+        // Validate images
         $images = array_map('absint', $section['images']);
         $images = array_filter($images, function($id) {
             return wp_attachment_is_image($id);
         });
 
-        // Check image count based on layout
-        if ($section['layout'] === 'full' && count($images) !== 1) {
-            return false;
+        // Only add section if it has valid images
+        if (count($images) > 0) {
+            $sanitized_data[] = array(
+                'layout' => sanitize_text_field($section['layout']),
+                'images' => $images
+            );
         }
-        if ($section['layout'] === 'split' && count($images) !== 2) {
-            return false;
-        }
-
-        $sanitized_data[] = array(
-            'layout' => sanitize_text_field($section['layout']),
-            'images' => $images
-        );
     }
 
     return $sanitized_data;
