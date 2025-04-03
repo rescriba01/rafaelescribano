@@ -64,126 +64,158 @@
         constructor( container, input ) {
             this.container = container;
             this.input = input;
+            console.log('Initializing gallery state...');
+            console.log('Initial gallery data:', this.input.value ? JSON.parse(this.input.value) : []);
         }
 
         /**
          * Initialize state from existing data
          */
         async initialize() {
-            if ( !this.input.value ) {
+            if (!this.input.value) {
                 return;
             }
 
             try {
-                // Clear existing sections first to prevent duplicates
-                while ( this.container.firstChild ) {
-                    this.container.removeChild( this.container.firstChild );
-                }
+                // Clear existing images first to prevent duplicates
+                this.clearGalleryContainer();
 
-                const parsedData = JSON.parse( this.input.value );
-                if ( Array.isArray( parsedData ) ) {
-                    // Process sections sequentially to maintain order
-                    for ( const section of parsedData ) {
-                        if ( section.images?.length ) {
-                            try {
-                                const attachments = await Promise.all(
-                                    section.images.map( async ( id ) => {
-                                        const attachment = wp.media.attachment( id );
-                                        await attachment.fetch();
-                                        return attachment;
-                                    } )
-                                );
-                                
-                                // Only create section if all attachments were loaded successfully
-                                if ( attachments.every( att => att.get( 'id' ) ) ) {
-                                    this.createSection( section.layout, attachments, false );
-                                }
-                            } catch ( err ) {
-                                console.error( `Error loading attachments for section: ${err}` );
-                                utils.createNotice(
-                                    wp.i18n.__( 'Error loading some images. They may have been deleted.', 're' ),
-                                    'warning'
-                                );
+                const data = JSON.parse(this.input.value);
+                console.log('Parsed gallery data:', data);
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    // Create gallery container if it doesn't exist
+                    let galleryContainer = this.container.querySelector('.gallery-images-container');
+                    if (!galleryContainer) {
+                        galleryContainer = this.createGalleryContainer();
+                    }
+                    
+                    // Load and display all images
+                    const imageIds = data.flatMap(item => item.images || []);
+                    
+                    if (imageIds.length > 0) {
+                        try {
+                            const attachments = await Promise.all(
+                                imageIds.map(async (id) => {
+                                    const attachment = wp.media.attachment(id);
+                                    await attachment.fetch();
+                                    return attachment;
+                                })
+                            );
+                            
+                            // Filter out any failed attachments
+                            const validAttachments = attachments.filter(att => att && att.get('id'));
+                            
+                            // Add each attachment to the gallery
+                            for (const attachment of validAttachments) {
+                                this.addImageToGallery(attachment, galleryContainer);
                             }
+                        } catch (err) {
+                            console.error('Error loading attachments:', err);
+                            utils.createNotice(
+                                wp.i18n.__('Error loading some images. They may have been deleted.', 're'),
+                                'warning'
+                            );
                         }
                     }
                 }
-            } catch ( e ) {
-                console.error( 'Error parsing gallery data:', e );
-                utils.createNotice( wp.i18n.__( 'Error loading gallery data', 're' ), 'error' );
+            } catch (e) {
+                console.error('Error parsing gallery data:', e);
+                utils.createNotice(wp.i18n.__('Error loading gallery data', 're'), 'error');
             }
         }
 
         /**
-         * Create gallery section with selected images
-         * 
-         * @param {string}  layout      Section layout type
-         * @param {Array}   attachments Array of media attachments
-         * @param {boolean} shouldUpdate Whether to update gallery data after creation
+         * Clear the gallery container
          */
-        createSection( layout, attachments, shouldUpdate = true ) {
-            try {
-                // Validate required number of images
-                const requiredCount = layout === 'split' ? 2 : 1;
-                if ( attachments.length !== requiredCount ) {
-                    utils.createNotice(
-                        `${wp.i18n.__( 'Section requires exactly', 're' )} ${requiredCount} ${wp.i18n.__( 'image(s)', 're' )}`,
-                        'error'
-                    );
-                    return;
+        clearGalleryContainer() {
+            console.log('Clearing gallery container');
+            // Remove only the gallery content, not section headers
+            const galleryContainer = this.container.querySelector('.gallery-images-container');
+            if (galleryContainer) {
+                while (galleryContainer.firstChild) {
+                    galleryContainer.removeChild(galleryContainer.firstChild);
                 }
-
-                const section = utils.createElement( 'div', {
-                    className: 'gallery-section',
-                    dataset: { layout }
-                } );
-
-                const header = utils.createElement( 'div', 
-                    { className: 'gallery-section-header' },
-                    `<h4>${layout === 'full' ? 
-                        wp.i18n.__( 'Full Width Section', 're' ) : 
-                        wp.i18n.__( '50/50 Split Section', 're' )
-                    }</h4>
-                    <button type="button" class="button-link remove-section">
-                        ${wp.i18n.__( 'Remove Section', 're' )}
-                    </button>`
-                );
-
-                const imagesContainer = utils.createElement( 'div', {
-                    className: `gallery-section-images ${layout}`
-                } );
-
-                // Create and filter out any null previews
-                const validPreviews = attachments
-                    .map( attachment => this.createImagePreview( attachment ) )
-                    .filter( preview => preview !== null );
-
-                // Check if we still have the required number of valid previews
-                if ( validPreviews.length !== requiredCount ) {
-                    utils.createNotice(
-                        wp.i18n.__( 'Error creating one or more image previews', 're' ),
-                        'error'
-                    );
-                    return;
+            } else {
+                // If there's no container yet, clear everything
+                while (this.container.firstChild) {
+                    this.container.removeChild(this.container.firstChild);
                 }
+            }
+        }
 
-                validPreviews.forEach( preview => {
-                    imagesContainer.appendChild( preview );
-                } );
+        /**
+         * Create the gallery container
+         * 
+         * @return {HTMLElement} The gallery container element
+         */
+        createGalleryContainer() {
+            const section = utils.createElement('div', {
+                className: 'gallery-section',
+            });
 
-                section.appendChild( header );
-                section.appendChild( imagesContainer );
-                this.container.appendChild( section );
+            const header = utils.createElement('div', 
+                { className: 'gallery-section-header' },
+                `<h4>${wp.i18n.__('Project Images Gallery', 're')}</h4>`
+            );
 
-                if ( shouldUpdate ) {
-                    this.update();
+            const imagesContainer = utils.createElement('div', {
+                className: 'gallery-images-container'
+            });
+
+            section.appendChild(header);
+            section.appendChild(imagesContainer);
+            this.container.appendChild(section);
+            
+            return imagesContainer;
+        }
+
+        /**
+         * Add new images to the gallery
+         * 
+         * @param {Array} attachments Array of media attachments
+         */
+        addImages(attachments) {
+            if (!attachments || attachments.length === 0) {
+                return;
+            }
+            
+            console.log('Adding images to gallery:', attachments.length);
+            
+            // Create or get gallery container
+            let galleryContainer = this.container.querySelector('.gallery-images-container');
+            if (!galleryContainer) {
+                galleryContainer = this.createGalleryContainer();
+            }
+            
+            // Add each attachment to the gallery
+            for (const attachment of attachments) {
+                this.addImageToGallery(attachment, galleryContainer);
+            }
+            
+            // Update the input value
+            this.update();
+        }
+
+        /**
+         * Add a single image to the gallery
+         * 
+         * @param {Object} attachment Media attachment object
+         * @param {HTMLElement} container Container to add the image to
+         */
+        addImageToGallery(attachment, container) {
+            const preview = this.createImagePreview(attachment);
+            if (preview) {
+                container.appendChild(preview);
+                
+                // Add event listener to remove button
+                const removeButton = preview.querySelector('.remove-image');
+                if (removeButton) {
+                    removeButton.addEventListener('click', () => {
+                        preview.remove();
+                        this.update();
+                    });
                 }
-            } catch ( error ) {
-                console.error( 'Error creating gallery section:', error );
-                utils.createNotice(
-                    wp.i18n.__( 'Error creating gallery section', 're' ),
-                    'error'
-                );
             }
         }
 
@@ -191,54 +223,38 @@
          * Update gallery data in hidden input
          */
         update() {
+            console.log('Updating gallery data...');
             try {
-                // Ensure container exists
-                if (!this.container) {
-                    console.warn('Gallery container not found');
-                    return;
-                }
+                const images = Array.from(this.container.querySelectorAll('img'))
+                    .map(img => {
+                        if (!img || !img.classList) {
+                            return null;
+                        }
+                        
+                        // Find wp-image class
+                        const wpImageClass = Array.from(img.classList)
+                            .find(className => className.startsWith('wp-image-'));
+                        
+                        if (!wpImageClass) {
+                            return null;
+                        }
 
-                const sections = Array.from(this.container.querySelectorAll('.gallery-section'));
+                        const id = parseInt(wpImageClass.replace('wp-image-', ''), 10);
+                        return isNaN(id) ? null : id;
+                    })
+                    .filter(id => id !== null);
                 
-                // If no sections found, set empty array in input
-                if (!sections.length) {
-                    this.input.value = JSON.stringify([]);
-                    this.input.dispatchEvent(new Event('change', { bubbles: true }));
-                    return;
-                }
-
-                const data = sections.map(section => {
-                    // Ensure section has required data
-                    if (!section || !section.dataset || !section.dataset.layout) {
-                        console.warn('Invalid section found, skipping');
-                        return null;
-                    }
-
-                    const images = Array.from(section.querySelectorAll('img'))
-                        .map(img => {
-                            if (!img || !img.classList) {
-                                return null;
-                            }
-                            // Find wp-image class
-                            const wpImageClass = Array.from(img.classList)
-                                .find(className => className.startsWith('wp-image-'));
-                            
-                            if (!wpImageClass) {
-                                return null;
-                            }
-
-                            const id = parseInt(wpImageClass.replace('wp-image-', ''), 10);
-                            return isNaN(id) ? null : id;
-                        })
-                        .filter(id => id !== null);
-
-                    return {
-                        layout: section.dataset.layout,
-                        images
-                    };
-                }).filter(section => section !== null && section.images.length > 0);
-
-                this.input.value = JSON.stringify(data);
+                console.log('Collected image IDs:', images);
+                
+                // Create a single gallery entry with all images
+                const galleryData = images.length > 0 ? [{
+                    layout: 'gallery', // Single consistent layout type
+                    images: images
+                }] : [];
+                
+                console.log('New gallery data:', galleryData);
+                
+                this.input.value = JSON.stringify(galleryData);
                 this.input.dispatchEvent(new Event('change', { bubbles: true }));
             } catch (error) {
                 console.error('Error updating gallery data:', error);
@@ -250,33 +266,35 @@
          * Create image preview element
          * 
          * @param {Object} attachment Media attachment object
-         * @return {HTMLElement}      Image preview element
+         * @return {HTMLElement|null} Image preview element or null if creation failed
          */
-        createImagePreview( attachment ) {
+        createImagePreview(attachment) {
             try {
-                if ( !attachment || !attachment.get ) {
-                    console.error( 'Invalid attachment object' );
+                console.log('Creating image preview for attachment:', attachment);
+                
+                if (!attachment || !attachment.get) {
+                    console.error('Invalid attachment object');
                     return null;
                 }
 
-                const sizes = attachment.get( 'sizes' );
-                const imageSize = sizes && ( sizes.medium || sizes.thumbnail );
-                const imageUrl = imageSize ? imageSize.url : attachment.get( 'url' );
-                const altText = attachment.get( 'alt' ) || '';
+                const sizes = attachment.get('sizes');
+                const imageSize = sizes && (sizes.medium || sizes.thumbnail);
+                const imageUrl = imageSize ? imageSize.url : attachment.get('url');
+                const altText = attachment.get('alt') || '';
                 
-                return utils.createElement( 'div', 
+                return utils.createElement('div', 
                     { className: 'gallery-image-preview' },
                     `<img src="${imageUrl}" 
-                         alt="${wp.htmlEscape ? wp.htmlEscape( altText ) : altText}" 
-                         class="wp-image-${attachment.get( 'id' )}"
+                         alt="${wp.htmlEscape ? wp.htmlEscape(altText) : altText}" 
+                         class="wp-image-${attachment.get('id')}"
                          width="${imageSize ? imageSize.width : ''}"
                          height="${imageSize ? imageSize.height : ''}" />
-                    <button type="button" class="remove-image" data-id="${attachment.get( 'id' )}">×</button>`
+                    <button type="button" class="remove-image" data-id="${attachment.get('id')}">×</button>`
                 );
-            } catch ( error ) {
-                console.error( 'Error creating image preview:', error );
+            } catch (error) {
+                console.error('Error creating image preview:', error);
                 utils.createNotice(
-                    wp.i18n.__( 'Error creating image preview', 're' ),
+                    wp.i18n.__('Error creating image preview', 're'),
                     'error'
                 );
                 return null;
@@ -288,9 +306,8 @@
      * Media frame management
      */
     class MediaFrameManager {
-        constructor( currentLayout ) {
+        constructor() {
             this.frame = null;
-            this.currentLayout = currentLayout;
             this.selectionCallback = null;
         }
 
@@ -301,39 +318,29 @@
          */
         initialize() {
             // If frame exists, destroy it and create a new one to ensure proper state
-            if ( this.frame ) {
+            if (this.frame) {
                 this.frame.dispose();
                 this.frame = null;
             }
 
-            // Create new frame with current settings
-            this.frame = wp.media( {
-                title: wp.i18n.__( 'Select Project Images', 're' ),
+            // Create new frame with multiple selection enabled
+            this.frame = wp.media({
+                title: wp.i18n.__('Select Project Images', 're'),
                 button: {
-                    text: wp.i18n.__( 'Add to Gallery', 're' )
+                    text: wp.i18n.__('Add to Gallery', 're')
                 },
-                multiple: this.currentLayout === 'split' ? 'add' : false,
+                multiple: true,
                 library: {
                     type: 'image'
                 }
-            } );
+            });
 
             // Add selection handler if callback is set
-            if ( this.selectionCallback ) {
-                this.frame.on( 'select', () => {
-                    const selection = this.frame.state().get( 'selection' );
-                    const requiredCount = this.currentLayout === 'split' ? 2 : 1;
-
-                    if ( selection.length !== requiredCount ) {
-                        utils.createNotice(
-                            `${wp.i18n.__( 'Please select exactly', 're' )} ${requiredCount} ${wp.i18n.__( 'image(s) for this layout', 're' )}`,
-                            'error'
-                        );
-                        return;
-                    }
-
-                    this.selectionCallback( selection.models );
-                } );
+            if (this.selectionCallback) {
+                this.frame.on('select', () => {
+                    const selection = this.frame.state().get('selection');
+                    this.selectionCallback(selection.models);
+                });
             }
 
             return this.frame;
@@ -345,13 +352,13 @@
         open() {
             try {
                 const frame = this.initialize();
-                if ( frame && frame.open ) {
+                if (frame && frame.open) {
                     frame.open();
                 }
-            } catch ( error ) {
-                console.error( 'Error opening media frame:', error );
+            } catch (error) {
+                console.error('Error opening media frame:', error);
                 utils.createNotice(
-                    wp.i18n.__( 'Error opening media library', 're' ),
+                    wp.i18n.__('Error opening media library', 're'),
                     'error'
                 );
             }
@@ -362,7 +369,7 @@
          * 
          * @param {Function} callback Selection callback
          */
-        onSelect( callback ) {
+        onSelect(callback) {
             this.selectionCallback = callback;
             // Initialize with the callback
             this.initialize();
@@ -376,28 +383,25 @@
         // Add debug logging for initialization
         console.log('Initializing gallery functionality...');
         
-        const layoutSelect = document.getElementById('work_gallery_layout_select');
         const uploadButton = document.getElementById('work_gallery_upload');
         const galleryInput = document.getElementById('work_gallery_data');
         const galleryContainer = document.querySelector('.work-gallery-sections');
         
         // Log element existence
         console.log('Required elements found:', {
-            layoutSelect: !!layoutSelect,
             uploadButton: !!uploadButton,
             galleryInput: !!galleryInput,
             galleryContainer: !!galleryContainer
         });
         
-        if (!layoutSelect || !uploadButton || !galleryInput || !galleryContainer) {
+        if (!uploadButton || !galleryInput || !galleryContainer) {
             console.error('Required gallery elements not found');
             utils.createNotice(wp.i18n.__('Error: Required gallery elements not found', 're'), 'error');
             return;
         }
 
-        let currentLayout = '';
         const state = new GalleryState(galleryContainer, galleryInput);
-        const mediaManager = new MediaFrameManager(currentLayout);
+        const mediaManager = new MediaFrameManager();
 
         // Verify wp.media availability
         if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
@@ -406,69 +410,7 @@
             return;
         }
 
-        const handleLayoutSelection = async (layout) => {
-            console.log('Handling layout selection:', layout);
-            try {
-                // Log AJAX parameters
-                console.log('AJAX parameters:', {
-                    url: reWorkMeta.ajaxurl,
-                    nonce: reWorkMeta.nonce,
-                    postId: reWorkMeta.post_id
-                });
-
-                const response = await fetch(reWorkMeta.ajaxurl, {
-                    method: 'POST',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-WP-Nonce': reWorkMeta.nonce
-                    },
-                    body: new URLSearchParams({
-                        action: 're_update_gallery_layout',
-                        nonce: reWorkMeta.nonce,
-                        post_id: reWorkMeta.post_id,
-                        layout
-                    })
-                });
-
-                // Log response status
-                console.log('Layout selection response status:', response.status);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log('Layout selection response:', data);
-
-                if (data.success) {
-                    currentLayout = layout;
-                    mediaManager.currentLayout = layout;
-                    uploadButton.disabled = !currentLayout;
-                    mediaManager.initialize();
-                } else {
-                    throw new Error(data.error || wp.i18n.__('Unknown error occurred', 're'));
-                }
-            } catch (error) {
-                console.error('Layout selection error:', error);
-                utils.createNotice(error.message, 'error');
-                layoutSelect.value = '';
-                uploadButton.disabled = true;
-            }
-        };
-
-        // Event Handlers with logging
-        layoutSelect.addEventListener('change', (event) => {
-            console.log('Layout changed:', event.target.value);
-            const selectedLayout = event.target.value;
-            if (selectedLayout) {
-                handleLayoutSelection(selectedLayout);
-            } else {
-                uploadButton.disabled = true;
-                currentLayout = '';
-            }
-        });
-
+        // Setup event handlers
         uploadButton.addEventListener('click', (event) => {
             console.log('Upload button clicked');
             event.preventDefault();
@@ -483,14 +425,23 @@
             mediaManager.open();
         });
 
+        // Add event delegation for removing sections and images
+        galleryContainer.addEventListener('click', (event) => {
+            // Handle remove section button clicks
+            if (event.target.classList.contains('remove-section')) {
+                const section = event.target.closest('.gallery-section');
+                if (section) {
+                    section.remove();
+                    state.update();
+                }
+            }
+        });
+
         // Initialize with logging
         try {
             mediaManager.onSelect((attachments) => {
                 console.log('Media selection made:', attachments.length);
-                state.createSection(currentLayout, attachments);
-                layoutSelect.value = '';
-                uploadButton.disabled = true;
-                currentLayout = '';
+                state.addImages(attachments);
             });
 
             state.initialize().catch(error => {

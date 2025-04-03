@@ -1,6 +1,7 @@
 ---
 description: 
-globs: **/wp-json/**/*.php, **/api/**/*.php, **/rest/**/*.js
+globs: 
+alwaysApply: true
 ---
 
 # Rules

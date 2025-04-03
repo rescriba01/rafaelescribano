@@ -1,6 +1,7 @@
 ---
-description: Enforces secure coding practices for PHP, JavaScript, and database interactions in WordPress projects.
-globs: **/*.php, **/*.js
+description: 
+globs: 
+alwaysApply: true
 ---
 
 # Rules

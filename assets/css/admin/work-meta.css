@@ -79,9 +79,10 @@
 
 .gallery-section-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    border-bottom: 1px solid #dcdcde;
+    padding-bottom: 10px;
 }
 
 .gallery-section-header h4 {
@@ -90,31 +91,35 @@
     font-weight: 600;
 }
 
-.gallery-section-images {
-    display: flex;
-    gap: 10px;
+/* Image Grid Layout */
+.gallery-images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    min-height: 100px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 2px;
 }
 
-.gallery-section-images.full {
-    justify-content: center;
-}
-
-.gallery-section-images.split {
-    justify-content: space-between;
-}
-
-.gallery-section-images.split .gallery-image-preview {
-    width: calc(50% - 5px);
+.gallery-images-container:empty {
+    border: 2px dashed #c3c4c7;
 }
 
 .gallery-image-preview {
     position: relative;
-    width: 150px;
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.gallery-image-preview:hover {
+    transform: translateY(-2px);
 }
 
 .gallery-image-preview img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
     display: block;
     border: 1px solid #c3c4c7;
     border-radius: 4px;
@@ -122,28 +127,38 @@
 
 .remove-image {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #dc3232;
-    color: white;
-    border: none;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    background: #dc3232;
+    color: #fff;
+    border: 2px solid #fff;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.gallery-image-preview:hover .remove-image {
+    opacity: 1;
 }
 
 .remove-image:hover {
-    background: #c92222;
+    background: #b32d2e;
 }
 
+/* Remove old section-specific styles */
+.gallery-section-header,
+.gallery-section-images.full,
+.gallery-section-images.split,
 .remove-section {
-    color: #dc3232;
-    text-decoration: none;
-}
-
-.remove-section:hover {
-    color: #c92222;
-    text-decoration: underline;
+    display: none;
 } 
