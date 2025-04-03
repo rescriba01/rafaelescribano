@@ -95,7 +95,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>When I'm not creating engaging and intuitive digital experiences, you'll likely find me at my local coffee shop, sipping a nitro cold brew while reading a Stephen King or Joe Hill book (flavor of the month, lol), at my local brew house on game night with a crew of four debating whether to include our house rules, or just kicking back, trying to catch up on one of the many streaming shows on my list.</p>
+<p>When I'm not creating engaging and intuitive digital experiences, you'll likely find me at my local coffee shop, sipping a nitro cold brew while reading a Stephen King or Joe Hill book (flavor of the month lol), at my local brewery on game night with a crew of four debating whether to include our house rules, or just kicking back, trying to catch up on one of the many streaming shows on my list.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
