@@ -3,7 +3,15 @@ import { gsap, ScrollTrigger, fadeIn, staggerFadeIn } from './modules/gsap-confi
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// Site-wide animations toggle. Set to false to disable all animations below
+// without removing the enqueue/build wiring.
+const ANIMATIONS_ENABLED = false;
+
 (() => {
+    if (!ANIMATIONS_ENABLED) {
+        return;
+    }
+
     // Initialize animations when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
         // Header animations
